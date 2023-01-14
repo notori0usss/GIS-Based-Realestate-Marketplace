@@ -39,10 +39,10 @@ class Listing(models.Model):
 
     rental_frequency=models.CharField(max_length=20,blank=True,null=True, choices=choices_rental_frequency)
 
-    property_constructed_date=models.DateField(max_length=8)
+    property_constructed_date=models.DateField(max_length=8, blank=True, null=True)
     rooms=models.IntegerField(blank=True,null=True)
     furnished=models.BooleanField(default=False,null=True)
-    pool=models.BooleanField(default=False,null=True)
+    pool=models.BooleanField(default=False,)
     elevator=models.BooleanField(default=False)
     jacuzzi=models.BooleanField(default=False)
     cctv=models.BooleanField(default=False)
@@ -50,3 +50,6 @@ class Listing(models.Model):
     date_posted=models.DateTimeField(default=timezone.now)
 
     locations=models.PointField(blank=True, null=True,srid=4326)
+
+    def __str__ (self):
+        return self.title
