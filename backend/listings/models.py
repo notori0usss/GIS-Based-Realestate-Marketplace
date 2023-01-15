@@ -48,8 +48,7 @@ class Listing(models.Model):
     cctv=models.BooleanField(default=False)
     parking=models.BooleanField(default=False)
     date_posted=models.DateTimeField(default=timezone.now)
+    location=models.PointField(blank=True, null=True,srid=4326)
 
-    locations=models.PointField(blank=True, null=True,srid=4326)
-
-    def __str__ (self):
+    def __str__(self):
         return self.title
