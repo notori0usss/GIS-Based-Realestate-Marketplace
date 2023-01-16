@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     "corsheaders",
+    'realtor',
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',

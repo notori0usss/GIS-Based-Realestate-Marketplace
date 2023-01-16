@@ -1,7 +1,8 @@
-import React from "react"
 import "./App.css"
+import Pages from "./components/pages/Pages"
+
 function App() {
-  return <div>App</div>
+  return <Pages />
 }
 
 export default App
