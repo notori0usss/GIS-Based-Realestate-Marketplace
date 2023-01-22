@@ -7,7 +7,7 @@ function Recommended() {
     <div className="flex flex-col items-center justify-center mt-12 bg-white py-12">
       <Heading
         title="Recommended for You"
-        subtitle="Properties You May Like."
+        subtitle="Properties close to you are recommended."
       />
       <ProductCard />
     </div>

@@ -44,11 +44,12 @@ class Listing(models.Model):
     furnished=models.BooleanField(default=False,null=True)
     pool=models.BooleanField(default=False)
     elevator=models.BooleanField(default=False)
-    jacuzzi=models.BooleanField(default=False)
     cctv=models.BooleanField(default=False)
     parking=models.IntegerField(blank=True, null=True)
     date_posted=models.DateTimeField(default=timezone.now)
+    area=models.IntegerField(blank=True, null=True)
     location=models.PointField(blank=True, null=True,srid=4326)
+
 
     def __str__(self):
         return self.title
