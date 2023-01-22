@@ -42,11 +42,11 @@ class Listing(models.Model):
     property_constructed_date=models.DateField(max_length=8, blank=True, null=True)
     rooms=models.IntegerField(blank=True,null=True)
     furnished=models.BooleanField(default=False,null=True)
-    pool=models.BooleanField(default=False,)
+    pool=models.BooleanField(default=False)
     elevator=models.BooleanField(default=False)
     jacuzzi=models.BooleanField(default=False)
     cctv=models.BooleanField(default=False)
-    parking=models.BooleanField(default=False)
+    parking=models.IntegerField(blank=True, null=True)
     date_posted=models.DateTimeField(default=timezone.now)
     location=models.PointField(blank=True, null=True,srid=4326)
 
