@@ -4,6 +4,7 @@ import Home from "./Home"
 import Listings from "./Listings"
 import AddProperty from "./AddProperty"
 import Login from "./Login"
+import Signup from "./Signup"
 
 function Pages() {
   return (
@@ -13,6 +14,7 @@ function Pages() {
         <Route path="/listings" element={<Listings />} />
         <Route path="/addProperty" element={<AddProperty />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   )

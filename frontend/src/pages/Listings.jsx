@@ -29,6 +29,35 @@ function Listings() {
   const [latitude, setLatitude] = useState(51.50655836576024)
   const [longitude, setLongitude] = useState(-0.075142566336191)
 
+  const listingDummy = [
+    {
+      id: 1,
+      price: "$2,345",
+      bed: 5,
+      parking: 2,
+      area: "124.6",
+      type: "House",
+      status: "Sale",
+    },
+    {
+      id: 2,
+      price: "$12,345",
+      bed: 2,
+      parking: 2,
+      area: "124.6",
+      type: "Office",
+      status: "Rent",
+    },
+    {
+      id: 3,
+      price: "$132,345",
+      bed: 10,
+      parking: 10,
+      area: "1244.6",
+      type: "Apartment",
+      status: "Rent",
+    },
+  ]
   return (
     <div className="relative">
       <Navbar />
@@ -38,7 +67,9 @@ function Listings() {
       </div> */}
       <div className="grid grid-cols-4 grid-rows-1">
         <div className="col-span-1 flex items-center gap-5 justify-center flex-col py-5">
-          <ProductCard />
+          {listingDummy.map((item) => (
+            <ProductCard item={listingDummy} />
+          ))}
         </div>
         <div className="h-[100vh] col-span-3 sticky top-0">
           <MapContainer
