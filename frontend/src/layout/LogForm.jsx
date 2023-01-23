@@ -2,7 +2,6 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { FcGoogle } from "react-icons/fc"
 function LogForm({ isLogin }) {
-  const navigate = useNavigate()
   if (isLogin) {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -42,10 +41,7 @@ function LogForm({ isLogin }) {
             <Link to="/forgotpasswords" className="text-gray-300">
               Forgot Password
             </Link>
-            <button
-              className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg"
-              onClick={() => navigate("/")}
-            >
+            <button className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg">
               Login
             </button>
           </div>

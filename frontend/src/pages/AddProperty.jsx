@@ -2,11 +2,7 @@ import React from "react"
 import Navbar from "../layout/Navbar"
 
 function AddProperty() {
-  return (
-    <>
-      <Navbar />
-    </>
-  )
+  return <></>
 }
 
 export default AddProperty

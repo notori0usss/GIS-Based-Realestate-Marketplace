@@ -60,7 +60,6 @@ function Listings() {
   ]
   return (
     <div className="relative">
-      <Navbar />
       {/* search goes here */}
       {/* <div className="w-20 h-10 bg-gray-600 absolute">
         

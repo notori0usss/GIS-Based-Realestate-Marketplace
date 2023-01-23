@@ -11,4 +11,8 @@ export const navItems = [
     path: "/addProperty",
     title: "Add Property",
   },
+  {
+    path: "/auction",
+    title: "Auction",
+  },
 ]
