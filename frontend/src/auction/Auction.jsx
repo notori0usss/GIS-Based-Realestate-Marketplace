@@ -1,14 +1,17 @@
 import React from "react"
+import { useContext } from "react"
 import { useState } from "react"
 import { useRef } from "react"
+import { AuthContext } from "./context/AuthContext"
 
 export default function Auction() {
   const [showModal, setShowModal] = React.useState(false)
   const [error, setError] = useState(true)
   const emailRef = useRef()
   const passwordRef = useRef()
+  const { login, currentUser } = useContext(AuthContext)
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault()
 
     if (emailRef.current.value && passwordRef.current.value === "") {
@@ -16,6 +19,11 @@ export default function Auction() {
     } else {
       setShowModal(false)
       setError(false)
+    }
+    try {
+      await login(emailRef.current.value, passwordRef.current.value)
+    } catch (error) {
+      setError("Invalid Login")
     }
   }
 
@@ -26,7 +34,7 @@ export default function Auction() {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Enter Token
+        {currentUser ? currentUser.name : "mula"}
       </button>
       {showModal ? (
         <>
@@ -65,7 +73,7 @@ export default function Auction() {
                       ref={emailRef}
                     />
                     <input
-                      type="text"
+                      type="password"
                       className={`w-full px-3 py-3 border-2 ${
                         error ? "border-red-400" : "border-green-400"
                       }`}

@@ -7,6 +7,8 @@ import Login from "./Login"
 import Signup from "./Signup"
 import Navbar from "../layout/Navbar"
 import Auction from "../auction/Auction"
+import { AuthProvider } from "../auction/context/AuthContext"
+import Testing from "../testing/Testing"
 function Pages() {
   return (
     <>
@@ -19,6 +21,7 @@ function Pages() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auction" element={<Auction />} />
+          <Route path="/testing" element={<Testing />} />
         </Routes>
       </BrowserRouter>
     </>

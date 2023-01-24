@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { FcGoogle } from "react-icons/fc"
+import LoginImg from "../assets/login/1.jpg"
 function LogForm({ isLogin }) {
   if (isLogin) {
     return (
@@ -47,7 +48,7 @@ function LogForm({ isLogin }) {
           </div>
         </div>
         <img
-          src="https://hotelkantipur.com/wp-content/uploads/2020/02/IMG_2033.jpg"
+          src={LoginImg}
           alt="house"
           className="w-full h-screen object-cover hidden lg:block"
         />
