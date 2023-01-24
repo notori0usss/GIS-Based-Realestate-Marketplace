@@ -4,11 +4,22 @@ import { BiMap } from "react-icons/bi"
 import { MdBed, MdCarRental } from "react-icons/md"
 import { FaCarSide, FaLocationArrow } from "react-icons/fa"
 import { TbGridDots } from "react-icons/tb"
-function ProductCard({ id, price, bed, parking, area, type, status }) {
+import NoData from "../assets/nodata.jpg"
+function ProductCard({
+  id,
+  title,
+  price,
+  rooms,
+  parking,
+  area,
+  listing_type,
+  status,
+  picture1,
+}) {
   return (
     <div className="flex flex-col w-[20rem] h-auto shadow-lg" key={id}>
       <div className="relative">
-        <img src={Img1} alt="" />
+        <img src={picture1} alt="" />
         <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
           {status}
         </p>
@@ -16,9 +27,9 @@ function ProductCard({ id, price, bed, parking, area, type, status }) {
 
       <div className="flex items-center w-full p-4 justify-between">
         <div className="">
-          <h1 className="font-semibold">{price}</h1>
+          <h1 className="font-semibold">{title}</h1>
           <div className="flex items-center text-sm text-yellow-600 gap-x-3 ">
-            {bed} <MdBed className="text-lg" /> | {parking}
+            {rooms} <MdBed className="text-lg" /> | {parking}
             <FaCarSide className="text-lg" />
             | 108.5 sqft <TbGridDots className="text-lg" />
           </div>
@@ -30,7 +41,7 @@ function ProductCard({ id, price, bed, parking, area, type, status }) {
         <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-bold spacing text-lg tracking-wider">
           {price}
         </button>
-        <h5>Apartment</h5>
+        <h5>{listing_type}</h5>
       </div>
     </div>
   )

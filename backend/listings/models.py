@@ -47,8 +47,9 @@ class Listing(models.Model):
     cctv=models.BooleanField(default=False)
     parking=models.IntegerField(blank=True, null=True)
     date_posted=models.DateTimeField(default=timezone.now)
-    area=models.IntegerField(blank=True, null=True)
+    property_area=models.IntegerField(blank=True, null=True)
     location=models.PointField(blank=True, null=True,srid=4326)
+    picture1=models.ImageField(blank=True, null=True,upload_to="pictures/%Y,%m/%d/")
 
 
     def __str__(self):
