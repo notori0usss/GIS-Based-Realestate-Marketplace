@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     "corsheaders",
     'realtor',
+    'djoser',
+    'rest_framework.authtoken',
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',
@@ -148,3 +150,10 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 CORS_ALLOW_ALL_ORIGINS=True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}

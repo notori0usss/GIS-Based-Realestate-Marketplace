@@ -7,7 +7,7 @@ class ListingsForm(forms.ModelForm):
 
     class Meta:
         model=Listing
-        fields=['title','description', 'area', 'borough','listing_type', 'property_status', 'price','rental_frequency', 'rooms', 'furnished', 'pool', 'property_constructed_date', 'elevator', 'cctv', 'parking','date_posted','property_area','location','latitude', 'longitude','picture1']
+        fields=['title','description', 'area', 'borough','listing_type', 'property_status', 'price','rental_frequency', 'rooms', 'furnished', 'pool', 'property_constructed_date', 'elevator', 'cctv', 'parking','date_posted','property_area','location','latitude', 'longitude','picture1','picture2','picture3','picture4','picture5']
 
     
     def clean(self):

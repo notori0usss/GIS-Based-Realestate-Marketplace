@@ -10,9 +10,10 @@ import officeIconPng from "../assets/map-icons/office.png"
 import apartmentIconPng from "../assets/map-icons/apartment.png"
 import List1 from "../assets/listings/img1.jpg"
 import ProductCard from "../layout/ProductCard"
-import myListings from "../data/dummyData"
+// import myListings from "../data/dummyData"
 import { useEffect } from "react"
 import Loading from "../layout/Loading"
+import { ImStack } from "react-icons/im"
 function Listings() {
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
@@ -29,7 +30,9 @@ function Listings() {
 
   const [allListings, setAllListings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
-
+  const [mapLayer, setMapLayer] = useState(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+  )
   useEffect(() => {
     const source = Axios.CancelToken.source()
     async function GetAllListings() {
@@ -55,10 +58,15 @@ function Listings() {
 
   return (
     <div className="relative">
-      {/* search goes here */}
-      {/* <div className="w-20 h-10 bg-gray-600 absolute">
-        
-      </div> */}
+      <button
+        className="absolute z-10 top-2 right-10 w-12"
+        onClick={() =>
+          setMapLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+        }
+      >
+        <ImStack className="w-10 h-10 rounded-lg bg-white" />
+      </button>
+      {/* <div className="w-full h-10 rounded-full top-2 bg-gray-600 absolute z-10"></div> */}
       <div className="grid grid-cols-4 grid-rows-1">
         <div className="col-span-1 flex items-center gap-5 justify-center flex-col py-5">
           {allListings.map((item) => (
@@ -71,9 +79,7 @@ function Listings() {
             zoom={14}
             scrollWheelZoom={true}
           >
-            <TileLayer
-              url={`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`}
-            />
+            <TileLayer url={mapLayer} />
             {allListings.map((item) => {
               function IconDisplay() {
                 if (item.listing_type === "House") {

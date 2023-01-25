@@ -15,32 +15,47 @@ function ProductCard({
   listing_type,
   status,
   picture1,
+  property_status,
+  rental_frequency,
+  property_area,
 }) {
   return (
     <div className="flex flex-col w-[20rem] h-auto shadow-lg" key={id}>
       <div className="relative">
         <img src={picture1} alt="" />
-        <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
-          {status}
-        </p>
+        {property_status === "Sale" ? (
+          <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
+            For {property_status}
+          </p>
+        ) : (
+          <p className="absolute top-4 left-0 bg-yellow-300 text-yellow-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
+            For {property_status}
+          </p>
+        )}
       </div>
 
       <div className="flex items-center w-full p-4 justify-between">
         <div className="">
-          <h1 className="font-semibold">{title}</h1>
-          <div className="flex items-center text-sm text-yellow-600 gap-x-3 ">
+          <h1 className="font-semibold text-gray-700">{title}</h1>
+          <div className="flex items-center text-md text-yellow-600 gap-x-3 ">
             {rooms} <MdBed className="text-lg" /> | {parking}
-            <FaCarSide className="text-lg" />
-            | 108.5 sqft <TbGridDots className="text-lg" />
+            <FaCarSide className="text-lg" /> | {property_area} sqft{" "}
+            <TbGridDots className="text-lg" />
           </div>
         </div>
         <FaLocationArrow className="text-gray-500 text-xl hover:text-gray-800 cursor-pointer" />
       </div>
       <hr className="my-2" />
       <div className="flex items-center justify-between px-5 py-2">
-        <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-bold spacing text-lg tracking-wider">
-          {price}
-        </button>
+        {property_status === "Rent" ? (
+          <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-bold spacing text-md w-1/2 tracking-wider">
+            {price}/<span className="text-xs">{rental_frequency}</span>
+          </button>
+        ) : (
+          <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-bold spacing text-md w-1/2 tracking-wider">
+            {price}
+          </button>
+        )}
         <h5>{listing_type}</h5>
       </div>
     </div>
