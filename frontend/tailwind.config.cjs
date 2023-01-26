@@ -5,6 +5,7 @@ module.exports = {
     fontFamily: {
       pacifico: ["Pacifico"],
     },
+
     extend: {
       backgroundImage: {
         hero: "url('./src/assets/services.jpg')",

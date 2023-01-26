@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { FcGoogle } from "react-icons/fc"
 import LoginImg from "../assets/login/1.jpg"
 import Axios from "axios"
+
+import { useImmerReducer } from "use-immer"
 function Signup() {
   const [sendRequest, setSendRequest] = useState(false)
   const [usernameValue, setUsernameValue] = useState("")
@@ -47,7 +49,7 @@ function Signup() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
-      <div className="flex flex-col items-center w-full h-screen justify-center space-y-10 bg-gray-700 px-28 text-white">
+      <div className="flex flex-col items-center w-full h-screen justify-center space-y-10 bg-gradient-to-b from-gray-700 md:from-gray-700 px-28 text-white">
         <h1 className="text-3xl font-pacifico">Create Account</h1>
         <p>
           Already have an account yet?
