@@ -32,7 +32,7 @@ function Login() {
           <Link to="/forgotpasswords" className="text-gray-300">
             Forgot Password
           </Link>
-          <button className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg">
+          <button className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg mt-2">
             Login
           </button>
         </div>

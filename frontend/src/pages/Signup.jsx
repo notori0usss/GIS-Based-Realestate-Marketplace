@@ -5,31 +5,55 @@ import LoginImg from "../assets/login/1.jpg"
 import Axios from "axios"
 
 import { useImmerReducer } from "use-immer"
-function Signup() {
-  const [sendRequest, setSendRequest] = useState(false)
-  const [usernameValue, setUsernameValue] = useState("")
-  const [emailValue, setEmailValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
-  const [re_passwordValue, setRePasswordValue] = useState("")
 
+function Signup() {
+  const initialState = {
+    usernameValue: "",
+    emailValue: "",
+    passwordValue: "",
+    rePasswordValue: "",
+    sendRequest: 0,
+  }
+
+  function ReducerFunction(draft, action) {
+    switch (action.type) {
+      case "catchUsernameChange":
+        draft.usernameValue = action.usernameChosen
+        break
+      case "catchEmailChange":
+        draft.emailValue = action.emailChosen
+        break
+      case "catchPasswordChange":
+        draft.passwordValue = action.passwordChosen
+        break
+      case "catchRePasswordChange":
+        draft.rePasswordValue = action.rePasswordChosen
+        break
+      case "changeSubmitRequest":
+        draft.sendRequest = draft.sendRequest + 1
+        break
+    }
+  }
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   const submitHandler = (e) => {
     e.preventDefault()
     console.log("Form Submitted")
-    setSendRequest(!sendRequest)
+    console.log(state)
+    dispatch({ type: "changeSubmitRequest" })
   }
 
   useEffect(() => {
-    if (sendRequest) {
+    if (state.sendRequest) {
       const source = Axios.CancelToken.source()
       async function SignUp() {
         try {
           const response = await Axios.post(
             "http://127.0.0.1:8000/api-auth-djoser/users/",
             {
-              username: usernameValue,
-              email: emailValue,
-              password: passwordValue,
-              re_password: re_passwordValue,
+              username: state.usernameValue,
+              email: state.emailValue,
+              password: state.passwordValue,
+              re_password: state.rePasswordValue,
             },
             {
               cancelToken: source.token,
@@ -45,11 +69,11 @@ function Signup() {
         source.cancel
       }
     }
-  }, [sendRequest])
+  }, [state.sendRequest])
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
-      <div className="flex flex-col items-center w-full h-screen justify-center space-y-10 bg-gradient-to-b from-gray-700 md:from-gray-700 px-28 text-white">
+      <div className="flex flex-col items-center w-full h-screen justify-center space-y-10 bg-gray-700 px-28 text-white">
         <h1 className="text-3xl font-pacifico">Create Account</h1>
         <p>
           Already have an account yet?
@@ -69,29 +93,49 @@ function Signup() {
             type="text"
             placeholder="Username"
             className="px-3 py-3 w-2/3 rounded-lg text-black"
-            value={usernameValue}
-            onChange={(e) => setUsernameValue(e.target.value)}
+            value={state.usernameValue}
+            onChange={(e) =>
+              dispatch({
+                type: "catchUsernameChange",
+                usernameChosen: e.target.value,
+              })
+            }
           />
           <input
             type="text"
             placeholder="name@email.com"
             className="px-3 py-3 w-2/3 rounded-lg text-black"
-            value={emailValue}
-            onChange={(e) => setEmailValue(e.target.value)}
+            value={state.emailValue}
+            onChange={(e) =>
+              dispatch({
+                type: "catchEmailChange",
+                emailChosen: e.target.value,
+              })
+            }
           />
           <input
             type="password"
             placeholder="Password"
             className="px-3 py-3 w-2/3 rounded-lg text-black"
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            value={state.passwordValue}
+            onChange={(e) =>
+              dispatch({
+                type: "catchPasswordChange",
+                passwordChosen: e.target.value,
+              })
+            }
           />
           <input
             type="password"
             placeholder="Confirm Password"
             className="px-3 py-3 w-2/3 rounded-lg text-black"
-            value={re_passwordValue}
-            onChange={(e) => setRePasswordValue(e.target.value)}
+            value={state.rePasswordValue}
+            onChange={(e) =>
+              dispatch({
+                type: "catchRePasswordChange",
+                rePasswordChosen: e.target.value,
+              })
+            }
           />
 
           <button

@@ -4,7 +4,7 @@ import { navItems } from "../data/navbar"
 function Navbar() {
   const navigate = useNavigate()
   return (
-    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-black text-white">
+    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white">
       <Link to="/" className="font-pacifico text-xl">
         Digi<span className="text-yellow-500"> Dalal</span>
       </Link>
