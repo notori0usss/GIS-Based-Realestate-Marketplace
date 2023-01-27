@@ -11,7 +11,7 @@ function App() {
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
   }
-  function CatchUserInfo(draft, action) {
+  function ReducerFunction(draft, action) {
     switch (action.type) {
       case "GetTokenResponse":
         draft.userToken = action.tokenValue
@@ -20,13 +20,14 @@ function App() {
         draft.userId = action.idInfo
         draft.userUsername = action.usernameInfo
         draft.userEmail = action.emailInfo
+        draft.userIsLogged = true
         break
       case "logout":
         draft.userIsLogged = false
         break
     }
   }
-  const [state, dispatch] = useImmerReducer(CatchUserInfo, initialState)
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   useEffect(() => {
     if (state.userIsLogged) {
       localStorage.setItem("theUserUsername", state.userUsername)

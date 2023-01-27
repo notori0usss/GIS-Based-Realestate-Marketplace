@@ -13,7 +13,7 @@ function Login() {
     sendRequest: 0,
     token: "",
   }
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+
   const navigate = useNavigate()
   const GlobalDispatch = useContext(DispatchContext)
   const GlobalState = useContext(StateContext)
@@ -33,6 +33,7 @@ function Login() {
         draft.token = action.tokenValue
     }
   }
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch({ type: "changeSendRequest" })
@@ -58,7 +59,7 @@ function Login() {
             tokenValue: response.data.auth_token,
           })
           GlobalDispatch({
-            type: "catchToken",
+            type: "GetTokenResponse",
             tokenValue: response.data.auth_token,
           })
           // navigate("/")
