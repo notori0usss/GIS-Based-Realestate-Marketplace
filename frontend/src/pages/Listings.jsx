@@ -30,9 +30,19 @@ function Listings() {
 
   const [allListings, setAllListings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
+  const [toggle, setToggle] = useState(false)
   const [mapLayer, setMapLayer] = useState(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
   )
+
+  const handleToggle = () => {
+    setToggle(!toggle)
+    setMapLayer(
+      toggle
+        ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    )
+  }
   useEffect(() => {
     const source = Axios.CancelToken.source()
     async function GetAllListings() {
@@ -59,12 +69,10 @@ function Listings() {
   return (
     <div className="relative">
       <button
-        className="absolute z-10 top-2 right-10 w-12"
-        onClick={() =>
-          setMapLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
-        }
+        className="absolute z-10 top-[1%] right-[1%] bg-white rounded-md p-2"
+        onClick={handleToggle}
       >
-        <ImStack className="w-10 h-10 rounded-lg bg-white" />
+        <ImStack className="w-6 h-6 rounded-lg text-black" />
       </button>
       {/* <div className="w-full h-10 rounded-full top-2 bg-gray-600 absolute z-10"></div> */}
       <div className="grid grid-cols-4 grid-rows-1">

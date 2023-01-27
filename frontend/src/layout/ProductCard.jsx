@@ -24,11 +24,11 @@ function ProductCard({
       <div className="relative">
         <img src={picture1} alt="" />
         {property_status === "Sale" ? (
-          <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
+          <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-sm shadow-sm">
             For {property_status}
           </p>
         ) : (
-          <p className="absolute top-4 left-0 bg-yellow-300 text-yellow-700 rounded-r-lg px-2 py-1 font-bold text-[10px] shadow-sm">
+          <p className="absolute top-4 left-0 bg-yellow-300 text-yellow-700 rounded-r-lg px-2 py-1 font-bold text-sm shadow-sm">
             For {property_status}
           </p>
         )}

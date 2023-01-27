@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { navItems } from "../data/navbar"
 import StateContext from "../context/StateContext"
 import { useState } from "react"
-import { Axios } from "axios"
+import Axios from "axios"
 import Avatar, { genConfig } from "react-nice-avatar"
 
 import DispatchContext from "../context/DispatchContext"
