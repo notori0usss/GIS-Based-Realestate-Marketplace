@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import useGeolocation from "../hooks/useGeolocation"
+import React, { useContext, useState, useRef } from "react"
 import Navbar from "../layout/Navbar"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import { Icon } from "leaflet"
@@ -8,13 +9,19 @@ import Axios from "axios"
 import houseIconPng from "../assets/map-icons/house.png"
 import officeIconPng from "../assets/map-icons/office.png"
 import apartmentIconPng from "../assets/map-icons/apartment.png"
+import userIconPng from "../assets/map-icons/location.png"
 import List1 from "../assets/listings/img1.jpg"
 import ProductCard from "../layout/ProductCard"
 // import myListings from "../data/dummyData"
 import { useEffect } from "react"
 import Loading from "../layout/Loading"
 import { ImStack } from "react-icons/im"
+import { RiUserLocationFill } from "react-icons/ri"
+import StateContext from "../context/StateContext"
+
 function Listings() {
+  const location = useGeolocation()
+  const mapRef = useRef(null)
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
     iconSize: [40, 40],
@@ -27,6 +34,23 @@ function Listings() {
     iconUrl: apartmentIconPng,
     iconSize: [40, 40],
   })
+  const userIcon = new Icon({
+    iconUrl: userIconPng,
+    iconSize: [30, 30],
+  })
+  const GlobalState = useContext(StateContext)
+  const ZOOM_LEVEL = 9
+  const showMyLocation = () => {
+    if (location.loaded && !location.error) {
+      mapRef.current.flyTo(
+        [location.coordinates.lat, location.coordinates.lng],
+        ZOOM_LEVEL,
+        { animate: true }
+      )
+    } else {
+      alert(location.error.message)
+    }
+  }
 
   const [allListings, setAllListings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
@@ -65,7 +89,7 @@ function Listings() {
   if (dataLoading === true) {
     return <Loading />
   }
-
+  console.log(mapRef)
   return (
     <div className="relative">
       <button
@@ -73,6 +97,12 @@ function Listings() {
         onClick={handleToggle}
       >
         <ImStack className="w-6 h-6 rounded-lg text-black" />
+      </button>
+      <button
+        className="absolute z-10 top-[5%] right-[1%] bg-white rounded-md p-2"
+        onClick={showMyLocation}
+      >
+        <RiUserLocationFill className="w-6 h-6 rounded-lg text-red-700" />
       </button>
       {/* <div className="w-full h-10 rounded-full top-2 bg-gray-600 absolute z-10"></div> */}
       <div className="grid grid-cols-4 grid-rows-1">
@@ -86,8 +116,22 @@ function Listings() {
             center={[51.505, -0.08]}
             zoom={14}
             scrollWheelZoom={true}
+            ref={mapRef}
           >
             <TileLayer url={mapLayer} />
+            {location.loaded && !location.error && (
+              <Marker
+                icon={userIcon}
+                position={[location.coordinates.lat, location.coordinates.lng]}
+              >
+                <Popup>
+                  Hello!{" "}
+                  <span className="text-yellow-500 font-bold cursor-pointer">
+                    {GlobalState.userUsername}
+                  </span>
+                </Popup>
+              </Marker>
+            )}
             {allListings.map((item) => {
               function IconDisplay() {
                 if (item.listing_type === "House") {
