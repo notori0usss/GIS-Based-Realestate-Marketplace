@@ -5,22 +5,31 @@ import { MdBed, MdCarRental } from "react-icons/md"
 import { FaCarSide, FaLocationArrow } from "react-icons/fa"
 import { TbGridDots } from "react-icons/tb"
 import NoData from "../assets/nodata.jpg"
-function ProductCard({
-  id,
-  title,
-  price,
-  rooms,
-  parking,
-  area,
-  listing_type,
-  status,
-  picture1,
-  property_status,
-  rental_frequency,
-  property_area,
-}) {
+function ProductCard(
+  {
+    id,
+    title,
+    price,
+    rooms,
+    parking,
+    area,
+    listing_type,
+    status,
+    picture1,
+    property_status,
+    rental_frequency,
+    property_area,
+    latitude,
+    longitude,
+  },
+  ref
+) {
+  const ZOOM_LEVEL = 16
+  const showPropertyLocation = () => {
+    ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
+  }
   return (
-    <div className="flex flex-col w-[20rem] h-auto shadow-lg" key={id}>
+    <div className="flex flex-col w-auto h-auto shadow-lg" key={id}>
       <div className="relative">
         <img src={picture1} alt="" />
         {property_status === "Sale" ? (
@@ -43,7 +52,10 @@ function ProductCard({
             <TbGridDots className="text-lg" />
           </div>
         </div>
-        <FaLocationArrow className="text-gray-500 text-xl hover:text-gray-800 cursor-pointer" />
+        <FaLocationArrow
+          onClick={showPropertyLocation}
+          className="text-gray-500 text-xl hover:text-gray-800 cursor-pointer"
+        />
       </div>
       <hr className="my-2" />
       <div className="flex items-center justify-between px-5 py-2">
@@ -62,4 +74,4 @@ function ProductCard({
   )
 }
 
-export default ProductCard
+export default React.forwardRef(ProductCard)

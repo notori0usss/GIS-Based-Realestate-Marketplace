@@ -2,20 +2,23 @@ from django.contrib.gis.db import models
 from django.utils import timezone
 from django.contrib.gis.geos import Point
 from random import choices
+from django.contrib.auth import get_user_model
 
+User=get_user_model()
 
 
 class Listing(models.Model):
+    seller=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     title = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
 
     choices_area=(
-        ('Inner London', 'Inner London'),
-        ('Outer London', 'Outer London'),
+        ('Inner Ringroad', 'Inner Ringroad'),
+        ('Outer Ringroad', 'Outer Ringroad'),
     )
     area = models.CharField(max_length=20, blank=True,null=True,choices=choices_area)
 
-    borough=models.CharField(max_length=50, blank=True,null=True)
+    municipality=models.CharField(max_length=50, blank=True,null=True)
     choices_listing_type=(
         ('House','House'),
         ('Apartment','Apartment'),
@@ -39,7 +42,6 @@ class Listing(models.Model):
 
     rental_frequency=models.CharField(max_length=20,blank=True,null=True, choices=choices_rental_frequency)
 
-    property_constructed_date=models.DateField(max_length=8, blank=True, null=True)
     rooms=models.IntegerField(blank=True,null=True)
     furnished=models.BooleanField(default=False,null=True)
     pool=models.BooleanField(default=False)
@@ -48,7 +50,9 @@ class Listing(models.Model):
     parking=models.IntegerField(blank=True, null=True)
     date_posted=models.DateTimeField(default=timezone.now)
     property_area=models.IntegerField(blank=True, null=True)
-    location=models.PointField(blank=True, null=True,srid=4326)
+    latitude=models.FloatField(blank=True, null=True)
+    longitude=models.FloatField(blank=True, null=True)
+
     picture1=models.ImageField(blank=True, null=True,upload_to="pictures/%Y,%m/%d/")
     picture2=models.ImageField(blank=True, null=True,upload_to="pictures/%Y,%m/%d/")
     picture3=models.ImageField(blank=True, null=True,upload_to="pictures/%Y,%m/%d/")

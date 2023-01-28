@@ -24,6 +24,7 @@ function Navbar() {
       )
       console.log(response)
       GlobalDispatch({ type: "logout" })
+      setIsOpen(false)
       navigate("/")
     } catch (error) {
       console.error(error)

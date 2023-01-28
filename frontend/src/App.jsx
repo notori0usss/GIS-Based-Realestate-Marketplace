@@ -10,6 +10,7 @@ function App() {
     userId: localStorage.getItem("theUserId"),
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
+    listingInfo: "",
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -25,6 +26,8 @@ function App() {
       case "logout":
         draft.userIsLogged = false
         break
+      case "getListings":
+        draft.listingInfo = action.listingValue
     }
   }
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)

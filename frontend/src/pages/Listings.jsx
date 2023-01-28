@@ -18,10 +18,10 @@ import Loading from "../layout/Loading"
 import { ImStack } from "react-icons/im"
 import { RiUserLocationFill } from "react-icons/ri"
 import StateContext from "../context/StateContext"
-
 function Listings() {
   const location = useGeolocation()
   const mapRef = useRef(null)
+  const GlobalState = useContext(StateContext)
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
     iconSize: [40, 40],
@@ -38,8 +38,8 @@ function Listings() {
     iconUrl: userIconPng,
     iconSize: [30, 30],
   })
-  const GlobalState = useContext(StateContext)
-  const ZOOM_LEVEL = 9
+
+  const ZOOM_LEVEL = 16
   const showMyLocation = () => {
     if (location.loaded && !location.error) {
       mapRef.current.flyTo(
@@ -75,6 +75,7 @@ function Listings() {
           "http://127.0.0.1:8000/api/listings/",
           { cancelToken: source.token }
         )
+
         setDataLoading(false)
         setAllListings(listingResponse.data)
       } catch (error) {
@@ -82,6 +83,7 @@ function Listings() {
       }
     }
     GetAllListings()
+
     return () => {
       source.cancel
     }
@@ -89,7 +91,7 @@ function Listings() {
   if (dataLoading === true) {
     return <Loading />
   }
-  console.log(mapRef)
+
   return (
     <div className="relative">
       <button
@@ -106,15 +108,15 @@ function Listings() {
       </button>
       {/* <div className="w-full h-10 rounded-full top-2 bg-gray-600 absolute z-10"></div> */}
       <div className="grid grid-cols-4 grid-rows-1">
-        <div className="col-span-1 flex items-center gap-5 justify-center flex-col py-5">
+        <div className="col-span-1 flex items-center gap-5 justify-start flex-col px-3 py-5 w-full">
           {allListings.map((item) => (
-            <ProductCard key={item.id} {...item} />
+            <ProductCard key={item.id} {...item} ref={mapRef} />
           ))}
         </div>
         <div className="h-[100vh] col-span-3 sticky top-0">
           <MapContainer
-            center={[51.505, -0.08]}
-            zoom={14}
+            center={[27.712714725156008, 85.34253917397493]}
+            zoom={16}
             scrollWheelZoom={true}
             ref={mapRef}
           >
@@ -146,10 +148,7 @@ function Listings() {
                 <Marker
                   key={item.id}
                   icon={IconDisplay()}
-                  position={[
-                    item.location.coordinates[0],
-                    item.location.coordinates[1],
-                  ]}
+                  position={[item.latitude, item.longitude]}
                 >
                   <Popup className="w-[20rem]">
                     <div className="flex flex-col w-full gap-1 items-center">
