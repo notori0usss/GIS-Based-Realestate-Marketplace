@@ -32,15 +32,20 @@ function Recommended() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-12 bg-white py-12">
+    <div className="flex items-center flex-col px-5 ">
       <Heading
         title="Recommended for You"
         subtitle="Properties close to you are recommended."
       />
-      <div className="flex items-center gap-5 justify-center flex-row px-3 py-5 w-full">
+
+      <div className="flex items-center justify-center gap-5 w-full">
         {allListings &&
           allListings.map((item) => (
-            <ProductCard className="w-20 h-20" key={item.id} {...item} />
+            <ProductCard
+              className="w-10 max-w-2 max-h-4"
+              key={item.id}
+              {...item}
+            />
           ))}
       </div>
     </div>

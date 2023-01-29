@@ -121,6 +121,7 @@ function AddProperty() {
         break
       case "catchUploadedImages":
         draft.uploadedImages = action.imagesChosen
+        break
       case "changeSendRequest":
         draft.sendRequest = draft.sendRequest + 1
         break
@@ -237,7 +238,51 @@ function AddProperty() {
     }),
     []
   )
-
+  //catching pictues
+  useEffect(() => {
+    if (state.uploadedImages[0]) {
+      dispatch({
+        type: "catchUploadedImages",
+        picture1Chosen: state.uploadedImages[0],
+      })
+    }
+  }, [state.uploadedImages[0]])
+  //pic2
+  useEffect(() => {
+    if (state.uploadedImages[1]) {
+      dispatch({
+        type: "catchUploadedImages",
+        picture2Chosen: state.uploadedImages[1],
+      })
+    }
+  }, [state.uploadedImages[1]])
+  //pic3
+  useEffect(() => {
+    if (state.uploadedImages[2]) {
+      dispatch({
+        type: "catchUploadedImages",
+        picture3Chosen: state.uploadedImages[2],
+      })
+    }
+  }, [state.uploadedImages[2]])
+  //pic 4
+  useEffect(() => {
+    if (state.uploadedImages[3]) {
+      dispatch({
+        type: "catchUploadedImages",
+        picture4Chosen: state.uploadedImages[3],
+      })
+    }
+  }, [state.uploadedImages[3]])
+  //pic 5
+  useEffect(() => {
+    if (state.uploadedImages[4]) {
+      dispatch({
+        type: "catchUploadedImages",
+        picture5Chosen: state.uploadedImages[4],
+      })
+    }
+  }, [state.uploadedImages[4]])
   return (
     <div className="flex flex-col items-center w-full mt-5">
       <h1 className="text-3xl my-6 font-semi">Add a Property</h1>
@@ -579,7 +624,33 @@ function AddProperty() {
                 </>
               ) : (
                 <p className="mb-2 text-sm text-gray-500">
-                  <span className="font-semibold">{}</span>
+                  <span className="font-semibold">
+                    {state.picture1Value ? (
+                      <li>{state.picture1Value.name}</li>
+                    ) : (
+                      ""
+                    )}
+                    {state.picture2Value ? (
+                      <li>{state.picture2Value.name}</li>
+                    ) : (
+                      ""
+                    )}
+                    {state.picture3Value ? (
+                      <li>{state.picture3Value.name}</li>
+                    ) : (
+                      ""
+                    )}
+                    {state.picture4Value ? (
+                      <li>{state.picture4Value.name}</li>
+                    ) : (
+                      ""
+                    )}
+                    {state.picture5Value ? (
+                      <li>{state.picture5Value.name}</li>
+                    ) : (
+                      ""
+                    )}
+                  </span>
                 </p>
               )}
             </div>
@@ -599,17 +670,7 @@ function AddProperty() {
           </label>
         </div>
 
-        <button
-          onClick={(e) => {
-            console.log(
-              Object.entries(state.uploadedImages).map((index, item) => (
-                <div>{item.name}</div>
-              ))
-            )
-          }}
-        >
-          Submit
-        </button>
+        <button>Submit</button>
       </form>
       {/* Map */}
     </div>
