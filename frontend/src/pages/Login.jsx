@@ -62,7 +62,6 @@ function Login() {
             type: "GetTokenResponse",
             tokenValue: response.data.auth_token,
           })
-          // navigate("/")
         } catch (error) {
           console.log(error)
         }
@@ -88,13 +87,16 @@ function Login() {
               cancelToken: source.token,
             }
           )
-          console.log(response.data.id)
           GlobalDispatch({
             type: "userSignsIn",
             usernameInfo: response.data.username,
             emailInfo: response.data.email,
             idInfo: response.data.id,
           })
+          if (response.status === 200) {
+            navigate("/")
+          }
+          console.log(response)
         } catch (error) {
           console.log(error)
         }

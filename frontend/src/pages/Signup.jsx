@@ -7,6 +7,7 @@ import Axios from "axios"
 import { useImmerReducer } from "use-immer"
 
 function Signup() {
+  const navigate = useNavigate()
   const initialState = {
     usernameValue: "",
     emailValue: "",
@@ -60,6 +61,9 @@ function Signup() {
             }
           )
           console.log(response)
+          if (response.status === 201) {
+            navigate("/login")
+          }
         } catch (error) {
           console.log(error)
         }
