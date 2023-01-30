@@ -62,7 +62,7 @@ function Login() {
             type: "GetTokenResponse",
             tokenValue: response.data.auth_token,
           })
-          // navigate("/")
+          navigate("/")
         } catch (error) {
           console.log(error)
         }
@@ -105,6 +105,11 @@ function Login() {
       }
     }
   }, [state.token])
+  function loginHanlder() {
+    if (GlobalState.userIsLogged) {
+      navigate("/")
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -128,7 +133,7 @@ function Login() {
         >
           <input
             type="text"
-            placeholder="name@email.com"
+            placeholder="Username"
             className="px-3 py-3 w-2/3 rounded-lg text-black"
             value={state.usernameValue}
             onChange={(e) => {
@@ -154,7 +159,10 @@ function Login() {
             Forgot Password
           </Link>
 
-          <button className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg mt-2">
+          <button
+            onClick={loginHanlder}
+            className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg mt-2"
+          >
             Login
           </button>
         </form>

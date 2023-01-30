@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Img1 from "../assets/listings/p-1.png"
 import { BiMap } from "react-icons/bi"
 import { MdBed, MdCarRental } from "react-icons/md"
@@ -21,13 +21,22 @@ function ProductCard(
     property_area,
     latitude,
     longitude,
+    date_posted,
   },
   ref
 ) {
-  const ZOOM_LEVEL = 16
+  const ZOOM_LEVEL = 20
   const showPropertyLocation = () => {
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
   }
+  const [timeElapsed, setTimeElapsed] = useState(0)
+  useEffect(() => {
+    const datePosted = new Date(date_posted)
+    const currentTime = new Date()
+    const difference = currentTime - datePosted
+    const timeElapsed = Math.floor(difference / (1000 * 60 * 60 * 24))
+    setTimeElapsed(timeElapsed)
+  }, [])
   return (
     <div className="flex flex-col w-auto h-auto shadow-lg" key={id}>
       <div className="relative">
@@ -68,7 +77,7 @@ function ProductCard(
             {price}
           </button>
         )}
-        <h5>{listing_type}</h5>
+        <h5>{timeElapsed} days Ago</h5>
       </div>
     </div>
   )
