@@ -5,6 +5,7 @@ import { MdBed, MdCarRental } from "react-icons/md"
 import { FaCarSide, FaLocationArrow } from "react-icons/fa"
 import { TbGridDots } from "react-icons/tb"
 import NoData from "../assets/nodata.jpg"
+import Avatar, { genConfig } from "react-nice-avatar"
 function ProductCard(
   {
     id,
@@ -22,13 +23,15 @@ function ProductCard(
     latitude,
     longitude,
     date_posted,
+    seller_username,
   },
   ref
 ) {
-  const ZOOM_LEVEL = 20
+  const ZOOM_LEVEL = 18
   const showPropertyLocation = () => {
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
   }
+  const avatar = genConfig(seller_username)
   const [timeElapsed, setTimeElapsed] = useState(0)
   useEffect(() => {
     const datePosted = new Date(date_posted)
@@ -37,8 +40,9 @@ function ProductCard(
     const timeElapsed = Math.floor(difference / (1000 * 60 * 60 * 24))
     setTimeElapsed(timeElapsed)
   }, [])
+
   return (
-    <div className="flex flex-col w-auto h-auto shadow-lg" key={id}>
+    <div className="flex flex-col w-full h-full shadow-lg" key={id}>
       <div className="relative">
         <img src={picture1} alt="" />
         {property_status === "Sale" ? (
@@ -54,7 +58,7 @@ function ProductCard(
 
       <div className="flex items-center w-full p-4 justify-between">
         <div className="">
-          <h1 className="font-semibold text-gray-700">{title}</h1>
+          <h1 className="font-semibold text-gray-700 text-lg">{title}</h1>
           <div className="flex items-center text-md text-yellow-600 gap-x-3 ">
             {rooms} <MdBed className="text-lg" /> | {parking}
             <FaCarSide className="text-lg" /> | {property_area} sqft{" "}
@@ -77,7 +81,21 @@ function ProductCard(
             {price}
           </button>
         )}
-        <h5>{timeElapsed} days Ago</h5>
+        <Avatar className="w-10 h-10 rounded-full" {...avatar} />
+      </div>
+      <hr />
+      <div className="flex items-center justify-between mx-2">
+        <h5 className="text-center font-semibold text-gray-600 my-2">
+          Posted by {seller_username}
+        </h5>
+        {timeElapsed === 0 ? (
+          <span className="text-gray-500 text-sm"> Today</span>
+        ) : (
+          <span className="text-gray-500 text-sm">
+            {" "}
+            {timeElapsed} days ago.
+          </span>
+        )}
       </div>
     </div>
   )

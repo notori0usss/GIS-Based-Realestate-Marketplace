@@ -7,12 +7,15 @@ import Axios from "axios"
 import Avatar, { genConfig } from "react-nice-avatar"
 
 import DispatchContext from "../context/DispatchContext"
+import { useEffect } from "react"
 function Navbar() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
-  const config = genConfig()
+
+  const config = genConfig(GlobalState.userEmail)
+
   async function handleLogout() {
     try {
       const response = await Axios.post(

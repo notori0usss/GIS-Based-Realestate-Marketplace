@@ -10,14 +10,12 @@ function Recommended({ allListings }) {
         subtitle="Properties close to you are recommended."
       />
 
-      <div className="flex items-center justify-center gap-5 w-full">
+      <div className="grid grid-cols-3">
         {allListings &&
           allListings.map((item) => (
-            <ProductCard
-              className="w-10 max-w-2 max-h-4"
-              key={item.id}
-              {...item}
-            />
+            <div className="h-30" key={item.id}>
+              <ProductCard {...item} />
+            </div>
           ))}
       </div>
     </div>

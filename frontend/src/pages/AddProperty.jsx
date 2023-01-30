@@ -7,7 +7,12 @@ import { MapContainer, TileLayer, useMap, Marker, Polygon } from "react-leaflet"
 import Kirtipur from "../data/GeoJSON/Kirtipur"
 import Balkot from "../data/GeoJSON/Balkot"
 import { AiFillDollarCircle } from "react-icons/ai"
+import StateContext from "../context/StateContext"
+import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 function AddProperty() {
+  const GlobalState = useContext(useContext)
+  const navigate = useNavigate()
   //Initial States for Form
   const initialState = {
     titleValue: "",
@@ -144,42 +149,48 @@ function AddProperty() {
   //using immerreducer
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   //form submit handler
-  const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch({ type: "sendRequest" })
-  }
-  // useEffect(() => {
-  //   if (state.sendRequest) {
-  //     const source = Axios.CancelToken.source()
-  //     async function SignIn() {
-  //       try {
-  //         const response = await Axios.post(
-  //           "http://127.0.0.1:8000/api-auth-djoser/token/login/",
-  //           {
-  //             username: state.usernameValue,
-  //             password: state.passwordValue,
-  //           },
-  //           {
-  //             cancelToken: source.token,
-  //           }
-  //         )
-  //         // console.log(response)
-  //         dispatch({
-  //           type: "catchToken",
-  //           tokenValue: response.data.auth_token,
-  //         })
 
-  //         // navigate("/")
-  //       } catch (error) {
-  //         console.log(error)
-  //       }
-  //     }
-  //     SignIn()
-  //     return () => {
-  //       source.cancel
-  //     }
-  //   }
-  // }, [state.sendRequest])
+  useEffect(() => {
+    if (state.sendRequest) {
+      async function AddProperty() {
+        const formData = new FormData()
+        formData.append("title", state.titleValue),
+          formData.append("area", state.areaValue),
+          formData.append("description", state.descriptionValue),
+          formData.append("listing_type", state.listingTypeValue),
+          formData.append("property_status", state.propertyStatusValue),
+          formData.append("price", state.priceValue),
+          formData.append("rooms", state.roomsValue),
+          formData.append("furnished", state.furnishedValue),
+          formData.append("pool", state.poolValue),
+          formData.append("elevator", state.elevatorValue),
+          formData.append("cctv", state.cctvValue),
+          formData.append("property_area", state.propertyAreaValue),
+          formData.append("rental_frequency", state.rentalFrequencyValue),
+          formData.append("latitude", state.latitudeValue),
+          formData.append("longitude", state.longitudeValue),
+          formData.append("picture1", state.picture1Value),
+          formData.append("picture2", state.picture2Value),
+          formData.append("picture3", state.picture3Value),
+          formData.append("picture4", state.picture4Value),
+          formData.append("picture5", state.picture5Value),
+          formData.append("seller", localStorage.getItem("theUserId"))
+
+        // console.log(response)
+        try {
+          const response = await Axios.post(
+            "http://127.0.0.1:8000/api/listings/create/",
+            formData
+          )
+          console.log(response)
+          navigate("/listings")
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      AddProperty()
+    }
+  }, [state.sendRequest])
 
   //for Changing the map position based on municipality
   useEffect(() => {
@@ -242,7 +253,7 @@ function AddProperty() {
   useEffect(() => {
     if (state.uploadedImages[0]) {
       dispatch({
-        type: "catchUploadedImages",
+        type: "catchPicture1Change",
         picture1Chosen: state.uploadedImages[0],
       })
     }
@@ -251,7 +262,7 @@ function AddProperty() {
   useEffect(() => {
     if (state.uploadedImages[1]) {
       dispatch({
-        type: "catchUploadedImages",
+        type: "catchPicture2Change",
         picture2Chosen: state.uploadedImages[1],
       })
     }
@@ -260,7 +271,7 @@ function AddProperty() {
   useEffect(() => {
     if (state.uploadedImages[2]) {
       dispatch({
-        type: "catchUploadedImages",
+        type: "catchPicture3Change",
         picture3Chosen: state.uploadedImages[2],
       })
     }
@@ -269,7 +280,7 @@ function AddProperty() {
   useEffect(() => {
     if (state.uploadedImages[3]) {
       dispatch({
-        type: "catchUploadedImages",
+        type: "catchPicture4Change",
         picture4Chosen: state.uploadedImages[3],
       })
     }
@@ -278,11 +289,16 @@ function AddProperty() {
   useEffect(() => {
     if (state.uploadedImages[4]) {
       dispatch({
-        type: "catchUploadedImages",
+        type: "catchPicture5Change",
         picture5Chosen: state.uploadedImages[4],
       })
     }
   }, [state.uploadedImages[4]])
+  const submitHandler = (e) => {
+    e.preventDefault()
+    console.log("Form Done")
+    dispatch({ type: "changeSendRequest" })
+  }
   return (
     <div className="flex flex-col items-center w-full mt-5">
       <h1 className="text-3xl my-6 font-semi">Add a Property</h1>
@@ -335,45 +351,16 @@ function AddProperty() {
             })
           }
         />
-        <h1 className="font-semibold text-sm text-gray-500">
-          Note: Latitude and Longitude can be chosen with the draggable marker
-          in the map.
-        </h1>
-        <div className="flex gap-2">
-          <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.latitudeValue}
-            placeholder="Latitude"
-            onChange={(e) =>
-              dispatch({
-                type: "catchLatitudeChange",
-                latitudeChosen: e.target.value,
-              })
-            }
-          />
-          <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.longitudeValue}
-            placeholder="Longitude"
-            onChange={(e) =>
-              dispatch({
-                type: "catchLongitudeChange",
-                longitudeChosen: e.target.value,
-              })
-            }
-          />
-        </div>
+
         <h1 className="font-semibold text-sm text-gray-500">
           Property Area in sqft & Price in Rs.
         </h1>
         <div className="flex gap-2">
           <input
             className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="text"
+            type="number"
             value={state.propertyAreaValue}
-            placeholder="PropertyArea"
+            placeholder="Property Area"
             onChange={(e) =>
               dispatch({
                 type: "catchPropertyAreaChange",
@@ -574,6 +561,36 @@ function AddProperty() {
             )}
           </select>
         </div>
+        <h1 className="font-semibold text-sm text-gray-500">
+          Note: Latitude and Longitude can be chosen with the draggable marker
+          in the map.
+        </h1>
+        <div className="flex gap-2">
+          <input
+            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="number"
+            value={state.latitudeValue}
+            placeholder="Latitude"
+            onChange={(e) =>
+              dispatch({
+                type: "catchLatitudeChange",
+                latitudeChosen: e.target.value,
+              })
+            }
+          />
+          <input
+            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="number"
+            value={state.longitudeValue}
+            placeholder="Longitude"
+            onChange={(e) =>
+              dispatch({
+                type: "catchLongitudeChange",
+                longitudeChosen: e.target.value,
+              })
+            }
+          />
+        </div>
         <div className="w-full h-[70vh]">
           <MapContainer
             center={[27.704111212111023, 85.31943175211019]}
@@ -597,23 +614,23 @@ function AddProperty() {
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                aria-hidden="true"
-                className="w-10 h-10 mb-3 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                />
-              </svg>
               {state.uploadedImages.length === 0 ? (
                 <>
+                  <svg
+                    aria-hidden="true"
+                    className="w-10 h-10 mb-3 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
                   <p className="mb-2 text-sm text-gray-500">
                     <span className="font-semibold">Click to upload</span> or
                     drag and drop
@@ -670,7 +687,7 @@ function AddProperty() {
           </label>
         </div>
 
-        <button>Submit</button>
+        <button onClick={submitHandler}>Submit</button>
       </form>
       {/* Map */}
     </div>
