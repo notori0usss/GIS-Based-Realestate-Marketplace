@@ -14,7 +14,7 @@ function Navbar() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
-  const config = genConfig(GlobalState.userEmail)
+  // const config = genConfig(GlobalState?.userEmail)
 
   async function handleLogout() {
     try {
@@ -58,7 +58,7 @@ function Navbar() {
             className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <Avatar className="w-10 h-10 rounded-full" {...config} />
+            {/* <Avatar className="w-10 h-10 rounded-full" {...config} /> */}SAd
           </button>
 
           {isOpen && (

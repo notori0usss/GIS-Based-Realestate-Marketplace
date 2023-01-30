@@ -26,6 +26,6 @@ urlpatterns = [
     path('api/realtor/',include('realtor.urls')),
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
-
+    path('api/stripe/', include('payments.urls')),
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

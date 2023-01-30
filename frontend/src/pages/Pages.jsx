@@ -7,6 +7,7 @@ import Login from "./Login"
 import Signup from "./Signup"
 import Navbar from "../layout/Navbar"
 import Auction from "../auction/Auction"
+import CheckOut from "./CheckOut"
 function Pages() {
   return (
     <>
@@ -15,7 +16,9 @@ function Pages() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listings" element={<Listings />} />
+
           <Route path="/addProperty" element={<AddProperty />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auction" element={<Auction />} />

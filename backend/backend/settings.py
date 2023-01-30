@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'realtor',
     'djoser',
     'rest_framework.authtoken',
+    'payments',
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',
@@ -146,6 +147,9 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+STRIPE_SECRET_KEY='sk_test_51MVzfYHRJSBCMAgS1HjxbQ2pXVHNqrkvfYnaZdgRkh7G25rforo11ODcxWf1llpfEpNOQK3p8rDJduwjWdXOQQFQ00BotxgYWM'
+SITE_URL="http://127.0.0.1:5173"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
