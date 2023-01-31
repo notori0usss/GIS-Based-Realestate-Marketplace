@@ -14,7 +14,7 @@ function Navbar() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
-  // const config = genConfig(GlobalState?.userEmail)
+  const config = genConfig(GlobalState?.userEmail)
 
   async function handleLogout() {
     try {
@@ -34,6 +34,22 @@ function Navbar() {
     }
   }
   console.log(GlobalState.userIsLogged)
+  const [profilePic, setProfilePic] = useState("")
+  useEffect(() => {
+    async function GetProfileInfo() {
+      try {
+        const response = await Axios.get(
+          `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
+        )
+        console.log(response.data)
+        setProfilePic(response.data.profile_picture)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    GetProfileInfo()
+  }, [GlobalState.userIsLogged])
+  console.log(profilePic)
   return (
     <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white">
       <Link to="/" className="font-pacifico text-xl">
@@ -58,10 +74,14 @@ function Navbar() {
             className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <img
-              src={GlobalState.profilePP}
-              className="w-10 h-10 rounded-full"
-            />
+            {profilePic === null ? (
+              <Avatar className="w-10 h-10" {...config} />
+            ) : (
+              <img
+                src={profilePic}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            )}
           </button>
 
           {isOpen && (
@@ -80,6 +100,10 @@ function Navbar() {
                   <a
                     href="#"
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    onClick={() => {
+                      navigate("/profile")
+                      setIsOpen(false)
+                    }}
                   >
                     Profile
                   </a>

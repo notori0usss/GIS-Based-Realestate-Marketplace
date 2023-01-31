@@ -9,6 +9,7 @@ import Axios from "axios"
 import Loading from "../layout/Loading"
 import DispatchContext from "../context/DispatchContext"
 import StateContext from "../context/StateContext"
+import Timeline from "../components/Timeline"
 function Home() {
   const location = useLocation()
   const GlobalDispatch = useContext(DispatchContext)
@@ -35,23 +36,7 @@ function Home() {
       source.cancel
     }
   }, [])
-  useEffect(() => {
-    async function GetProfileInfo() {
-      try {
-        const response = await Axios.get(
-          `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
-        )
-        console.log(response.data)
-        GlobalDispatch({
-          type: "getProfile",
-          profileValue: response.data,
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    GetProfileInfo()
-  }, [])
+
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);
@@ -88,6 +73,7 @@ function Home() {
       <Hero />
       <Feature allListings={allListings} />
       <Recommended allListings={allListings} />
+      <Timeline />
     </>
   )
 }

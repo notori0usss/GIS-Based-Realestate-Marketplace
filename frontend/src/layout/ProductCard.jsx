@@ -87,7 +87,7 @@ function ProductCard(
         {seller_profile_picture !== "" ? (
           <img
             src={`http://127.0.0.1:8000${seller_profile_picture}/`}
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full object-cover"
           />
         ) : (
           <Avatar className="w-10 h-10 rounded-full" {...avatar} />

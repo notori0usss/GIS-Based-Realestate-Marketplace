@@ -11,8 +11,6 @@ function App() {
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
     listingInfo: "",
-    profile: "",
-    profilePP: localStorage.getItem("theUserPP"),
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -31,8 +29,6 @@ function App() {
       case "getListings":
         draft.listingInfo = action.listingValue
         break
-      case "getProfile":
-        draft.profile = action.profileValue
     }
   }
 
@@ -45,13 +41,13 @@ function App() {
       localStorage.setItem("theUserEmail", state.userEmail)
       localStorage.setItem("theUserId", state.userId)
       localStorage.setItem("theUserToken", state.userToken)
-      localStorage.setItem("theUserPP", state.profile.profile_picture)
     } else {
       localStorage.removeItem("theUserUsername")
       localStorage.removeItem("theUserEmail")
       localStorage.removeItem("theUserId")
       localStorage.removeItem("theUserToken")
       localStorage.removeItem("theSessionId")
+      localStorage.removeItem("theUserPP")
     }
   }, [state.userIsLogged])
 
