@@ -18,6 +18,7 @@ import Loading from "../layout/Loading"
 import { ImStack } from "react-icons/im"
 import { RiUserLocationFill } from "react-icons/ri"
 import StateContext from "../context/StateContext"
+
 function Listings() {
   const location = useGeolocation()
   const mapRef = useRef(null)
@@ -91,11 +92,11 @@ function Listings() {
   if (dataLoading === true) {
     return <Loading />
   }
-
+  function navigation() {}
   return (
     <div className="relative">
       <button
-        className="absolute z-10 top-[1%] right-[1%] bg-white rounded-md p-2"
+        className="absolute z-10 top-[3%] right-[1%] bg-white rounded-md p-2"
         onClick={handleToggle}
       >
         <ImStack className="w-6 h-6 rounded-lg text-black" />
@@ -158,6 +159,7 @@ function Listings() {
                         alt="listing"
                         className="w-full h-[12rem] object-cover"
                       />
+                      <button onClick={navigation}>Goto</button>
                       <p className="w-full truncate">{item.description}</p>
                       <button className="w-full bg-yellow-500 text-white py-3 rounded-lg">
                         See More

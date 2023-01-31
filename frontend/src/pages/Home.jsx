@@ -48,8 +48,8 @@ function Home() {
         const subscribedStatus = new FormData()
         subscribedStatus.append("subscribed", values.success)
         try {
-          const response = await Axios.post(
-            `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`,
+          const response = await Axios.patch(
+            `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/update/`,
             subscribedStatus
           )
           console.log(response)

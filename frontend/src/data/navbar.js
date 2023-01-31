@@ -12,7 +12,7 @@ export const navItems = [
     title: "Add Property",
   },
   {
-    path: "/auction",
-    title: "Auction",
+    path: "/realtors",
+    title: "Realtors",
   },
 ]

@@ -330,27 +330,12 @@ function AddProperty() {
     console.log("Form Done")
     dispatch({ type: "changeSendRequest" })
   }
-  console.log(state.userProfile.phoneNumber)
+  console.log(GlobalState.userIsLogged)
   const SubmitButtonDisplay = () => {
     if (
       GlobalState.userIsLogged &&
-      state.userProfile.agencyName !== "" &&
-      state.userProfile.phoneNumber !== "" &&
-      state.userProfile.subscribed
-    ) {
-      return (
-        <button
-          type="submit"
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
-        >
-          Add Listing
-        </button>
-      )
-    } else if (
-      GlobalState.userIsLogged &&
-      state.userProfile.agencyName === "" &&
-      state.userProfile.phoneNumber === "" &&
-      state.userProfile.subscribed
+      state.userProfile.agencyName === null &&
+      state.userProfile.phoneNumber === null
     ) {
       return (
         <button
@@ -372,6 +357,20 @@ function AddProperty() {
           className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Subscribe First
+        </button>
+      )
+    } else if (
+      GlobalState.userIsLogged &&
+      state.userProfile.agencyName !== "" &&
+      state.userProfile.phoneNumber !== "" &&
+      state.userProfile.subscribed
+    ) {
+      return (
+        <button
+          type="submit"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+        >
+          Add Listing
         </button>
       )
     } else {

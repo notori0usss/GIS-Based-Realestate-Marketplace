@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import BgImg from "../assets/bgimg.png"
+import { useNavigate } from "react-router-dom"
 export default function CheckOut() {
+  const navigate = useNavigate()
   return (
     <div className="xl:mx-auto xl:container py-20  px-6">
       <div className="lg:flex items-center justify-between">
@@ -33,7 +35,10 @@ export default function CheckOut() {
             role="listitem"
             className="bg-white cursor-pointer shadow rounded-lg p-8 relative z-30 mt-12 "
           >
-            <div className="md:flex items-center justify-between">
+            <div
+              className="md:flex items-center justify-between"
+              onClick={() => navigate("/addProperty")}
+            >
               <h2 className="text-2xl font-semibold leading-6 text-gray-800">
                 Starter
               </h2>

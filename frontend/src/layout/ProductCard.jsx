@@ -77,11 +77,11 @@ function ProductCard(
       <hr className="my-2" />
       <div className="flex items-center justify-between px-5 py-2">
         {property_status === "Rent" ? (
-          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-1/2 tracking-wider">
+          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}/<span className="text-xs">{rental_frequency}</span>
           </button>
         ) : (
-          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-1/2 tracking-wider">
+          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}
           </button>
         )}

@@ -9,6 +9,7 @@ import Navbar from "../layout/Navbar"
 import Auction from "../auction/Auction"
 import CheckOut from "./CheckOut"
 import Profile from "./Profile"
+import Realtor from "./Realtor"
 function Pages() {
   return (
     <>
@@ -22,6 +23,7 @@ function Pages() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/realtors" element={<Realtor />} />
           <Route path="/auction" element={<Auction />} />
         </Routes>
       </BrowserRouter>
