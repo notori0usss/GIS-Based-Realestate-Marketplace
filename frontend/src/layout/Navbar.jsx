@@ -58,7 +58,10 @@ function Navbar() {
             className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {/* <Avatar className="w-10 h-10 rounded-full" {...config} /> */}SAd
+            <img
+              src={GlobalState.profilePP}
+              className="w-10 h-10 rounded-full"
+            />
           </button>
 
           {isOpen && (

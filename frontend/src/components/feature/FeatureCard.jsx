@@ -1,7 +1,7 @@
 import React from "react"
 import { featured } from "../../data/feature"
 function FeatureCard({ allListings }) {
-  console.log(allListings)
+  // console.log(allListings)
   const listingInfo = allListings.reduce((rType, property) => {
     const { A = 0, O = 0, H = 0 } = rType
     if (property.listing_type === "Office") {
@@ -12,7 +12,7 @@ function FeatureCard({ allListings }) {
       return { ...rType, H: H + 1 }
     }
   }, {})
-  console.log(listingInfo)
+  // console.log(listingInfo)
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center gap-y-10 lg:gap-x-10">
       <div className="flex flex-col items-center justify-center gap-1 bg-white w-[15rem] h-[13rem] rounded-md shadow-xl">

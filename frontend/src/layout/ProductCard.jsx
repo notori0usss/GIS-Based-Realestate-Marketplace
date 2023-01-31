@@ -6,6 +6,8 @@ import { FaCarSide, FaLocationArrow } from "react-icons/fa"
 import { TbGridDots } from "react-icons/tb"
 import NoData from "../assets/nodata.jpg"
 import Avatar, { genConfig } from "react-nice-avatar"
+import { useContext } from "react"
+import StateContext from "../context/StateContext"
 function ProductCard(
   {
     id,
@@ -24,6 +26,7 @@ function ProductCard(
     longitude,
     date_posted,
     seller_username,
+    seller_profile_picture,
   },
   ref
 ) {
@@ -32,6 +35,7 @@ function ProductCard(
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
   }
   const avatar = genConfig(seller_username)
+  const GlobalState = useContext(StateContext)
   const [timeElapsed, setTimeElapsed] = useState(0)
   useEffect(() => {
     const datePosted = new Date(date_posted)
@@ -40,7 +44,6 @@ function ProductCard(
     const timeElapsed = Math.floor(difference / (1000 * 60 * 60 * 24))
     setTimeElapsed(timeElapsed)
   }, [])
-
   return (
     <div className="flex flex-col w-full h-full shadow-lg" key={id}>
       <div className="relative">
@@ -81,7 +84,14 @@ function ProductCard(
             {price}
           </button>
         )}
-        <Avatar className="w-10 h-10 rounded-full" {...avatar} />
+        {seller_profile_picture !== "" ? (
+          <img
+            src={`http://127.0.0.1:8000${seller_profile_picture}/`}
+            className="w-10 h-10 rounded-full"
+          />
+        ) : (
+          <Avatar className="w-10 h-10 rounded-full" {...avatar} />
+        )}
       </div>
       <hr />
       <div className="flex items-center justify-between mx-2">

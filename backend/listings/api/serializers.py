@@ -6,9 +6,16 @@ class ListingSerializer(serializers.ModelSerializer):
     country=serializers.SerializerMethodField()
     seller_username=serializers.SerializerMethodField()
     seller_agency_name=serializers.SerializerMethodField()
+    seller_profile_picture=serializers.SerializerMethodField()
 
+    class Meta:
+        model=Listing
+        fields='__all__'
     def get_seller_agency_name(self,obj):
         return obj.seller.profile.agency_name
+
+    def get_seller_profile_picture(self, obj):
+        return obj.seller.profile.profile_picture.url
 
     def get_seller_username(self, obj):
         try:
@@ -19,7 +26,5 @@ class ListingSerializer(serializers.ModelSerializer):
 
     def get_country(self,obj):
         return "Nepal"
-    class Meta:
-        model=Listing
-        fields='__all__'
+   
         

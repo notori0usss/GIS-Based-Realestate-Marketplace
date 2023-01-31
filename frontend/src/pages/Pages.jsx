@@ -16,9 +16,8 @@ function Pages() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listings" element={<Listings />} />
-
           <Route path="/addProperty" element={<AddProperty />} />
-
+          <Route path="/checkout" element={<CheckOut />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auction" element={<Auction />} />

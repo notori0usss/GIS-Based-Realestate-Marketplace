@@ -35,15 +35,43 @@ function Home() {
       source.cancel
     }
   }, [])
-
+  useEffect(() => {
+    async function GetProfileInfo() {
+      try {
+        const response = await Axios.get(
+          `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
+        )
+        console.log(response.data)
+        GlobalDispatch({
+          type: "getProfile",
+          profileValue: response.data,
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    GetProfileInfo()
+  }, [])
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);
     const values = QueryString.parse(location.search)
     console.log(values.success)
     if (values.success) {
-      GlobalDispatch({ type: "getSessionId", paymentValue: values.session_id })
-      console.log("Order placed! You will receive an email confirmation.")
+      async function ChangeSubscription() {
+        const subscribedStatus = new FormData()
+        subscribedStatus.append("subscribed", values.success)
+        try {
+          const response = await Axios.post(
+            `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`,
+            subscribedStatus
+          )
+          console.log(response)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      ChangeSubscription()
     }
 
     if (values.canceled) {
@@ -51,7 +79,7 @@ function Home() {
         "Order canceled -- continue to shop around and checkout when you're ready."
       )
     }
-  }, [GlobalState.paymentInfo])
+  }, [])
   if (dataLoading === true) {
     return <Loading />
   }

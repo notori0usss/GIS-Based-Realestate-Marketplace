@@ -12,6 +12,7 @@ class Profile(models.Model):
     phone_number=models.CharField(max_length=25,null=True, blank=True)
     bio=models.TextField(null=True, blank=True)
     profile_picture=models.ImageField(upload_to='profile_pictures/%Y/%m/%d',null=True, blank=True)
+    subscribed=models.BooleanField(default=False,null=True)
 
     def __str__(self):
         return f"Profile of {self.seller.username}"

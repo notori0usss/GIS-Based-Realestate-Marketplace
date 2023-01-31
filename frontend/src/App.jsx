@@ -11,7 +11,8 @@ function App() {
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
     listingInfo: "",
-    paymentInfo: localStorage.getItem("theSessionId"),
+    profile: "",
+    profilePP: localStorage.getItem("theUserPP"),
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -30,20 +31,21 @@ function App() {
       case "getListings":
         draft.listingInfo = action.listingValue
         break
-      case "getSessionId":
-        draft.paymentInfo = action.paymentValue
-        break
+      case "getProfile":
+        draft.profile = action.profileValue
     }
   }
 
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
-  console.log(state.paymentInfo)
+
+  console.log(state.profile)
   useEffect(() => {
     if (state.userIsLogged) {
       localStorage.setItem("theUserUsername", state.userUsername)
       localStorage.setItem("theUserEmail", state.userEmail)
       localStorage.setItem("theUserId", state.userId)
       localStorage.setItem("theUserToken", state.userToken)
+      localStorage.setItem("theUserPP", state.profile.profile_picture)
     } else {
       localStorage.removeItem("theUserUsername")
       localStorage.removeItem("theUserEmail")
@@ -52,11 +54,7 @@ function App() {
       localStorage.removeItem("theSessionId")
     }
   }, [state.userIsLogged])
-  useEffect(() => {
-    if (state.paymentInfo !== "") {
-      localStorage.setItem("theSessionId", state.paymentInfo)
-    }
-  }, [state.paymentInfo])
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
