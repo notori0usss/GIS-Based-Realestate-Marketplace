@@ -341,7 +341,7 @@ function AddProperty() {
       return (
         <button
           type="submit"
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-10"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Add Listing
         </button>
@@ -355,7 +355,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/profile")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-10"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Update Profile First
         </button>
@@ -369,7 +369,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/checkout")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-10"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Subscribe First
         </button>
@@ -378,7 +378,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/login")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-10"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Login to Post
         </button>
@@ -386,8 +386,10 @@ function AddProperty() {
     }
   }
   return (
-    <div className="flex flex-col items-center w-full mt-5">
-      <h1 className="text-3xl my-6 font-semi">Add a Property</h1>
+    <div className="flex flex-col items-center w-full pt-5 bg-gradient-to-b from-yellow-50 to-amber-50">
+      <h1 className="text-3xl my-6 font-semibold text-gray-600">
+        Add a Property
+      </h1>
       <form
         action=""
         onSubmit={submitHandler}
@@ -395,7 +397,7 @@ function AddProperty() {
       >
         <div className="flex justify-evenly gap-x-5">
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="text"
             value={state.titleValue}
             placeholder="Title"
@@ -407,7 +409,7 @@ function AddProperty() {
             }
           />
           <select
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             value={state.listingTypeValue}
             onChange={(e) =>
               dispatch({
@@ -441,9 +443,9 @@ function AddProperty() {
         <h1 className="font-semibold text-sm text-gray-500">
           Property Area in sqft & Price in Rs.
         </h1>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.propertyAreaValue}
             placeholder="Property Area"
@@ -456,7 +458,7 @@ function AddProperty() {
           />
 
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.priceValue}
             placeholder="Price"
@@ -471,9 +473,9 @@ function AddProperty() {
         <h1 className="font-semibold text-sm text-gray-500">
           Mention number of Rooms and Parking space here.
         </h1>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.roomsValue}
             placeholder="Rooms"
@@ -485,7 +487,7 @@ function AddProperty() {
             }
           />
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.parkingValue}
             placeholder="Parking"
@@ -497,9 +499,9 @@ function AddProperty() {
             }
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <select
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="text"
             value={state.propertyStatusValue}
             placeholder="Property Status"
@@ -519,7 +521,7 @@ function AddProperty() {
 
           {state.propertyStatusValue === "Rent" ? (
             <select
-              className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
               value={state.rentalFrequencyValue}
               onChange={(e) =>
                 dispatch({
@@ -537,14 +539,14 @@ function AddProperty() {
             </select>
           ) : (
             <select
-              className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
               disabled
             >
               <option value="">--</option>
             </select>
           )}
         </div>
-        <div className="flex gap-10 w-full items-center justify-center text-lg">
+        <div className="flex gap-10 w-full items-center justify-center text-lg font-semibold">
           <label htmlFor="furnished">
             <input
               id="furnished"
@@ -605,9 +607,9 @@ function AddProperty() {
             CCTV
           </label>
         </div>
-        <div className="flex justify-evenly w-full gap-x-2">
+        <div className="flex justify-evenly w-full gap-4">
           <select
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="text"
             value={state.areaValue}
             placeholder="Area"
@@ -626,7 +628,7 @@ function AddProperty() {
             <option value={"Bhaktapur"}>Bhaktapur</option>
           </select>
           <select
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="text"
             value={state.municipalityValue}
             placeholder="Municipality"
@@ -651,9 +653,9 @@ function AddProperty() {
           Note: Latitude and Longitude can be chosen with the draggable marker
           in the map.
         </h1>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.latitudeValue}
             placeholder="Latitude"
@@ -665,7 +667,7 @@ function AddProperty() {
             }
           />
           <input
-            className="w-full h-10 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="number"
             value={state.longitudeValue}
             placeholder="Longitude"
@@ -704,7 +706,7 @@ function AddProperty() {
                 <>
                   <svg
                     aria-hidden="true"
-                    className="w-10 h-10 mb-3 text-gray-400"
+                    className="w-10 h-16 mb-3 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

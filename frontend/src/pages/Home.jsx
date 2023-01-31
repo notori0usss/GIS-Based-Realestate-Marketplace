@@ -10,6 +10,7 @@ import Loading from "../layout/Loading"
 import DispatchContext from "../context/DispatchContext"
 import StateContext from "../context/StateContext"
 import Timeline from "../components/Timeline"
+import Footer from "../components/Footer"
 function Home() {
   const location = useLocation()
   const GlobalDispatch = useContext(DispatchContext)
@@ -74,6 +75,7 @@ function Home() {
       <Feature allListings={allListings} />
       <Recommended allListings={allListings} />
       <Timeline />
+      <Footer />
     </>
   )
 }

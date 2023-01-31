@@ -37,7 +37,7 @@ function Profile() {
     }
     GetProfileInfo()
   }, [])
-  return <div>Profile</div>
+  return <div></div>
 }
 
 export default Profile

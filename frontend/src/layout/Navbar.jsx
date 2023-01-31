@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { navItems } from "../data/navbar"
 import StateContext from "../context/StateContext"
 import { useState } from "react"
@@ -50,6 +50,7 @@ function Navbar() {
     GetProfileInfo()
   }, [GlobalState.userIsLogged])
   console.log(profilePic)
+
   return (
     <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white">
       <Link to="/" className="font-pacifico text-xl">
@@ -58,12 +59,12 @@ function Navbar() {
       <ul className="flex items-center gap-x-7 justify-center">
         {navItems.map((navItem, index) => (
           <li key={index}>
-            <Link
+            <NavLink
               to={navItem.path}
-              className="hover:text-yellow-500 active:text-yellow-500"
+              className={({ isActive }) => (isActive ? "text-yellow-500" : "")}
             >
               {navItem.title}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>

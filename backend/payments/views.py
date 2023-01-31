@@ -14,7 +14,7 @@ class StripeCheckoutView(APIView):
             checkout_session = stripe.checkout.Session.create(
                 line_items=[
                     {
-                        'price': 'price_1MW04lHRJSBCMAgSsUpw6asa',
+                        'price': 'price_1MWGn4HRJSBCMAgSRk8hs9OL',
                         'quantity': 1,
                     },
                 ],
