@@ -22,6 +22,7 @@ import StateContext from "../context/StateContext"
 function Listings() {
   const location = useGeolocation()
   const mapRef = useRef(null)
+  const markerRef = useRef(null)
   const GlobalState = useContext(StateContext)
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
@@ -147,6 +148,7 @@ function Listings() {
               }
               return (
                 <Marker
+                  ref={markerRef}
                   key={item.id}
                   icon={IconDisplay()}
                   position={[item.latitude, item.longitude]}
