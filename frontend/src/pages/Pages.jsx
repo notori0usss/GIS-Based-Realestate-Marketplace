@@ -10,6 +10,7 @@ import Auction from "../auction/Auction"
 import CheckOut from "./CheckOut"
 import Profile from "./Profile"
 import Realtor from "./Realtor"
+import AllProperties from "../components/AllProperties"
 function Pages() {
   return (
     <>
@@ -25,6 +26,7 @@ function Pages() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/realtors" element={<Realtor />} />
           <Route path="/auction" element={<Auction />} />
+          <Route path="/allProperties" element={<AllProperties />} />
         </Routes>
       </BrowserRouter>
     </>

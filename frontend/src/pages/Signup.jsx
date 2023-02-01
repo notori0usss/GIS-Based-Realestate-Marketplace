@@ -5,9 +5,10 @@ import LoginImg from "../assets/login/1.jpg"
 import Axios from "axios"
 
 import { useImmerReducer } from "use-immer"
-
+import UserImg from "../assets/user.png"
 function Signup() {
   const navigate = useNavigate()
+
   const initialState = {
     usernameValue: "",
     emailValue: "",

@@ -85,13 +85,13 @@ function ProductCard(
             Rs.{price}
           </button>
         )}
-        {seller_profile_picture !== "" ? (
+        {seller_profile_picture === "" ? (
+          <Avatar className="w-10 h-10 rounded-full" {...avatar} />
+        ) : (
           <img
             src={`http://127.0.0.1:8000${seller_profile_picture}/`}
             className="w-10 h-10 rounded-full object-cover"
           />
-        ) : (
-          <Avatar className="w-10 h-10 rounded-full" {...avatar} />
         )}
       </div>
       <hr />

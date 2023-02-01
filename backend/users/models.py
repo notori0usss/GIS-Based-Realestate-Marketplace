@@ -11,7 +11,7 @@ class Profile(models.Model):
     agency_name=models.CharField(max_length=100,null=True,blank=True)
     phone_number=models.CharField(max_length=25,null=True, blank=True)
     bio=models.TextField(null=True, blank=True)
-    profile_picture=models.ImageField(upload_to='profile_pictures/%Y/%m/%d',null=True, blank=True)
+    profile_picture=models.ImageField(upload_to='profile_pictures/%Y/%m/%d',default="user.png")
     subscribed=models.BooleanField(default=False,null=True)
 
     def __str__(self):

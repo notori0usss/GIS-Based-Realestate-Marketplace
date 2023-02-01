@@ -440,36 +440,6 @@ function AddProperty() {
         />
 
         <h1 className="font-semibold text-sm text-gray-500">
-          Property Area in sqft & Price in Rs.
-        </h1>
-        <div className="flex gap-4">
-          <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.propertyAreaValue}
-            placeholder="Property Area"
-            onChange={(e) =>
-              dispatch({
-                type: "catchPropertyAreaChange",
-                propertyAreaChosen: e.target.value,
-              })
-            }
-          />
-
-          <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.priceValue}
-            placeholder="Price"
-            onChange={(e) =>
-              dispatch({
-                type: "catchPriceChange",
-                priceChosen: e.target.value,
-              })
-            }
-          />
-        </div>
-        <h1 className="font-semibold text-sm text-gray-500">
           Mention number of Rooms and Parking space here.
         </h1>
         <div className="flex gap-4">
@@ -544,6 +514,36 @@ function AddProperty() {
               <option value="">--</option>
             </select>
           )}
+        </div>
+        <h1 className="font-semibold text-sm text-gray-500">
+          Property Area in sqft & Price in Rs.
+        </h1>
+        <div className="flex gap-4">
+          <input
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="number"
+            value={state.propertyAreaValue}
+            placeholder="Property Area"
+            onChange={(e) =>
+              dispatch({
+                type: "catchPropertyAreaChange",
+                propertyAreaChosen: e.target.value,
+              })
+            }
+          />
+
+          <input
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="number"
+            value={state.priceValue}
+            placeholder="Price"
+            onChange={(e) =>
+              dispatch({
+                type: "catchPriceChange",
+                priceChosen: e.target.value,
+              })
+            }
+          />
         </div>
         <div className="flex gap-10 w-full items-center justify-center text-lg font-semibold">
           <label htmlFor="furnished">

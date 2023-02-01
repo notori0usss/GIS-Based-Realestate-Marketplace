@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import Axios from "axios"
 import DispatchContext from "../context/DispatchContext"
 import StateContext from "../context/StateContext"
+
 function Login() {
   const initialState = {
     usernameValue: "",
@@ -33,6 +34,7 @@ function Login() {
         draft.token = action.tokenValue
     }
   }
+
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   const submitHandler = (e) => {
     e.preventDefault()
@@ -67,6 +69,7 @@ function Login() {
         }
       }
       SignIn()
+
       return () => {
         source.cancel
       }
@@ -96,6 +99,7 @@ function Login() {
           if (response.status === 200) {
             navigate("/")
           }
+
           console.log(response)
         } catch (error) {
           console.log(error)

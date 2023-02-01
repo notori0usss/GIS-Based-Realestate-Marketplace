@@ -1,5 +1,5 @@
 import React from "react"
-import { FaFileSignature, FaMoneyBill } from "react-icons/fa"
+import { FaFileSignature, FaMoneyBill, FaPlus, FaStop } from "react-icons/fa"
 import Heading from "./Heading"
 function Timeline() {
   return (
@@ -62,7 +62,7 @@ function Timeline() {
         <li className="border-l-2 border-yellow-600">
           <div className="md:flex flex-start">
             <div className="bg-yellow-600 w-6 h-6 flex items-center justify-center rounded-full -ml-3.5">
-              <FaMoneyBill className="text-white w-3 h-3" />
+              <FaPlus className="text-white w-3 h-3" />
             </div>
             <div className="block p-6 rounded-lg shadow-lg bg-gray-100 max-w-md ml-6 mb-10">
               <div className="flex justify-between mb-4">

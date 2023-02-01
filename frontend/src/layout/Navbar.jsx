@@ -8,13 +8,17 @@ import Avatar, { genConfig } from "react-nice-avatar"
 
 import DispatchContext from "../context/DispatchContext"
 import { useEffect } from "react"
+import { MdVerified } from "react-icons/md"
 function Navbar() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const [config, setConfig] = useState("")
 
-  const config = genConfig(GlobalState?.userEmail)
+  // useEffect(() => {
+  //   setConfig(genConfig(GlobalState?.userEmail))
+  // }, [GlobalState.userSignsIn])
 
   async function handleLogout() {
     try {
@@ -35,6 +39,7 @@ function Navbar() {
   }
   console.log(GlobalState.userIsLogged)
   const [profilePic, setProfilePic] = useState("")
+  const [subscriptionStatus, setSubscriptionStatus] = useState(false)
   useEffect(() => {
     async function GetProfileInfo() {
       try {
@@ -43,12 +48,13 @@ function Navbar() {
         )
         console.log(response.data)
         setProfilePic(response.data.profile_picture)
+        setSubscriptionStatus(response.data.subscribed)
       } catch (e) {
         console.log(e)
       }
     }
     GetProfileInfo()
-  }, [GlobalState.userIsLogged])
+  }, [GlobalState.userIsLogged, subscriptionStatus])
   console.log(profilePic)
 
   return (
@@ -92,6 +98,9 @@ function Navbar() {
             >
               <div className="px-4 py-3 text-sm text-yellow-300 hover:text-yellow-300 text-center">
                 {GlobalState.userUsername}
+                {subscriptionStatus && (
+                  <MdVerified className="text-blue-500 text-sm inline ml-1" />
+                )}
               </div>
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"

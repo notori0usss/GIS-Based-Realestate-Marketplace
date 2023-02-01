@@ -1,7 +1,9 @@
 import React from "react"
 import HeroImg from "../assets/services.jpg"
 import TypeWriter from "./TypeWriter"
+import { useNavigate } from "react-router-dom"
 function Hero() {
+  const navigate = useNavigate()
   return (
     <div className="bg-gradient-to-tr from-gray-700 to-gray-500 h-[80vh] w-full relative">
       <img
@@ -13,7 +15,10 @@ function Hero() {
         <h1 className="text-5xl lg:text-7xl font-bold uppercase text-white shadow-sm">
           <TypeWriter />
         </h1>
-        <button className="bg-yellow-500 z-10 text-white font-bold px-5 py-3 shadow-sm uppercase rounded-lg">
+        <button
+          className="bg-yellow-500 z-10 text-white font-bold px-5 py-3 shadow-sm uppercase rounded-lg"
+          onClick={() => navigate("/allProperties")}
+        >
           See all properties
         </button>
       </div>

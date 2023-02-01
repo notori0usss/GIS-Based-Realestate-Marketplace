@@ -11,6 +11,8 @@ import DispatchContext from "../context/DispatchContext"
 import StateContext from "../context/StateContext"
 import Timeline from "../components/Timeline"
 import Footer from "../components/Footer"
+import Banner from "../components/Banner"
+import Promo from "../components/Promo"
 function Home() {
   const location = useLocation()
   const GlobalDispatch = useContext(DispatchContext)
@@ -27,6 +29,10 @@ function Home() {
         )
         setDataLoading(false)
         setAllListings(listingResponse.data)
+        GlobalDispatch({
+          type: "getListings",
+          listingValue: listingResponse.data,
+        })
       } catch (error) {
         console.log(error)
       }
@@ -42,7 +48,7 @@ function Home() {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);
     const values = QueryString.parse(location.search)
-    console.log(values.success)
+    // console.log(values.success)
     if (values.success) {
       async function ChangeSubscription() {
         const subscribedStatus = new FormData()
@@ -75,6 +81,8 @@ function Home() {
       <Feature allListings={allListings} />
       <Recommended allListings={allListings} />
       <Timeline />
+      <Banner />
+      <Promo />
       <Footer />
     </>
   )
