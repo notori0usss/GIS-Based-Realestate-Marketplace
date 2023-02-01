@@ -2,7 +2,10 @@ import React from "react"
 import BannerImg from "../assets/bannerimg.png"
 function Banner() {
   return (
-    <div className="flex justify-center items-center bg-white mx-20 ">
+    <div
+      className="flex justify-center items-center bg-white px-20 py-20"
+      style={{ clipPath: " polygon(0 12%, 100% 0%, 100% 100%, 0 100%)" }}
+    >
       <div className="grid grid-cols-6 w-full bg-gray-700 rounded-lg    ">
         <div className="col-span-4">
           <h2 className="font-bold text-3xl text-white ml-10 mt-8">

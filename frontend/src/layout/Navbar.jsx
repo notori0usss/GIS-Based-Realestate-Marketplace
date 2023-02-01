@@ -58,7 +58,7 @@ function Navbar() {
   console.log(profilePic)
 
   return (
-    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white">
+    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white sticky top-0 z-10">
       <Link to="/" className="font-pacifico text-xl">
         Digi<span className="text-yellow-500"> Dalal</span>
       </Link>
@@ -99,7 +99,7 @@ function Navbar() {
               <div className="px-4 py-3 text-sm text-yellow-300 hover:text-yellow-300 text-center">
                 {GlobalState.userUsername}
                 {subscriptionStatus && (
-                  <MdVerified className="text-blue-500 text-sm inline ml-1" />
+                  <MdVerified className="text-pale-500 text-sm inline ml-1" />
                 )}
               </div>
               <ul

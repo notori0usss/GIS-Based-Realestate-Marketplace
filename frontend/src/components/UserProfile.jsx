@@ -11,7 +11,7 @@ function UserProfile({ agency, number, profilePicture, isSubscribed }) {
     <div className="flex flex-col items-center border-4 py-10 gap-2">
       <img
         src={profilePicture}
-        alt=""
+        alt="profile-picture"
         className="w-32 h-32 object-cover rounded-full"
       />
       {GlobalState.userUsername ? (
@@ -20,7 +20,7 @@ function UserProfile({ agency, number, profilePicture, isSubscribed }) {
           <span className="text-yellow-500 font-semibold">
             {GlobalState.userUsername}{" "}
             {isSubscribed ? (
-              <MdVerified className="text-blue-500 text-sm inline" />
+              <MdVerified className="text-yellow-500 text-sm inline" />
             ) : (
               ""
             )}
