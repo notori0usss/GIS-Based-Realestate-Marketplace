@@ -9,7 +9,7 @@ function Footer() {
             <Link to="/" className="font-pacifico text-3xl">
               Digi<span className="text-yellow-500"> Dalal</span>
             </Link>
-            <p classNameName="max-w-xs mt-4 text-sm text-gray-600">
+            <p className="max-w-xs mt-4 text-sm text-gray-600">
               Marketplace for your Realestate Properties.
             </p>
             <div className="flex mt-8 space-x-6 text-gray-600">

@@ -2,89 +2,61 @@ import React from "react"
 import { FaFileSignature, FaMoneyBill, FaPlus, FaStop } from "react-icons/fa"
 import Heading from "./Heading"
 function Timeline() {
+  const timeline = [
+    {
+      id: 1,
+      title: "Registration",
+      description: "lorem ipsum dolor sit amet, consectetur adip",
+    },
+    {
+      id: 2,
+      title: "One Time Charge",
+      description: "lorem ipsum dolor sit amet, consectetur adip",
+    },
+    {
+      id: 3,
+      title: "Unlimited Posting",
+      description: "lorem ipsum dolor sit amet, consectetur adip",
+    },
+  ]
   return (
-    <div className="flex items-center flex-col mt-16 bg-white py-10">
+    <div
+      className="flex items-center flex-col bg-white py-32 mb-10 translate-y[-12]"
+      style={{ clipPath: "polygon(0 10%, 100% 0%, 100% 90%, 0 100%)" }}
+    >
       <Heading title={"Why us?"} subtitle={"Our Features"} />
-      <ol className="flex items-center justify-center w-full my-10 flex-col">
-        <li className="border-l-2 border-yellow-600">
-          <div className="md:flex flex-start">
-            <div className="bg-yellow-600 w-6 h-6 flex items-center justify-center rounded-full -ml-3.5">
-              <FaFileSignature className="text-white w-3 h-3" />
-            </div>
-            <div className="block p-6 rounded-lg shadow-lg bg-gray-100 max-w-md ml-6 mb-10">
-              <div className="flex justify-between mb-4">
-                <a
-                  href="#!"
-                  className="font-medium text-yellow-600 hover:text-yellow-700 focus:text-yellow-800 duration-300 transition ease-in-out text-sm"
+      <ol className="items-center sm:flex">
+        {timeline.map((item) => (
+          <li className="relative mb-6 sm:mb-0" key={item.id}>
+            <div className="flex items-center">
+              <div className="z-10 flex items-center justify-center w-6 h-6 bg-yellow-100 rounded-full ring-0 ring-white dark:bg-yellow-900 sm:ring-8 dark:ring-gray-700 shrink-0">
+                <svg
+                  aria-hidden="true"
+                  className="w-3 h-3 text-yellow-800 dark:text-yellow-300"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Easy Registration
-                </a>
+                  <path
+                    fillRule="evenodd"
+                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
               </div>
-              <p className="text-gray-700 mb-6">
-                You can Registration with a click of a button & some details.
-              </p>
-              <button
-                type="button"
-                className="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Register Here
-              </button>
+              <div className="hidden sm:flex w-full bg-gray-200 h-0.5 "></div>
             </div>
-          </div>
-        </li>
+            <div className="mt-3 sm:pr-8">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {item.title}
+              </h3>
 
-        <li className="border-l-2 border-yellow-600">
-          <div className="md:flex flex-start">
-            <div className="bg-yellow-600 w-6 h-6 flex items-center justify-center rounded-full -ml-3.5">
-              <FaMoneyBill className="text-white w-3 h-3" />
-            </div>
-            <div className="block p-6 rounded-lg shadow-lg bg-gray-100 max-w-md ml-6 mb-10">
-              <div className="flex justify-between mb-4">
-                <a
-                  href="#!"
-                  className="font-medium text-yellow-600 hover:text-yellow-700 focus:text-yellow-800 duration-300 transition ease-in-out text-sm"
-                >
-                  One time Charge for Listing
-                </a>
-              </div>
-              <p className="text-gray-700 mb-6">
-                One time Charge for listing. Only at $20 for unlimited Listing.
+              <p className="text-base font-normal text-gray-500 ">
+                {item.description}
               </p>
-              <button
-                type="button"
-                className="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Subscribe Here
-              </button>
             </div>
-          </div>
-        </li>
-        <li className="border-l-2 border-yellow-600">
-          <div className="md:flex flex-start">
-            <div className="bg-yellow-600 w-6 h-6 flex items-center justify-center rounded-full -ml-3.5">
-              <FaPlus className="text-white w-3 h-3" />
-            </div>
-            <div className="block p-6 rounded-lg shadow-lg bg-gray-100 max-w-md ml-6 mb-10">
-              <div className="flex justify-between mb-4">
-                <a
-                  href="#!"
-                  className="font-medium text-yellow-600 hover:text-yellow-700 focus:text-yellow-800 duration-300 transition ease-in-out text-sm"
-                >
-                  Add Property with the Help of OSM
-                </a>
-              </div>
-              <p className="text-gray-700 mb-6">
-                Add your listing on a map with marker. How cool is that!
-              </p>
-              <button
-                type="button"
-                className="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Add Listing
-              </button>
-            </div>
-          </div>
-        </li>
+          </li>
+        ))}
       </ol>
     </div>
   )

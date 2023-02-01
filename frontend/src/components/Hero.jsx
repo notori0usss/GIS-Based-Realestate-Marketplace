@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom"
 function Hero() {
   const navigate = useNavigate()
   return (
-    <div className="bg-gradient-to-tr from-gray-700 to-gray-500 h-[80vh] w-full relative">
+    <div
+      className="bg-gradient-to-tr from-gray-700 to-gray-500 h-[80vh] w-full relative"
+      style={{ clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0 88%)" }}
+    >
       <img
         src={HeroImg}
         alt="bg-hero"

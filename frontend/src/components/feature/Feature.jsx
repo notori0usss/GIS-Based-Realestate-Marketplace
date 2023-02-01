@@ -4,7 +4,7 @@ import Heading from "../Heading"
 
 function Feature({ allListings }) {
   return (
-    <div className="my-20 flex flex-col items-center ">
+    <div className="my-10 flex flex-col items-center ">
       <Heading
         title="Featured Property Types"
         subtitle="Find All Type of Property."
