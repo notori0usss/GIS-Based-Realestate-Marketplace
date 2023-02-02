@@ -118,7 +118,25 @@ function Navbar() {
                     Profile
                   </a>
                 </li>
+                {GlobalState.userEmail === "admin@digidalal.com" ||
+                GlobalState.userEmail === "dhunganaswaroop@gmail.com" ? (
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => {
+                        navigate("/admin")
+                        setIsOpen(false)
+                      }}
+                    >
+                      Admin
+                    </a>
+                  </li>
+                ) : (
+                  ""
+                )}
               </ul>
+
               <div className="py-2" onClick={handleLogout}>
                 <a
                   href="#"

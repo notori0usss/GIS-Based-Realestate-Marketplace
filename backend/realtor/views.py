@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView,UpdateAPIView
 from rest_framework import permissions
 from .models import Realtor
 from .serializers import RealtorSerializer
@@ -13,8 +13,18 @@ class RealtorView(RetrieveAPIView):
     queryset = Realtor.objects.all()
     serializer_class = RealtorSerializer
 
-class TopSellerView(ListAPIView):
+class RealtorUpdate(UpdateAPIView):
+    queryset = Realtor.objects.all()
+    serializer_class = RealtorSerializer
+
+class IsVerifiedView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
-    queryset = Realtor.objects.filter(top_seller=True)
+    queryset = Realtor.objects.filter(is_verified=True)
+    serializer_class = RealtorSerializer
+    pagination_class = None
+    
+class UpdateVerifiedView(UpdateAPIView):
+    permission_classes = (permissions.AllowAny, )
+    queryset = Realtor.objects.filter(is_verified=True)
     serializer_class = RealtorSerializer
     pagination_class = None

@@ -6,11 +6,11 @@ import AddProperty from "./AddProperty"
 import Login from "./Login"
 import Signup from "./Signup"
 import Navbar from "../layout/Navbar"
-import Auction from "../auction/Auction"
 import CheckOut from "./CheckOut"
 import Profile from "./Profile"
 import Realtor from "./Realtor"
 import AllProperties from "../components/AllProperties"
+import AdminPage from "./AdminPage"
 function Pages() {
   return (
     <>
@@ -26,6 +26,7 @@ function Pages() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/realtors" element={<Realtor />} />
           <Route path="/auction" element={<Auction />} />
+          <Route path="admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
         </Routes>
       </BrowserRouter>
