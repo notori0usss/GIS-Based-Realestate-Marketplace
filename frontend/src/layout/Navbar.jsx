@@ -9,6 +9,7 @@ import Avatar, { genConfig } from "react-nice-avatar"
 import DispatchContext from "../context/DispatchContext"
 import { useEffect } from "react"
 import { MdVerified } from "react-icons/md"
+import { FaHeart } from "react-icons/fa"
 function Navbar() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)

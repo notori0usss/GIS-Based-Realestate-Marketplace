@@ -18,6 +18,7 @@ import Loading from "../layout/Loading"
 import { ImStack } from "react-icons/im"
 import { RiUserLocationFill } from "react-icons/ri"
 import StateContext from "../context/StateContext"
+import SearchBar from "../components/SearchBar"
 
 function Listings() {
   const location = useGeolocation()
@@ -93,9 +94,10 @@ function Listings() {
   if (dataLoading === true) {
     return <Loading />
   }
-  function navigation() {}
+
   return (
     <div className="relative">
+      <SearchBar ref={mapRef} />
       <button
         className="absolute z-10 top-[3%] right-[1%] bg-white rounded-md p-2"
         onClick={handleToggle}
@@ -123,6 +125,7 @@ function Listings() {
             ref={mapRef}
           >
             <TileLayer url={mapLayer} />
+
             {location.loaded && !location.error && (
               <Marker
                 icon={userIcon}

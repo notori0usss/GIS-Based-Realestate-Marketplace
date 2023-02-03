@@ -622,7 +622,6 @@ function AddProperty() {
             <option selected hidden>
               Select District
             </option>
-
             <option value={"Kathmandu"}>Kathmandu</option>
             <option value={"Bhaktapur"}>Bhaktapur</option>
           </select>
@@ -678,7 +677,7 @@ function AddProperty() {
             }
           />
         </div>
-        <div className="w-full h-[70vh]">
+        <div className="w-full h-[70vh] z-0">
           <MapContainer
             center={[27.704111212111023, 85.31943175211019]}
             zoom={11}

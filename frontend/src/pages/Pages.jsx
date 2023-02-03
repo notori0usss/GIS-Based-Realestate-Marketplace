@@ -25,8 +25,7 @@ function Pages() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/realtors" element={<Realtor />} />
-          <Route path="/auction" element={<Auction />} />
-          <Route path="admin" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
         </Routes>
       </BrowserRouter>
