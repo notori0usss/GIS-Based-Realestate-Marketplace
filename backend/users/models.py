@@ -13,6 +13,6 @@ class Profile(models.Model):
     bio=models.TextField(null=True, blank=True)
     profile_picture=models.ImageField(upload_to='profile_pictures/%Y/%m/%d',default="user.png")
     subscribed=models.BooleanField(default=False,null=True)
-
+    
     def __str__(self):
         return f"Profile of {self.seller.username}"

@@ -1,12 +1,18 @@
 import React, { useState } from "react"
 
-function SearchBar({}, ref) {
+function SearchBar({ getSearchTitle }, ref) {
   const [query, setQuery] = useState("")
-  console.log(ref.current)
+  const [lat, setLat] = useState(28.015879590070554)
+  const [lng, setLng] = useState(84.77230931473511)
+
+  if (query === "kirtipur") {
+    setLat(27.667286988735277)
+    setLng(85.27796966687711)
+  }
   function searchHandler(e) {
     e.preventDefault()
-    console.log(query)
-    ref.current.flyTo([27.723511377718985, 85.30779224321469], 18, {
+    getSearchTitle(query.toLowerCase())
+    ref.current.flyTo([lat, lng], 18, {
       animate: true,
     })
   }
@@ -23,9 +29,9 @@ function SearchBar({}, ref) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             ></path>
           </svg>

@@ -8,6 +8,10 @@ export const navItems = [
     title: "Listings",
   },
   {
+    path: "./agencies",
+    title: "Agencies",
+  },
+  {
     path: "/addProperty",
     title: "Add Property",
   },

@@ -11,6 +11,8 @@ import Profile from "./Profile"
 import Realtor from "./Realtor"
 import AllProperties from "../components/AllProperties"
 import AdminPage from "./AdminPage"
+import ProfileUpdate from "../components/ProfileUpdate"
+import Agencies from "./Agencies"
 function Pages() {
   return (
     <>
@@ -19,6 +21,7 @@ function Pages() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listings" element={<Listings />} />
+          <Route path="/agencies" element={<Agencies />} />
           <Route path="/addProperty" element={<AddProperty />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/login" element={<Login />} />
@@ -27,6 +30,7 @@ function Pages() {
           <Route path="/realtors" element={<Realtor />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
+          <Route path="/profileupdate" element={<ProfileUpdate />} />
         </Routes>
       </BrowserRouter>
     </>

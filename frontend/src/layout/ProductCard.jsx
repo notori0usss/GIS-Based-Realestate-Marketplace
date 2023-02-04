@@ -25,7 +25,7 @@ function ProductCard(
     latitude,
     longitude,
     date_posted,
-    seller_username,
+    seller_agency_name,
     seller_profile_picture,
   },
   ref
@@ -34,7 +34,7 @@ function ProductCard(
   const showPropertyLocation = () => {
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
   }
-  const avatar = genConfig(seller_username)
+
   const GlobalState = useContext(StateContext)
   const [timeElapsed, setTimeElapsed] = useState(0)
   useEffect(() => {
@@ -96,8 +96,8 @@ function ProductCard(
       </div>
       <hr />
       <div className="flex items-center justify-between mx-2">
-        <h5 className="text-center font-semibold text-gray-600 my-2">
-          Posted by {seller_username}
+        <h5 className="text-center font-semibold text-gray-600 my-2 hover:underline hover:text-gray-800 hover:cursor-pointer">
+          Posted by {seller_agency_name}
         </h5>
         {timeElapsed === 0 ? (
           <span className="text-gray-500 text-sm"> Today</span>

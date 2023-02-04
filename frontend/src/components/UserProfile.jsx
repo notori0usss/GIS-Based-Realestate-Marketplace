@@ -1,12 +1,25 @@
 import React from "react"
 import { useContext } from "react"
 import StateContext from "../context/StateContext"
-import { FaPhoneAlt, FaRing, FaSuitcase } from "react-icons/fa"
-import { MdVerified } from "react-icons/md"
+import {
+  FaPhoneAlt,
+  FaRing,
+  FaSuitcase,
+  MdVerified,
+  TbReportMoney,
+} from "react-icons/all"
+import { useNavigate } from "react-router-dom"
+import ProfileUpdate from "./ProfileUpdate"
 
-function UserProfile({ agency, number, profilePicture, isSubscribed }) {
+function UserProfile({
+  agency,
+  number,
+  profilePicture,
+  isSubscribed,
+  totalListing,
+}) {
   const GlobalState = useContext(StateContext)
-
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col items-center border-4 py-10 gap-2">
       <img
@@ -37,6 +50,16 @@ function UserProfile({ agency, number, profilePicture, isSubscribed }) {
       <div className="flex items-center gap-2">
         <FaPhoneAlt className="text-gray-600" />: {number}
       </div>
+      <div className="flex items-center gap-2">
+        <TbReportMoney className="text-gray-600 text-xl font-bold " />:{" "}
+        {totalListing}
+      </div>
+      <button
+        className="bg-yellow-500 px-5 py-2 font-semibold text-white hover:bg-yellow-400"
+        onClick={() => navigate("/profileupdate")}
+      >
+        Edit Profile
+      </button>
     </div>
   )
 }

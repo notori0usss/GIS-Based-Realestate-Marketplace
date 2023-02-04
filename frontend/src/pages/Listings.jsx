@@ -1,7 +1,7 @@
 import useGeolocation from "../hooks/useGeolocation"
 import React, { useContext, useState, useRef } from "react"
 import Navbar from "../layout/Navbar"
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet"
 import { Icon } from "leaflet"
 
 import Axios from "axios"
@@ -19,7 +19,8 @@ import { ImStack } from "react-icons/im"
 import { RiUserLocationFill } from "react-icons/ri"
 import StateContext from "../context/StateContext"
 import SearchBar from "../components/SearchBar"
-
+import Kirtipur from "../data/GeoJSON/Kirtipur"
+import Balkot from "../data/GeoJSON/Balkot"
 function Listings() {
   const location = useGeolocation()
   const mapRef = useRef(null)
@@ -54,7 +55,18 @@ function Listings() {
       alert(location.error.message)
     }
   }
-
+  const [searchTitle, setSearchTitle] = useState("")
+  function getSearchTitle(query) {
+    setSearchTitle(query)
+  }
+  console.log(searchTitle)
+  function areaDisplay() {
+    if (searchTitle === "kirtipur") {
+      return <Polygon positions={Kirtipur} />
+    } else if (searchTitle === "balkot") {
+      return <Polygon positions={Balkot} />
+    }
+  }
   const [allListings, setAllListings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [toggle, setToggle] = useState(false)
@@ -97,7 +109,7 @@ function Listings() {
 
   return (
     <div className="relative">
-      <SearchBar ref={mapRef} />
+      <SearchBar ref={mapRef} getSearchTitle={getSearchTitle} />
       <button
         className="absolute z-10 top-[3%] right-[1%] bg-white rounded-md p-2"
         onClick={handleToggle}
@@ -125,7 +137,7 @@ function Listings() {
             ref={mapRef}
           >
             <TileLayer url={mapLayer} />
-
+            {areaDisplay()}
             {location.loaded && !location.error && (
               <Marker
                 icon={userIcon}

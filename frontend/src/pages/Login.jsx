@@ -96,11 +96,10 @@ function Login() {
             emailInfo: response.data.email,
             idInfo: response.data.id,
           })
+          console.log(response)
           if (response.status === 200) {
             navigate("/")
           }
-
-          console.log(response)
         } catch (error) {
           console.log(error)
         }
