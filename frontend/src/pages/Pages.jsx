@@ -13,6 +13,8 @@ import AllProperties from "../components/AllProperties"
 import AdminPage from "./AdminPage"
 import ProfileUpdate from "../components/ProfileUpdate"
 import Agencies from "./Agencies"
+import AgencyDetail from "../components/AgencyDetail"
+import ListingDetails from "./ListingDetails"
 function Pages() {
   return (
     <>
@@ -31,6 +33,8 @@ function Pages() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
+          <Route path="/agencies/:id" element={<AgencyDetail />} />
+          <Route path="/listings/:id" element={<ListingDetails />} />
         </Routes>
       </BrowserRouter>
     </>

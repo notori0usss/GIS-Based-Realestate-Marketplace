@@ -17,6 +17,7 @@ function UserProfile({
   profilePicture,
   isSubscribed,
   totalListing,
+  sellerId,
 }) {
   const GlobalState = useContext(StateContext)
   const navigate = useNavigate()
@@ -50,7 +51,10 @@ function UserProfile({
       <div className="flex items-center gap-2">
         <FaPhoneAlt className="text-gray-600" />: {number}
       </div>
-      <div className="flex items-center gap-2">
+      <div
+        className="flex items-center gap-2"
+        onClick={() => navigate(`/agencies/${sellerId}`)}
+      >
         <TbReportMoney className="text-gray-600 text-xl font-bold " />:{" "}
         {totalListing}
       </div>

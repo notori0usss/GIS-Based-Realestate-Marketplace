@@ -5,6 +5,7 @@ import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import Loading from "../layout/Loading"
 import AgencyCard from "../layout/AgencyCard"
+import Heading from "../components/Heading"
 function Agencies() {
   const navigate = useNavigate()
   const GlobalState = useContext(StateContext)
@@ -43,18 +44,26 @@ function Agencies() {
     return <Loading />
   }
   return (
-    <ul className="grid grid-cols-3 px-32 py-10">
-      {state.agenciesList.map(
-        (item) =>
-          item.agency_name &&
-          item.phone_number &&
-          item.subscribed && (
-            <li key={item.id}>
-              <AgencyCard {...item} />
-            </li>
-          )
-      )}
-    </ul>
+    <>
+      <div className="flex items-center justify-center flex-col mt-10">
+        <Heading
+          title="Our Registered Agencies"
+          subtitle="Check the finest Agencies"
+        />
+      </div>
+      <ul className="grid grid-cols-3 px-32 pb-10">
+        {state.agenciesList.map(
+          (item) =>
+            item.agency_name &&
+            item.phone_number &&
+            item.subscribed && (
+              <li key={item.id}>
+                <AgencyCard {...item} />
+              </li>
+            )
+        )}
+      </ul>
+    </>
   )
 }
 

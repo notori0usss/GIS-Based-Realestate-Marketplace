@@ -1,6 +1,8 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
-function AgencyCard({ agency_name, profile_picture, seller_listings }) {
+function AgencyCard({ agency_name, profile_picture, seller_listings, seller }) {
+  const navigate = useNavigate()
   function sellerListingLength(seller_listings) {
     if (seller_listings.length === 0) {
       return (
@@ -9,10 +11,20 @@ function AgencyCard({ agency_name, profile_picture, seller_listings }) {
         </button>
       )
     } else if (seller_listings.length === 1) {
-      return <button className="hover:text-yellow-500">1 Property</button>
+      return (
+        <button
+          className="hover:text-yellow-500"
+          onClick={() => navigate(`/agencies/${seller}`)}
+        >
+          1 Property
+        </button>
+      )
     } else {
       return (
-        <button className="hover:text-yellow-500">
+        <button
+          className="hover:text-yellow-500"
+          onClick={() => navigate(`/agencies/${seller}`)}
+        >
           {seller_listings.length} Property
         </button>
       )

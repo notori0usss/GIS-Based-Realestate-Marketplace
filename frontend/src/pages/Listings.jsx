@@ -21,11 +21,13 @@ import StateContext from "../context/StateContext"
 import SearchBar from "../components/SearchBar"
 import Kirtipur from "../data/GeoJSON/Kirtipur"
 import Balkot from "../data/GeoJSON/Balkot"
+import { useNavigate } from "react-router-dom"
 function Listings() {
   const location = useGeolocation()
   const mapRef = useRef(null)
   const markerRef = useRef(null)
   const GlobalState = useContext(StateContext)
+  const navigate = useNavigate()
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
     iconSize: [40, 40],
@@ -59,7 +61,7 @@ function Listings() {
   function getSearchTitle(query) {
     setSearchTitle(query)
   }
-  console.log(searchTitle)
+
   function areaDisplay() {
     if (searchTitle === "kirtipur") {
       return <Polygon positions={Kirtipur} />
@@ -93,6 +95,7 @@ function Listings() {
 
         setDataLoading(false)
         setAllListings(listingResponse.data)
+        console.log(listingResponse.data)
       } catch (error) {
         console.log(error)
       }
@@ -174,11 +177,15 @@ function Listings() {
                       <img
                         src={item.picture1}
                         alt="listing"
-                        className="w-full h-[12rem] object-cover"
+                        className="w-full h-[12rem] object-cover cursor-pointer"
+                        onClick={() => navigate(`/listings/${item.id}`)}
                       />
                       <button onClick={navigation}>Goto</button>
                       <p className="w-full truncate">{item.description}</p>
-                      <button className="w-full bg-yellow-500 text-white py-3 rounded-lg">
+                      <button
+                        className="w-full bg-yellow-500 text-white py-3 rounded-lg"
+                        onClick={() => navigate(`/listings/${item.id}`)}
+                      >
                         See More
                       </button>
                     </div>

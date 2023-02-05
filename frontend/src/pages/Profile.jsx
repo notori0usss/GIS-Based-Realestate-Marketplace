@@ -63,6 +63,7 @@ function Profile() {
           profilePicture={state.profilePictureValue}
           isSubscribed={state.userProfile.subscribed}
           totalListing={state.userProfile.seller_listings_count}
+          sellerId={state.userProfile.seller}
         />
       ) : (
         <UserProfile
@@ -71,6 +72,7 @@ function Profile() {
           profilePicture={state.userProfile.profile_picture}
           isSubscribed={state.userProfile.subscribed}
           totalListing={state.userProfile.seller_listings_count}
+          sellerId={state.userProfile.seller}
         />
       )}
     </>

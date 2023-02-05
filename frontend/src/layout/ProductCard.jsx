@@ -8,6 +8,7 @@ import NoData from "../assets/nodata.jpg"
 import Avatar, { genConfig } from "react-nice-avatar"
 import { useContext } from "react"
 import StateContext from "../context/StateContext"
+import { useNavigate } from "react-router-dom"
 function ProductCard(
   {
     id,
@@ -27,6 +28,7 @@ function ProductCard(
     date_posted,
     seller_agency_name,
     seller_profile_picture,
+    seller,
   },
   ref
 ) {
@@ -34,7 +36,7 @@ function ProductCard(
   const showPropertyLocation = () => {
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
   }
-
+  const navigate = useNavigate()
   const GlobalState = useContext(StateContext)
   const [timeElapsed, setTimeElapsed] = useState(0)
   useEffect(() => {
@@ -45,9 +47,17 @@ function ProductCard(
     setTimeElapsed(timeElapsed)
   }, [])
   return (
-    <div className="flex flex-col w-full h-full shadow-lg" key={id}>
+    <div
+      className="flex flex-col w-full h-full shadow-lg hover:shadow-2xl transistion-all duration-150 rounded-md "
+      key={id}
+    >
       <div className="relative">
-        <img className="w-full h-[15rem] object-cover" src={picture1} alt="" />
+        <img
+          className="w-full h-[15rem] object-cover cursor-pointer "
+          src={picture1}
+          alt=""
+          onClick={() => navigate(`/listings/${id}`)}
+        />
         {property_status === "Sale" ? (
           <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-sm shadow-sm">
             For {property_status}
@@ -96,7 +106,10 @@ function ProductCard(
       </div>
       <hr />
       <div className="flex items-center justify-between mx-2">
-        <h5 className="text-center font-semibold text-gray-600 my-2 hover:underline hover:text-gray-800 hover:cursor-pointer">
+        <h5
+          className="text-center font-semibold text-gray-600 my-2 hover:underline hover:text-gray-800 hover:cursor-pointer"
+          onClick={() => navigate(`/agencies/${seller}`)}
+        >
           Posted by {seller_agency_name}
         </h5>
         {timeElapsed === 0 ? (
