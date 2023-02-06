@@ -56,8 +56,8 @@ function ListingDetails() {
     state.listingInfo.picture5,
   ].filter((picture) => picture !== null)
   return (
-    <div className="flex gap-4 px-2 py-2 bg-white">
-      <div className="bg-[#f7fdfe] border-2 flex-3">
+    <div className="grid grid-cols-4 gap-4 px-2 py-2 bg-white">
+      <div className="bg-[#f7fdfe] border-2 col-span-3">
         <nav className="rounded-md w-full">
           <ol className="list-reset flex py-4 px-4">
             <li>
@@ -93,18 +93,20 @@ function ListingDetails() {
               ))}
             </Fade>
           ) : (
-            <Zoom scale={0.4}>
+            <Fade>
               {images.map((image, index) => (
                 <img
                   key={index}
                   style={{
                     width: "100%",
                     height: "70vh",
+                    objectFit: "cover",
+                    margin: "auto",
                   }}
                   src={image}
                 />
               ))}
-            </Zoom>
+            </Fade>
           )}
         </div>
 
@@ -181,42 +183,47 @@ function ListingDetails() {
           </div>
         </div>
       </div>
-
-      <div className="flex flex-col gap-4 flex-1">
-        <div className="bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-4">
-          {/* Profile */}
-          <div className="py-4 w-full ">
-            <div className="flex gap-2 items-center">
-              <img className="w-20 h-20 rounded-full bg-black" src="" alt="" />
-              <div>
-                <h2>Swaroop Agency</h2>
-                <p>Date Joined</p>
+      <div>
+        <div className="flex flex-col gap-4 flex-1">
+          <div className="bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-4">
+            {/* Profile */}
+            <div className="py-4 w-full ">
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-20 h-20 rounded-full bg-black"
+                  src=""
+                  alt=""
+                />
+                <div>
+                  <h2>Swaroop Agency</h2>
+                  <p>Date Joined</p>
+                </div>
+              </div>
+              <button className="px-5 py-5 text-center w-full text-yellow-500 underline font-bold ">
+                View Profile
+              </button>
+              <div className="text-gray-500">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet
+                eligendi tenetur facilis accusamus harum labore aut natus
+                quaerat deleniti? Accusantium.
+              </div>
+              <div className="flex items-center mt-5 gap-3">
+                <h2 className="font-semibold">Contact with Host: </h2>
+                <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                  Chat
+                </button>
+                <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                  Email
+                </button>
               </div>
             </div>
-            <button className="px-5 py-5 text-center w-full text-yellow-500 underline font-bold ">
-              View Profile
-            </button>
-            <div className="text-gray-500">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet
-              eligendi tenetur facilis accusamus harum labore aut natus quaerat
-              deleniti? Accusantium.
-            </div>
-            <div className="flex items-center mt-5 gap-3">
-              <h2 className="font-semibold">Contact with Host: </h2>
-              <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
-                Chat
-              </button>
-              <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
-                Email
-              </button>
-            </div>
           </div>
-        </div>
-        <div className="w-full bg-[#f7fdfe] border-2 rounded-lg px-3 py-5">
-          <h1 className="text-xl font-semibold">Properties Nearby</h1>
-          <NearbyProperty />
-          <NearbyProperty />
-          <NearbyProperty />
+          <div className="w-full bg-[#f7fdfe] border-2 rounded-lg px-3 py-5">
+            <h1 className="text-xl font-semibold">Properties Nearby</h1>
+            <NearbyProperty />
+            <NearbyProperty />
+            <NearbyProperty />
+          </div>
         </div>
       </div>
     </div>
