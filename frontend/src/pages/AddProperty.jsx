@@ -174,6 +174,7 @@ function AddProperty() {
           formData.append("property_status", state.propertyStatusValue),
           formData.append("price", state.priceValue),
           formData.append("rooms", state.roomsValue),
+          formData.append("parking", state.parkingValue),
           formData.append("furnished", state.furnishedValue),
           formData.append("pool", state.poolValue),
           formData.append("elevator", state.elevatorValue),
