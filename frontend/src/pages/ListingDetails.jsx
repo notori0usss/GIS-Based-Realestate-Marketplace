@@ -3,7 +3,13 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import Loading from "../layout/Loading"
-import { MdBed, FaCarSide, TbGridDots } from "react-icons/all"
+import {
+  MdBed,
+  FaCarSide,
+  TbGridDots,
+  FaPhone,
+  FaPhoneAlt,
+} from "react-icons/all"
 import { Fade, Zoom } from "react-slideshow-image"
 
 import "react-slideshow-image/dist/styles.css"
@@ -12,8 +18,9 @@ function ListingDetails() {
   const navigate = useNavigate()
   const params = useParams()
   const initialState = {
-    lisitingInfo: "",
+    listingInfo: "",
     dataIsLoading: true,
+    userInfo: "",
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -22,6 +29,9 @@ function ListingDetails() {
         break
       case "loadingDone":
         draft.dataIsLoading = false
+        break
+      case "catchUserInfo":
+        draft.userInfo = action.userObject
         break
     }
   }
@@ -42,12 +52,28 @@ function ListingDetails() {
     GetListingInfo()
   }, [])
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  useEffect(() => {
+    async function GetUserInfo() {
+      try {
+        const response = await Axios.get(
+          `http://127.0.0.1:8000/api/profiles/${state.listingInfo.seller}/`
+        )
+        console.log(response.data)
+        dispatch({ type: "catchUserInfo", userObject: response.data })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    GetUserInfo()
+  }, [state.listingInfo])
+
   //form submit
 
   if (state.dataIsLoading === true) {
     return <Loading />
   }
   console.log(state.listingInfo)
+  console.log(state.userInfo)
   const images = [
     state.listingInfo.picture1,
     state.listingInfo.picture2,
@@ -55,6 +81,7 @@ function ListingDetails() {
     state.listingInfo.picture4,
     state.listingInfo.picture5,
   ].filter((picture) => picture !== null)
+
   return (
     <div className="grid grid-cols-4 gap-4 px-2 py-2 bg-white">
       <div className="bg-[#f7fdfe] border-2 col-span-3">
@@ -167,18 +194,34 @@ function ListingDetails() {
           <div className="mt-16 w-2/3">
             <h2 className="text-2xl font-semibold">Facilities</h2>
             <div className="flex gap-10 my-3">
-              <div className="bg-teal-300 px-3 py-2 text-lg font-semibold rounded-xl">
-                Pool
-              </div>
-              <div className="bg-yellow-300 px-3 py-2 text-lg font-semibold rounded-xl">
-                Furnished
-              </div>
-              <div className="bg-gray-700 px-3 py-2 text-lg font-semibold rounded-xl text-white">
-                Elevator
-              </div>
-              <div className="bg-red-500 px-3 py-2 text-lg font-semibold rounded-xl text-white">
-                CCTV
-              </div>
+              {!state.listingInfo.pool &&
+                !state.listingInfo.furnished &&
+                !state.listingInfo.elevator &&
+                !state.listingInfo.cctv && (
+                  <div className="bg-red-300 px-3 py-2 text-lg font-semibold rounded-xl">
+                    Opps! No description available.
+                  </div>
+                )}
+              {state.listingInfo.pool && (
+                <div className="bg-teal-300 px-3 py-2 text-lg font-semibold rounded-xl">
+                  Pool
+                </div>
+              )}
+              {state.listingInfo.furnished && (
+                <div className="bg-yellow-300 px-3 py-2 text-lg font-semibold rounded-xl">
+                  Furnished
+                </div>
+              )}
+              {state.listingInfo.elevator && (
+                <div className="bg-gray-700 px-3 py-2 text-lg font-semibold rounded-xl text-white">
+                  Elevator
+                </div>
+              )}
+              {state.listingInfo.cctv && (
+                <div className="bg-red-500 px-3 py-2 text-lg font-semibold rounded-xl text-white">
+                  CCTV
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -190,23 +233,27 @@ function ListingDetails() {
             <div className="py-4 w-full ">
               <div className="flex gap-2 items-center">
                 <img
-                  className="w-20 h-20 rounded-full bg-black"
-                  src=""
+                  className="w-20 h-20 rounded-full bg-black object-cover"
+                  src={state.userInfo?.profile_picture}
                   alt=""
                 />
                 <div>
-                  <h2>Swaroop Agency</h2>
-                  <p>Date Joined</p>
+                  <h2 className="text-lg font-semibold">
+                    {state.userInfo.agency_name}
+                  </h2>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <FaPhoneAlt className="text-sm" />
+                    {state.userInfo.phone_number}
+                  </div>
                 </div>
               </div>
-              <button className="px-5 py-5 text-center w-full text-yellow-500 underline font-bold ">
+              <button
+                className="px-5 py-5 text-center w-full text-yellow-500 underline font-bold "
+                onClick={() => navigate(`/agencies/${state.userInfo.seller}`)}
+              >
                 View Profile
               </button>
-              <div className="text-gray-500">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet
-                eligendi tenetur facilis accusamus harum labore aut natus
-                quaerat deleniti? Accusantium.
-              </div>
+              <div className="text-gray-500">{state.userInfo.bio}</div>
               <div className="flex items-center mt-5 gap-3">
                 <h2 className="font-semibold">Contact with Host: </h2>
                 <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">

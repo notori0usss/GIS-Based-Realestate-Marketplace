@@ -7,6 +7,8 @@ import DispatchContext from "../context/DispatchContext"
 import UserProfile from "../components/UserProfile"
 import UserIcon from "../assets/user.png"
 import Loading from "../layout/Loading"
+import AgencyCard from "../layout/AgencyCard"
+import ProfileListCard from "../components/ProfileListCard"
 function Profile() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
@@ -49,10 +51,11 @@ function Profile() {
   }, [])
 
   //form submit
-
+  console.log(state.userProfile)
   if (state.dataIsLoading === true) {
     return <Loading />
   }
+
   return (
     <>
       {state.userProfile.agency_name === null ||
@@ -75,6 +78,14 @@ function Profile() {
           sellerId={state.userProfile.seller}
         />
       )}
+      <hr />
+      <div className="flex justify-center">
+        <div className="grid grid-cols-3 gap-8 my-4 mx-auto">
+          {state.userProfile.seller_listings?.map((item) => (
+            <ProfileListCard {...item} />
+          ))}
+        </div>
+      </div>
     </>
   )
 }

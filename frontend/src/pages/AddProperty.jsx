@@ -169,6 +169,7 @@ function AddProperty() {
         const formData = new FormData()
         formData.append("title", state.titleValue),
           formData.append("area", state.areaValue),
+          formData.append("municipality", state.municipalityValue),
           formData.append("description", state.descriptionValue),
           formData.append("listing_type", state.listingTypeValue),
           formData.append("property_status", state.propertyStatusValue),
