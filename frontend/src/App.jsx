@@ -11,6 +11,7 @@ function App() {
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
     listingInfo: "",
+    subscribedInfo: 0,
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -29,12 +30,15 @@ function App() {
       case "getListings":
         draft.listingInfo = action.listingValue
         break
+      case "getSubscribedInfo":
+        draft.subscribedInfo = draft.subscribedInfo + 1
+        break
     }
   }
 
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  console.log(state.subscribedInfo)
 
-  console.log(state.profile)
   useEffect(() => {
     if (state.userIsLogged) {
       localStorage.setItem("theUserUsername", state.userUsername)

@@ -7,4 +7,4 @@ password: normal one
 Get realtor data in admin panel
 make it verifyable
 admin panel consists of total listings 
-//"f:/React Projects/fyp/myvenv/Scripts/Activate.ps1"
+ & "f:/React Projects/fyp/myvenv/Scripts/Activate.ps1"

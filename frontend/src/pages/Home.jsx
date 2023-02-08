@@ -59,6 +59,7 @@ function Home() {
             subscribedStatus
           )
           console.log(response)
+          GlobalDispatch({ type: "getSubscribedInfo" })
         } catch (error) {
           console.log(error)
         }

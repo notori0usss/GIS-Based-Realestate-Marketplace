@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
@@ -14,9 +14,11 @@ import { Fade, Zoom } from "react-slideshow-image"
 
 import "react-slideshow-image/dist/styles.css"
 import NearbyProperty from "../components/NearbyProperty"
+import StateContext from "../context/StateContext"
 function ListingDetails() {
   const navigate = useNavigate()
   const params = useParams()
+  const GlobalState = useContext(StateContext)
   const initialState = {
     listingInfo: "",
     dataIsLoading: true,
@@ -35,7 +37,7 @@ function ListingDetails() {
         break
     }
   }
-
+  console.log(GlobalState.listingInfo)
   useEffect(() => {
     async function GetListingInfo() {
       try {
@@ -66,8 +68,6 @@ function ListingDetails() {
     }
     GetUserInfo()
   }, [state.listingInfo])
-
-  //form submit
 
   if (state.dataIsLoading === true) {
     return <Loading />
@@ -267,9 +267,11 @@ function ListingDetails() {
           </div>
           <div className="w-full bg-[#f7fdfe] border-2 rounded-lg px-3 py-5">
             <h1 className="text-xl font-semibold">Properties Nearby</h1>
-            <NearbyProperty />
-            <NearbyProperty />
-            <NearbyProperty />
+            {Array.from(GlobalState?.listingInfo)
+              .slice(0, 3)
+              .map((item) => (
+                <NearbyProperty {...item} key={item.id} />
+              ))}
           </div>
         </div>
       </div>

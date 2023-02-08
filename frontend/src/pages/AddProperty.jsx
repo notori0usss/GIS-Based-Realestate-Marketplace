@@ -387,7 +387,7 @@ function AddProperty() {
     }
   }
   return (
-    <div className="flex flex-col items-center w-full pt-5 bg-gradient-to-b from-yellow-50 to-amber-50">
+    <div className="flex flex-col items-center w-full pt-5">
       <h1 className="text-3xl my-6 font-semibold text-gray-600">
         Add a Property
       </h1>
@@ -398,7 +398,7 @@ function AddProperty() {
       >
         <div className="flex justify-evenly gap-x-5">
           <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="text"
             value={state.titleValue}
             placeholder="Title"
@@ -410,7 +410,7 @@ function AddProperty() {
             }
           />
           <select
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             value={state.listingTypeValue}
             onChange={(e) =>
               dispatch({
@@ -428,7 +428,7 @@ function AddProperty() {
           </select>
         </div>
         <textarea
-          className="h-32 px-3 py-2 shadow-md rounded-lg focus:outline-blue-300 "
+          className="h-32 px-3 py-2 shadow-md rounded focus:outline-blue-300 "
           maxLength={200}
           type="text"
           value={state.descriptionValue}
@@ -446,7 +446,7 @@ function AddProperty() {
         </h1>
         <div className="flex gap-4">
           <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="number"
             value={state.roomsValue}
             placeholder="Rooms"
@@ -458,7 +458,7 @@ function AddProperty() {
             }
           />
           <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="number"
             value={state.parkingValue}
             placeholder="Parking"
@@ -472,7 +472,7 @@ function AddProperty() {
         </div>
         <div className="flex gap-4">
           <select
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="text"
             value={state.propertyStatusValue}
             placeholder="Property Status"
@@ -492,7 +492,7 @@ function AddProperty() {
 
           {state.propertyStatusValue === "Rent" ? (
             <select
-              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
               value={state.rentalFrequencyValue}
               onChange={(e) =>
                 dispatch({
@@ -510,7 +510,7 @@ function AddProperty() {
             </select>
           ) : (
             <select
-              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
               disabled
             >
               <option value="">--</option>
@@ -522,7 +522,7 @@ function AddProperty() {
         </h1>
         <div className="flex gap-4">
           <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="number"
             value={state.propertyAreaValue}
             placeholder="Property Area"
@@ -535,7 +535,7 @@ function AddProperty() {
           />
 
           <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="number"
             value={state.priceValue}
             placeholder="Price"
@@ -610,7 +610,7 @@ function AddProperty() {
         </div>
         <div className="flex justify-evenly w-full gap-4">
           <select
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="text"
             value={state.areaValue}
             placeholder="Area"
@@ -628,7 +628,7 @@ function AddProperty() {
             <option value={"Bhaktapur"}>Bhaktapur</option>
           </select>
           <select
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="text"
             value={state.municipalityValue}
             placeholder="Municipality"
@@ -649,36 +649,7 @@ function AddProperty() {
             )}
           </select>
         </div>
-        <h1 className="font-semibold text-sm text-gray-500">
-          Note: Latitude and Longitude can be chosen with the draggable marker
-          in the map.
-        </h1>
-        <div className="flex gap-4">
-          <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.latitudeValue}
-            placeholder="Latitude"
-            onChange={(e) =>
-              dispatch({
-                type: "catchLatitudeChange",
-                latitudeChosen: e.target.value,
-              })
-            }
-          />
-          <input
-            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
-            type="number"
-            value={state.longitudeValue}
-            placeholder="Longitude"
-            onChange={(e) =>
-              dispatch({
-                type: "catchLongitudeChange",
-                longitudeChosen: e.target.value,
-              })
-            }
-          />
-        </div>
+
         <div className="w-full h-[70vh] z-0">
           <MapContainer
             center={[27.704111212111023, 85.31943175211019]}
@@ -696,10 +667,40 @@ function AddProperty() {
             ></Marker>
           </MapContainer>
         </div>
+        <h1 className="font-semibold text-sm text-gray-500">
+          Note: Latitude and Longitude can be chosen with the draggable marker
+          in the map.
+        </h1>
+        <div className="flex gap-4">
+          <input
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
+            type="number"
+            value={state.latitudeValue}
+            placeholder="Latitude"
+            onChange={(e) =>
+              dispatch({
+                type: "catchLatitudeChange",
+                latitudeChosen: e.target.value,
+              })
+            }
+          />
+          <input
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
+            type="number"
+            value={state.longitudeValue}
+            placeholder="Longitude"
+            onChange={(e) =>
+              dispatch({
+                type: "catchLongitudeChange",
+                longitudeChosen: e.target.value,
+              })
+            }
+          />
+        </div>
         <div className="flex items-center justify-center w-full">
           <label
             htmlFor="dropzone-file"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               {state.uploadedImages.length === 0 ? (

@@ -17,10 +17,6 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [config, setConfig] = useState("")
 
-  // useEffect(() => {
-  //   setConfig(genConfig(GlobalState?.userEmail))
-  // }, [GlobalState.userSignsIn])
-
   async function handleLogout() {
     try {
       const response = await Axios.post(
@@ -55,11 +51,10 @@ function Navbar() {
       }
     }
     GetProfileInfo()
-  }, [GlobalState.userIsLogged, subscriptionStatus])
-  console.log(profilePic)
+  }, [GlobalState.userIsLogged, subscriptionStatus, GlobalState.subscribedInfo])
 
   return (
-    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white sticky top-0 z-10">
+    <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white sticky top-0 z-20">
       <Link to="/" className="font-pacifico text-xl">
         Digi<span className="text-yellow-500"> Dalal</span>
       </Link>
