@@ -73,8 +73,8 @@ class Poi(models.Model):
         ('Resturant', 'Resturant'),
         ('Tourist Destination', 'Tourist Destination'),
     )
-    type=models.CharField(max_length=50,choices=choices_type)
-    location=models.PointField(srid=4326,blank=True,null=True)
+    type = models.CharField(max_length=50, choices=choices_type)
+    location = models.PointField(srid=4326, blank=True, null=True)
 
     def __str__(self):
         return self.name
