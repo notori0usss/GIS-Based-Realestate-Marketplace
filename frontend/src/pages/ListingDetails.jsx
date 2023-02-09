@@ -18,14 +18,19 @@ import StateContext from "../context/StateContext"
 function ListingDetails() {
   const navigate = useNavigate()
   const params = useParams()
-  const GlobalState = useContext(StateContext)
+  const userId = localStorage.getItem("theUserId")
+  console.log(userId)
   const initialState = {
     listingInfo: "",
+    allListingInfo: "",
     dataIsLoading: true,
     userInfo: "",
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
+      case "catchAllListingInfo":
+        draft.allListingInfo = action.allListingObject
+        break
       case "catchListingInfo":
         draft.listingInfo = action.listingObject
         break
@@ -37,7 +42,7 @@ function ListingDetails() {
         break
     }
   }
-  console.log(GlobalState.listingInfo)
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   useEffect(() => {
     async function GetListingInfo() {
       try {
@@ -52,28 +57,45 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [])
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  }, [params.id, state.listingInfo.picture1])
+
   useEffect(() => {
-    async function GetUserInfo() {
+    async function GetAllListingInfo() {
       try {
-        const response = await Axios.get(
-          `http://127.0.0.1:8000/api/profiles/${state.listingInfo.seller}/`
-        )
+        const response = await Axios.get("http://127.0.0.1:8000/api/listings/")
+        dispatch({
+          type: "catchAllListingInfo",
+          allListingObject: response.data,
+        })
         console.log(response.data)
-        dispatch({ type: "catchUserInfo", userObject: response.data })
       } catch (e) {
         console.log(e)
       }
     }
+    GetAllListingInfo()
+  }, [])
+
+  useEffect(() => {
+    async function GetUserInfo() {
+      if (state.listingInfo.seller) {
+        try {
+          const response = await Axios.get(
+            `http://127.0.0.1:8000/api/profiles/${state.listingInfo.seller}/`
+          )
+          console.log(response.data)
+          dispatch({ type: "catchUserInfo", userObject: response.data })
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+
     GetUserInfo()
-  }, [state.listingInfo])
+  }, [state.listingInfo.seller])
 
   if (state.dataIsLoading === true) {
     return <Loading />
   }
-  console.log(state.listingInfo)
-  console.log(state.userInfo)
   const images = [
     state.listingInfo.picture1,
     state.listingInfo.picture2,
@@ -105,7 +127,7 @@ function ListingDetails() {
         </nav>
         <div className="slide-container overflow-hidden px-20">
           {images.length === 1 ? (
-            <Fade autoplay={false} arrows={false}>
+            <div>
               {images.map((image, index) => (
                 <img
                   key={index}
@@ -118,7 +140,7 @@ function ListingDetails() {
                   src={image}
                 />
               ))}
-            </Fade>
+            </div>
           ) : (
             <Fade>
               {images.map((image, index) => (
@@ -253,21 +275,34 @@ function ListingDetails() {
               >
                 View Profile
               </button>
+
               <div className="text-gray-500">{state.userInfo.bio}</div>
-              <div className="flex items-center mt-5 gap-3">
-                <h2 className="font-semibold">Contact with Host: </h2>
-                <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
-                  Chat
-                </button>
-                <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
-                  Email
-                </button>
-              </div>
+              {Number(userId) === Number(state.userInfo.seller) ? (
+                <div className="flex items-center mt-5 gap-3">
+                  <h2 className="font-semibold">Make Changes: </h2>
+                  <button className="px-4 py-1 font-semibold text-teal-500 bg-white border-2 border-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-200 rounded-3xl">
+                    Edit
+                  </button>
+                  <button className="px-4 py-1 font-semibold text-red-500 bg-white border-2 border-red-500 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-3xl">
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center mt-5 gap-3">
+                  <h2 className="font-semibold">Contact Host: </h2>
+                  <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                    Chat
+                  </button>
+                  <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                    Email
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full bg-[#f7fdfe] border-2 rounded-lg px-3 py-5">
             <h1 className="text-xl font-semibold">Properties Nearby</h1>
-            {Array.from(GlobalState?.listingInfo)
+            {Array.from(state.allListingInfo)
               .slice(0, 3)
               .map((item) => (
                 <NearbyProperty {...item} key={item.id} />

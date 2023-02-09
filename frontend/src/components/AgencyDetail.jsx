@@ -78,7 +78,7 @@ function AgencyDetail() {
       <div className="flex items-center w-full justify-center">
         <div className="grid grid-cols-3 gap-10">
           {state.userProfile.seller_listings.map((item) => (
-            <ProfileListCard {...item} />
+            <ProfileListCard {...item} key={item.id} />
           ))}
         </div>
       </div>
