@@ -342,7 +342,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/profile")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Update Profile First
         </button>
@@ -356,7 +356,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/checkout")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Subscribe First
         </button>
@@ -370,7 +370,7 @@ function AddProperty() {
       return (
         <button
           type="submit"
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Add Listing
         </button>
@@ -379,7 +379,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/login")}
-          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Login to Post
         </button>

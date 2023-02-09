@@ -13,7 +13,7 @@ function AgencyCard({ agency_name, profile_picture, seller_listings, seller }) {
     } else if (seller_listings.length === 1) {
       return (
         <button
-          className="hover:text-yellow-500"
+          className="hover:text-blue-500"
           onClick={() => navigate(`/agencies/${seller}`)}
         >
           1 Property
@@ -22,7 +22,7 @@ function AgencyCard({ agency_name, profile_picture, seller_listings, seller }) {
     } else {
       return (
         <button
-          className="hover:text-yellow-500"
+          className="hover:text-blue-500"
           onClick={() => navigate(`/agencies/${seller}`)}
         >
           {seller_listings.length} Property

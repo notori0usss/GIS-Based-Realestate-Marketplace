@@ -31,10 +31,10 @@ function UserProfile({
       {GlobalState.userUsername ? (
         <div className="text-xl font-semibold">
           Welcome{" "}
-          <span className="text-yellow-500 font-semibold">
+          <span className="text-blue-500 font-semibold">
             {GlobalState.userUsername}{" "}
             {isSubscribed ? (
-              <MdVerified className="text-yellow-500 text-sm inline" />
+              <MdVerified className="text-blue-500 text-sm inline" />
             ) : (
               ""
             )}
@@ -59,7 +59,7 @@ function UserProfile({
         {totalListing}
       </div>
       <button
-        className="bg-yellow-500 px-5 py-2 font-semibold text-white hover:bg-yellow-400"
+        className="bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-yellow-400"
         onClick={() => navigate("/profileupdate")}
       >
         Edit Profile

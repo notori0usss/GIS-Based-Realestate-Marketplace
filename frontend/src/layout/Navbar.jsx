@@ -56,14 +56,14 @@ function Navbar() {
   return (
     <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white sticky top-0 z-20">
       <Link to="/" className="font-pacifico text-xl">
-        Digi<span className="text-yellow-500"> Dalal</span>
+        Digi<span className="text-blue-500"> Dalal</span>
       </Link>
       <ul className="flex items-center gap-x-7 justify-center">
         {navItems.map((navItem, index) => (
           <li key={index}>
             <NavLink
               to={navItem.path}
-              className={({ isActive }) => (isActive ? "text-yellow-500" : "")}
+              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
             >
               {navItem.title}
             </NavLink>
@@ -92,7 +92,7 @@ function Navbar() {
               id="dropdownAvatar"
               className="z-10 absolute translate-x-[-120px] bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
             >
-              <div className="px-4 py-3 text-sm text-yellow-300 hover:text-yellow-300 text-center">
+              <div className="px-4 py-3 text-sm text-blue-300 hover:text-blue-300 text-center">
                 {GlobalState.userUsername}
                 {subscriptionStatus && (
                   <MdVerified className="text-pale-500 text-sm inline ml-1" />
@@ -146,7 +146,7 @@ function Navbar() {
         </div>
       ) : (
         <button
-          className="hover:text-white bg-yellow-500 hover:bg-yellow-400 text-gray-200 px-5 py-2 font-semibold rounded-lg"
+          className="hover:text-white bg-blue-500 hover:bg-blue-400 text-gray-200 px-5 py-2 font-semibold rounded-lg"
           onClick={() => navigate("/login")}
         >
           Login

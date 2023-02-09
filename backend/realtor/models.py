@@ -3,9 +3,9 @@ from datetime import datetime
 
 class Realtor(models.Model):
     name = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    photo = models.ImageField(upload_to='media/realtor/%Y/%m/%d/')
     cv = models.FileField(upload_to='cv/%Y/%m/%d/',null=True,blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True,max_length=50)
     phone = models.CharField(max_length=20)
     email = models.CharField(max_length=100)
     date_hired = models.DateTimeField(default=datetime.now, blank=True)

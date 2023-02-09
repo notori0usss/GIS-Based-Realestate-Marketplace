@@ -228,7 +228,7 @@ function ProfileUpdate() {
             }
           />
           <div className="flex items-center justify-between gap-8">
-            <button className="w-1/2 bg-yellow-500 py-3 rounded-md font-semibold text-white">
+            <button className="w-1/2 bg-blue-500 py-3 rounded-md font-semibold text-white">
               Save
             </button>
             <button

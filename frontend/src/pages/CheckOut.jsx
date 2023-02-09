@@ -54,7 +54,7 @@ export default function CheckOut() {
             role="listitem"
             className="bg-white cursor-pointer shadow rounded-lg mt-4 flex relative z-30"
           >
-            <div className="w-2.5 h-auto bg-yellow-500 rounded-tl-md rounded-bl-md" />
+            <div className="w-2.5 h-auto bg-blue-500 rounded-tl-md rounded-bl-md" />
             <div className="w-full p-8">
               <div className="md:flex items-center justify-between relative">
                 <form
@@ -66,7 +66,7 @@ export default function CheckOut() {
                       Premium
                     </h2>
                     <div className="absolute right-0 top-0">
-                      <p className="text-xl md:mt-0 mt-4 font-semibold leading-6  bg-yellow-500 rounded-lg p-3 text-white ">
+                      <p className="text-xl md:mt-0 mt-4 font-semibold leading-6  bg-blue-500 rounded-lg p-3 text-white ">
                         RS. 5000
                       </p>
                     </div>

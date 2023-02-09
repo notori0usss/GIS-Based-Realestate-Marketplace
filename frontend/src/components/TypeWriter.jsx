@@ -8,8 +8,8 @@ function TypeWriter() {
 
   return (
     <div className="App flex gap-2 ">
-      <span className="text-yellow-500 z-10">{text}</span>
-      <Cursor cursorColor="#FFD700" />
+      <span className="text-blue-500 z-10">{text}</span>
+      <Cursor cursorColor="#0081C9" />
       Your Next Property
     </div>
   )

@@ -24,7 +24,7 @@ function AllProperties() {
         type="text"
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search Here"
-        className="w-1/2 px-3 py-2 h-10 outline-yellow-500 shadow-lg rounded-md mt-2 "
+        className="w-1/2 px-3 py-2 h-10 outline-blue-500 shadow-lg rounded-md mt-2 "
       />
       <div className="text-italic text-gray-500">
         Showing Results By <span className="font-semibold">{query}</span>

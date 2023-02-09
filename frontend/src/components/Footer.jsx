@@ -7,7 +7,7 @@ function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <Link to="/" className="font-pacifico text-3xl">
-              Digi<span className="text-yellow-500"> Dalal</span>
+              Digi<span className="text-blue-500"> Dalal</span>
             </Link>
             <p className="max-w-xs mt-4 text-sm text-gray-600">
               Marketplace for your Realestate Properties.

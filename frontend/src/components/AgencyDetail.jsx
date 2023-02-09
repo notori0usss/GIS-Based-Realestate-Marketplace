@@ -68,7 +68,7 @@ function AgencyDetail() {
           <div className="">
             <h2 className="text-xl font-bold">
               {state.userProfile.agency_name}{" "}
-              <MdVerified className="text-yellow-500 text-md inline" />
+              <MdVerified className="text-blue-500 text-md inline" />
             </h2>
             <p className="text-sm ">{state.userProfile.bio}</p>
           </div>

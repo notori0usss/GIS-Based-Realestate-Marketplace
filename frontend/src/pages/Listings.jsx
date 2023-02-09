@@ -148,7 +148,7 @@ function Listings() {
               >
                 <Popup>
                   Hello!{" "}
-                  <span className="text-yellow-500 font-bold cursor-pointer">
+                  <span className="text-blue-500 font-bold cursor-pointer">
                     {GlobalState.userUsername}
                   </span>
                 </Popup>
@@ -183,7 +183,7 @@ function Listings() {
                       <button onClick={navigation}>Goto</button>
                       <p className="w-full truncate">{item.description}</p>
                       <button
-                        className="w-full bg-yellow-500 text-white py-3 rounded-lg"
+                        className="w-full bg-blue-500 text-white py-3 rounded-lg"
                         onClick={() => navigate(`/listings/${item.id}`)}
                       >
                         See More

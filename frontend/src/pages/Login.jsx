@@ -115,13 +115,13 @@ function Login() {
     <div className="grid grid-cols-1 lg:grid-cols-2">
       <div className="flex flex-col items-center w-full h-screen justify-center space-y-10 bg-gray-700 px-28 text-white">
         <h1 className="text-3xl font-pacifico">
-          Log into Digi<span className="text-yellow-500">Dalal</span>
+          Log into Digi<span className="text-blue-500">Dalal</span>
         </h1>
         <p>
           Don't have an account yet?
           <Link
             to="/signup"
-            className="text-yellow-500 hover:text-yellow-300 hover:underline ml-1"
+            className="text-blue-500 hover:text-blue-300 hover:underline ml-1"
           >
             Sign up Free
           </Link>
@@ -159,7 +159,7 @@ function Login() {
             Forgot Password
           </Link>
 
-          <button className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg mt-2">
+          <button className="px-3 py-3 bg-blue-500 w-2/3 rounded-lg mt-2">
             Login
           </button>
         </form>

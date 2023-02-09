@@ -84,7 +84,7 @@ function Signup() {
           Already have an account yet?
           <Link
             to="/login"
-            className="text-yellow-500 hover:text-yellow-300 hover:underline ml-1"
+            className="text-blue-500 hover:text-blue-300 hover:underline ml-1"
           >
             Login
           </Link>
@@ -144,7 +144,7 @@ function Signup() {
           />
 
           <button
-            className="px-3 py-3 bg-yellow-500 w-2/3 rounded-lg mt-5"
+            className="px-3 py-3 bg-blue-500 w-2/3 rounded-lg mt-5"
             type="submit"
           >
             Register

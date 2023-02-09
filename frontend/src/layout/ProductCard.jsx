@@ -72,7 +72,7 @@ function ProductCard(
       <div className="flex items-center w-full p-4 justify-between">
         <div className="">
           <h1 className="font-semibold text-gray-700 text-lg">{title}</h1>
-          <div className="flex items-center text-md text-yellow-600 gap-x-3 ">
+          <div className="flex items-center text-md text-blue-600 gap-x-3 ">
             {rooms} <MdBed className="text-lg" /> |{" "}
             {parking === 0 ? 0 : parking}
             <FaCarSide className="text-lg" /> | {property_area} sqft{" "}
@@ -87,11 +87,11 @@ function ProductCard(
       <hr className="my-2" />
       <div className="flex items-center justify-between px-5 py-2">
         {property_status === "Rent" ? (
-          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
+          <button className="bg-blue-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}/<span className="text-xs">{rental_frequency}</span>
           </button>
         ) : (
-          <button className="bg-yellow-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
+          <button className="bg-blue-500 text-white px-5 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}
           </button>
         )}

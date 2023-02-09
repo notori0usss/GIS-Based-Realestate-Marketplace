@@ -270,7 +270,7 @@ function ListingDetails() {
                 </div>
               </div>
               <button
-                className="px-5 py-5 text-center w-full text-yellow-500 underline font-bold "
+                className="px-5 py-5 text-center w-full text-blue-500 underline font-bold "
                 onClick={() => navigate(`/agencies/${state.userInfo.seller}`)}
               >
                 View Profile
@@ -290,10 +290,10 @@ function ListingDetails() {
               ) : (
                 <div className="flex items-center mt-5 gap-3">
                   <h2 className="font-semibold">Contact Host: </h2>
-                  <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                  <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
                     Chat
                   </button>
-                  <button className="px-4 py-1 font-semibold text-yellow-500 bg-white border-2 border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200 rounded-3xl">
+                  <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
                     Email
                   </button>
                 </div>

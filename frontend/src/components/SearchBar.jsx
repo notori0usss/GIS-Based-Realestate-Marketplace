@@ -39,7 +39,7 @@ function SearchBar({ getSearchTitle }, ref) {
         <input
           type="search"
           id="default-search"
-          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-gray-50 focus:ring-yellow-500 focus:border-yellow-500"
+          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Search Location, Kathmandu..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}

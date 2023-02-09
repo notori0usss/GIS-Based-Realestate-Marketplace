@@ -19,7 +19,7 @@ function Hero() {
           <TypeWriter />
         </h1>
         <button
-          className="bg-yellow-500 z-10 text-white font-bold px-5 py-3 shadow-sm uppercase rounded-lg"
+          className="bg-blue-500 z-10 text-white font-bold px-5 py-3 shadow-sm uppercase rounded-lg"
           onClick={() => navigate("/allProperties")}
         >
           See all properties

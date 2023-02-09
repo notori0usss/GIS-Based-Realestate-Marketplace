@@ -12,19 +12,19 @@ function Timeline() {
       id: 1,
       title: "Registration",
       description: "lorem ipsum dolor sit amet, consectetur adip",
-      icon: <FaFileSignature className="text-yellow-500 text-lg" />,
+      icon: <FaFileSignature className="text-blue-500 text-lg" />,
     },
     {
       id: 2,
       title: "One Time Charge",
       description: "lorem ipsum dolor sit amet, consectetur adip",
-      icon: <FaMoneyBill className="text-yellow-500 text-lg" />,
+      icon: <FaMoneyBill className="text-blue-500 text-lg" />,
     },
     {
       id: 3,
       title: "Unlimited Posting",
       description: "lorem ipsum dolor sit amet, consectetur adip",
-      icon: <IoInfiniteSharp className="text-yellow-500 text-lg" />,
+      icon: <IoInfiniteSharp className="text-blue-500 text-lg" />,
     },
   ]
   return (
