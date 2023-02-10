@@ -314,7 +314,7 @@ function ListingDetails() {
       <div className="h-[80vh] grid grid-cols-4 rounded-lg p-12 bg-[#f7fdfe]">
         <div>Pois</div>
         <div className="col-span-3">
-          <MapContainer
+          {/* <MapContainer
             center={[state.listingInfo.latitude, state.listingInfo.longitude]}
             zoom={15}
             scrollWheelZoom={true}
@@ -342,7 +342,7 @@ function ListingDetails() {
                 <Popup>{poi.name}</Popup>
               </Marker>
             ))}
-          </MapContainer>
+          </MapContainer> */}
         </div>
       </div>
     </>
