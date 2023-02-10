@@ -14,7 +14,7 @@ class PoisForm(forms.ModelForm):
         data = super().clean()
         latitude = data.pop('latitude')
         longitude = data.pop('longitude')
-        data['location'] = Point(latitude, longitude, srid=32645)
+        data['location'] = Point(latitude, longitude, srid=4326)
         return data
 
     def __init__(self, *args, **kwargs):

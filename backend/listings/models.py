@@ -75,7 +75,7 @@ class PointInterest(models.Model):
         ('Tourist', 'Tourist'),
     )
     type = models.CharField(max_length=50, choices=choices_type)
-    location = models.PointField(srid=32645, blank=True, null=True)
+    location = models.PointField(srid=4326, blank=True, null=True)
 
     def __str__(self):
         return self.name

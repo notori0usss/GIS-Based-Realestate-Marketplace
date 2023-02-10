@@ -16,7 +16,25 @@ import { Fade, Zoom } from "react-slideshow-image"
 import "react-slideshow-image/dist/styles.css"
 import NearbyProperty from "../components/NearbyProperty"
 import StateContext from "../context/StateContext"
+import stadiumIconPng from "../assets/map-icons/stadium.png"
+import universityIconPng from "../assets/map-icons/university.png"
+import hospitalIconPng from "../assets/map-icons/hospital.png"
+import { Icon, icon } from "leaflet"
+
 function ListingDetails() {
+  const stadiumIcon = new Icon({
+    iconUrl: stadiumIconPng,
+    iconSize: [40, 40],
+  })
+  const universityIcon = new Icon({
+    iconUrl: universityIconPng,
+    iconSize: [40, 40],
+  })
+  const hospitalIcon = new Icon({
+    iconUrl: hospitalIconPng,
+    iconSize: [40, 40],
+  })
+
   const navigate = useNavigate()
   const params = useParams()
   const userId = localStorage.getItem("theUserId")
@@ -314,7 +332,7 @@ function ListingDetails() {
       <div className="h-[80vh] grid grid-cols-4 rounded-lg p-12 bg-[#f7fdfe]">
         <div>Pois</div>
         <div className="col-span-3">
-          {/* <MapContainer
+          <MapContainer
             center={[state.listingInfo.latitude, state.listingInfo.longitude]}
             zoom={15}
             scrollWheelZoom={true}
@@ -331,18 +349,30 @@ function ListingDetails() {
             >
               <Popup>{state.listingInfo.title}</Popup>
             </Marker>
-            {state.listingInfo.listing_pois_within_10km.map((poi) => (
-              <Marker
-                key={poi.id}
-                position={[
-                  poi.location.coordinates[0],
-                  poi.location.coordinates[1],
-                ]}
-              >
-                <Popup>{poi.name}</Popup>
-              </Marker>
-            ))}
-          </MapContainer> */}
+            {state.listingInfo.listing_pois_within_radius.map((poi) => {
+              function PoiIcon() {
+                if (poi.type === "Stadium") {
+                  return stadiumIcon
+                } else if (poi.type === "Hospital") {
+                  return hospitalIcon
+                } else if (poi.type === "University") {
+                  return universityIcon
+                } else return stadiumIcon
+              }
+              return (
+                <Marker
+                  key={poi.id}
+                  position={[
+                    poi.location.coordinates[0],
+                    poi.location.coordinates[1],
+                  ]}
+                  icon={PoiIcon()}
+                >
+                  <Popup>{poi.name}</Popup>
+                </Marker>
+              )
+            })}
+          </MapContainer>
         </div>
       </div>
     </>
