@@ -118,10 +118,9 @@ function Navbar() {
                 GlobalState.userEmail === "dhunganaswaroop@gmail.com" ? (
                   <li>
                     <a
-                      href="#"
+                      href="http://127.0.0.1:8000/admin/"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       onClick={() => {
-                        navigate("/admin")
                         setIsOpen(false)
                       }}
                     >
