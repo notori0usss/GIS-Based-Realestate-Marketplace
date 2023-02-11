@@ -20,6 +20,7 @@ import stadiumIconPng from "../assets/map-icons/stadium.png"
 import universityIconPng from "../assets/map-icons/university.png"
 import hospitalIconPng from "../assets/map-icons/hospital.png"
 import { Icon, icon } from "leaflet"
+import Model from "../layout/Model"
 
 function ListingDetails() {
   const stadiumIcon = new Icon({
@@ -301,9 +302,7 @@ function ListingDetails() {
                     <button className="px-4 py-1 font-semibold text-teal-500 bg-white border-2 border-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-200 rounded-3xl">
                       Edit
                     </button>
-                    <button className="px-4 py-1 font-semibold text-red-500 bg-white border-2 border-red-500 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-3xl">
-                      Delete
-                    </button>
+                    <Model />
                   </div>
                 ) : (
                   <div className="flex items-center mt-5 gap-3">
@@ -330,7 +329,58 @@ function ListingDetails() {
         </div>
       </div>
       <div className="h-[80vh] grid grid-cols-4 rounded-lg p-12 bg-[#f7fdfe]">
-        <div>Pois</div>
+        <div className="flex items-center flex-col gap-5">
+          {state.listingInfo.listing_pois_within_radius !== "" ? (
+            state.listingInfo?.listing_pois_within_radius.map((poi) => {
+              function DegreeToRadian(coordinate) {
+                return (coordinate * Math.PI) / 180
+              }
+              function CalculateDistance() {
+                const latitude1 = DegreeToRadian(state.listingInfo.latitude)
+                const longitude1 = DegreeToRadian(state.listingInfo.longitude)
+
+                const latitude2 = DegreeToRadian(poi.location.coordinates[0])
+                const longitude2 = DegreeToRadian(poi.location.coordinates[1])
+
+                // The formula
+                const latDiff = latitude2 - latitude1
+                const lonDiff = longitude2 - longitude1
+                const R = 6371000 / 1000
+
+                const a =
+                  Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+                  Math.cos(latitude1) *
+                    Math.cos(latitude2) *
+                    Math.sin(lonDiff / 2) *
+                    Math.sin(lonDiff / 2)
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+                const d = R * c
+
+                const dist =
+                  Math.acos(
+                    Math.sin(latitude1) * Math.sin(latitude2) +
+                      Math.cos(latitude1) *
+                        Math.cos(latitude2) *
+                        Math.cos(lonDiff)
+                  ) * R
+                return dist.toFixed(2)
+              }
+              return (
+                <div className="border-2 w-full">
+                  <div>{poi.name}</div>
+                  <div>
+                    {poi.type} |{CalculateDistance()} Kilometers
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            <div className="bg-red-300 px-3 py-2 text-lg font-semibold rounded-xl">
+              Opps! No description available.
+            </div>
+          )}
+        </div>
         <div className="col-span-3">
           <MapContainer
             center={[state.listingInfo.latitude, state.listingInfo.longitude]}
