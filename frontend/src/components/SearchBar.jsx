@@ -2,8 +2,8 @@ import React, { useState } from "react"
 
 function SearchBar({ getSearchTitle }, ref) {
   const [query, setQuery] = useState("")
-  const [lat, setLat] = useState(28.015879590070554)
-  const [lng, setLng] = useState(84.77230931473511)
+  const [lat, setLat] = useState(27.667286988735277)
+  const [lng, setLng] = useState(85.27796966687711)
 
   if (query === "kirtipur") {
     setLat(27.667286988735277)
@@ -12,7 +12,7 @@ function SearchBar({ getSearchTitle }, ref) {
   function searchHandler(e) {
     e.preventDefault()
     getSearchTitle(query.toLowerCase())
-    ref.current.flyTo([lat, lng], 18, {
+    ref.current.flyTo([lat, lng], 14, {
       animate: true,
     })
   }

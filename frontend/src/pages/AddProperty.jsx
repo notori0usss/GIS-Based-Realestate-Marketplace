@@ -38,14 +38,18 @@ function AddProperty() {
     picture1Value: "",
     picture2Value: "",
     picture3Value: "",
-    picture4Value: "",
-    picture5Value: "",
+    bathroom1Value: "",
+    bathroom2Value: "",
+    bedroom1Value: "",
+    bedroom2Value: "",
     mapInstance: null,
     markerPosition: {
       lat: 27.704111212111023,
       lng: 85.31943175211019,
     },
-    uploadedImages: [],
+    uploadedPropertyImages: [],
+    uploadedBedroomImages: [],
+    uploadedBathroomImages: [],
     userProfile: {
       agencyName: "",
       phoneNumber: "",
@@ -116,11 +120,17 @@ function AddProperty() {
       case "catchPicture3Change":
         draft.picture3Value = action.picture3Chosen
         break
-      case "catchPicture4Change":
-        draft.picture4Value = action.picture4Chosen
+      case "catchBathroom1Change":
+        draft.bathroom1Value = action.bathroom1Chosen
         break
-      case "catchPicture5Change":
-        draft.picture5Value = action.picture5Chosen
+      case "catchBathroom2Change":
+        draft.bathroom2Value = action.bathroom2Chosen
+        break
+      case "catchBedroom1Change":
+        draft.bedroom1Value = action.bedroom1Chosen
+        break
+      case "catchBedroom2Change":
+        draft.bedroom2Value = action.bedroom2Chosen
         break
 
       case "getMap":
@@ -132,9 +142,16 @@ function AddProperty() {
         draft.latitudeValue = ""
         draft.longitudeValue = ""
         break
-      case "catchUploadedImages":
-        draft.uploadedImages = action.imagesChosen
+      case "catchuploadedPropertyImages":
+        draft.uploadedPropertyImages = action.imagesChosen
         break
+      case "catchuploadedBedroomImages":
+        draft.uploadedBedroomImages = action.bedimagesChosen
+        break
+      case "catchuploadedBathroomImages":
+        draft.uploadedBathroomImages = action.bathimagesChosen
+        break
+
       case "catchuserProfileInfo":
         draft.userProfile.agencyName = action.profileObject.agency_name
         draft.userProfile.phoneNumber = action.profileObject.phone_number
@@ -187,8 +204,10 @@ function AddProperty() {
           formData.append("picture1", state.picture1Value),
           formData.append("picture2", state.picture2Value),
           formData.append("picture3", state.picture3Value),
-          formData.append("picture4", state.picture4Value),
-          formData.append("picture5", state.picture5Value),
+          formData.append("bathPicture1", state.bathroom1Value),
+          formData.append("bathPicture2", state.bathroom2Value),
+          formData.append("bedroomPicture1", state.bedroom1Value),
+          formData.append("bedroomPicture2", state.bedroom2Value),
           formData.append("seller", localStorage.getItem("theUserId"))
 
         // console.log(response)
@@ -266,49 +285,67 @@ function AddProperty() {
   )
   //catching pictues
   useEffect(() => {
-    if (state.uploadedImages[0]) {
+    if (state.uploadedPropertyImages[0]) {
       dispatch({
         type: "catchPicture1Change",
-        picture1Chosen: state.uploadedImages[0],
+        picture1Chosen: state.uploadedPropertyImages[0],
       })
     }
-  }, [state.uploadedImages[0]])
+  }, [state.uploadedPropertyImages[0]])
   //pic2
   useEffect(() => {
-    if (state.uploadedImages[1]) {
+    if (state.uploadedPropertyImages[1]) {
       dispatch({
         type: "catchPicture2Change",
-        picture2Chosen: state.uploadedImages[1],
+        picture2Chosen: state.uploadedPropertyImages[1],
       })
     }
-  }, [state.uploadedImages[1]])
+  }, [state.uploadedPropertyImages[1]])
   //pic3
   useEffect(() => {
-    if (state.uploadedImages[2]) {
+    if (state.uploadedPropertyImages[2]) {
       dispatch({
         type: "catchPicture3Change",
-        picture3Chosen: state.uploadedImages[2],
+        picture3Chosen: state.uploadedPropertyImages[2],
       })
     }
-  }, [state.uploadedImages[2]])
-  //pic 4
+  }, [state.uploadedPropertyImages[2]])
+
   useEffect(() => {
-    if (state.uploadedImages[3]) {
+    if (state.uploadedBathroomImages[0]) {
       dispatch({
-        type: "catchPicture4Change",
-        picture4Chosen: state.uploadedImages[3],
+        type: "catchBathroom1Change",
+        bathroom1Chosen: state.uploadedBathroomImages[0],
       })
     }
-  }, [state.uploadedImages[3]])
-  //pic 5
+  }, [state.uploadedBathroomImages[0]])
+
   useEffect(() => {
-    if (state.uploadedImages[4]) {
+    if (state.uploadedBathroomImages[1]) {
       dispatch({
-        type: "catchPicture5Change",
-        picture5Chosen: state.uploadedImages[4],
+        type: "catchBathroom2Change",
+        bathroom2Chosen: state.uploadedBathroomImages[1],
       })
     }
-  }, [state.uploadedImages[4]])
+  }, [state.uploadedBathroomImages[1]])
+
+  useEffect(() => {
+    if (state.uploadedBedroomImages[0]) {
+      dispatch({
+        type: "catchBedroom1Change",
+        bedroom1Chosen: state.uploadedBedroomImages[0],
+      })
+    }
+  }, [state.uploadedBedroomImages[0]])
+
+  useEffect(() => {
+    if (state.uploadedBedroomImages[1]) {
+      dispatch({
+        type: "catchBedroom2Change",
+        bedroom2Chosen: state.uploadedBedroomImages[1],
+      })
+    }
+  }, [state.uploadedBedroomImages[1]])
 
   //req to get profile info
   useEffect(() => {
@@ -342,7 +379,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/profile")}
-          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Update Profile First
         </button>
@@ -356,7 +393,7 @@ function AddProperty() {
       return (
         <button
           onClick={() => navigate("/checkout")}
-          className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
+          className="w-full mx-auto bg-red-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Subscribe First
         </button>
@@ -703,7 +740,7 @@ function AddProperty() {
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              {state.uploadedImages.length === 0 ? (
+              {state.uploadedPropertyImages.length === 0 ? (
                 <>
                   <svg
                     aria-hidden="true"
@@ -721,11 +758,12 @@ function AddProperty() {
                     />
                   </svg>
                   <p className="mb-2 text-sm text-gray-500">
-                    <span className="font-semibold">Click to upload</span> or
-                    drag and drop
+                    <span className="font-semibold">
+                      Upload Your Best Property Pictures Here!
+                    </span>
                   </p>
                   <p className="text-xs text-gray-500 ">
-                    PNG, JPG or GIF (MAX. 5 Pictures)
+                    PNG, JPG or GIF (MAX. 3 Pictures)
                   </p>
                 </>
               ) : (
@@ -746,16 +784,6 @@ function AddProperty() {
                     ) : (
                       ""
                     )}
-                    {state.picture4Value ? (
-                      <li>{state.picture4Value.name}</li>
-                    ) : (
-                      ""
-                    )}
-                    {state.picture5Value ? (
-                      <li>{state.picture5Value.name}</li>
-                    ) : (
-                      ""
-                    )}
                   </span>
                 </p>
               )}
@@ -768,12 +796,143 @@ function AddProperty() {
               accept="image/png,image/gif,image/jpeg"
               onChange={(e) => {
                 dispatch({
-                  type: "catchUploadedImages",
+                  type: "catchuploadedPropertyImages",
                   imagesChosen: e.target.files,
                 })
               }}
             />
           </label>
+        </div>
+        <div className="flex">
+          <div className="flex items-center justify-center w-1/2">
+            <label
+              htmlFor="bedroomImages"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
+            >
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                {state.uploadedBedroomImages.length === 0 ? (
+                  <>
+                    <svg
+                      aria-hidden="true"
+                      className="w-10 h-16 mb-3 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500">
+                      <span className="font-semibold">
+                        Upload Bedroom Pictures Here
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500 ">
+                      PNG, JPG or GIF (MAX. 2 Pictures)
+                    </p>
+                  </>
+                ) : (
+                  <p className="mb-2 text-sm text-gray-500">
+                    <span className="font-semibold">
+                      {state.bedroom1Value ? (
+                        <li>{state.bedroom1Value.name}</li>
+                      ) : (
+                        ""
+                      )}
+                      {state.bedroom2Value ? (
+                        <li>{state.bedroom2Value.name}</li>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </p>
+                )}
+              </div>
+              <input
+                id="bedroomImages"
+                type="file"
+                className="hidden"
+                multiple
+                accept="image/png,image/gif,image/jpeg"
+                onChange={(e) => {
+                  dispatch({
+                    type: "catchuploadedBedroomImages",
+                    bedimagesChosen: e.target.files,
+                  })
+                }}
+              />
+            </label>
+          </div>
+
+          <div className="flex items-center justify-center w-1/2">
+            <label
+              htmlFor="bathroomImages"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
+            >
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                {state.uploadedBathroomImages.length === 0 ? (
+                  <>
+                    <svg
+                      aria-hidden="true"
+                      className="w-10 h-16 mb-3 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500">
+                      <span className="font-semibold">
+                        Upload Bathroom Pictures
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500 ">
+                      PNG, JPG or GIF (MAX. 2 Pictures)
+                    </p>
+                  </>
+                ) : (
+                  <p className="mb-2 text-sm text-gray-500">
+                    <span className="font-semibold">
+                      {state.bathroom1Value ? (
+                        <li>{state.bathroom1Value.name}</li>
+                      ) : (
+                        ""
+                      )}
+                      {state.bathroom2Value ? (
+                        <li>{state.bathroom2Value.name}</li>
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </p>
+                )}
+              </div>
+              <input
+                id="bathroomImages"
+                type="file"
+                className="hidden"
+                multiple
+                accept="image/png,image/gif,image/jpeg"
+                onChange={(e) => {
+                  dispatch({
+                    type: "catchuploadedBathroomImages",
+                    bathimagesChosen: e.target.files,
+                  })
+                }}
+              />
+            </label>
+          </div>
         </div>
         <div>{SubmitButtonDisplay()}</div>
       </form>

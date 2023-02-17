@@ -15,6 +15,7 @@ import ProfileUpdate from "../components/ProfileUpdate"
 import Agencies from "./Agencies"
 import AgencyDetail from "../components/AgencyDetail"
 import ListingDetails from "./ListingDetails"
+import Comparision from "./Comparision"
 function Pages() {
   return (
     <>
@@ -35,6 +36,7 @@ function Pages() {
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/agencies/:id" element={<AgencyDetail />} />
           <Route path="/listings/:id" element={<ListingDetails />} />
+          <Route path="/compare/:id" element={<Comparision />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -20,8 +20,9 @@ import stadiumIconPng from "../assets/map-icons/stadium.png"
 import universityIconPng from "../assets/map-icons/university.png"
 import hospitalIconPng from "../assets/map-icons/hospital.png"
 import { Icon, icon } from "leaflet"
-import Model from "../layout/Model"
-
+import DeleteModel from "../layout/DeleteModel"
+import Agent from "../assets/agent.png"
+import UpdateModel from "../layout/UpdateModel"
 function ListingDetails() {
   const stadiumIcon = new Icon({
     iconUrl: stadiumIconPng,
@@ -118,8 +119,6 @@ function ListingDetails() {
     state.listingInfo.picture1,
     state.listingInfo.picture2,
     state.listingInfo.picture3,
-    state.listingInfo.picture4,
-    state.listingInfo.picture5,
   ].filter((picture) => picture !== null)
 
   return (
@@ -296,13 +295,11 @@ function ListingDetails() {
                 </button>
 
                 <div className="text-gray-500">{state.userInfo.bio}</div>
-                {Number(userId) === Number(state.userInfo.seller) ? (
+                {userId == state.userInfo.seller ? (
                   <div className="flex items-center mt-5 gap-3">
                     <h2 className="font-semibold">Make Changes: </h2>
-                    <button className="px-4 py-1 font-semibold text-teal-500 bg-white border-2 border-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-200 rounded-3xl">
-                      Edit
-                    </button>
-                    <Model />
+                    <UpdateModel />
+                    <DeleteModel />
                   </div>
                 ) : (
                   <div className="flex items-center mt-5 gap-3">
@@ -324,6 +321,27 @@ function ListingDetails() {
                 .map((item) => (
                   <NearbyProperty {...item} key={item.id} />
                 ))}
+            </div>
+          </div>
+          <div className="mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 relative h-[50vh]">
+            <img
+              src={Agent}
+              alt=""
+              className="absolute w-1/2 right-0 object-cover h-2/3 bottom-0"
+            />
+            <div className="flex flex-col gap-5 items-start w-full h-full">
+              <div className="text-2xl font-semibold">
+                Confused What you Looking for?
+              </div>
+              <p className="text-gray-500">
+                Don't Worry! Compare Properties here!
+              </p>
+              <button
+                onClick={() => navigate(`/compare/${state.listingInfo.id}`)}
+                className="justify-self-center mt-16 rounded-2xl px-6 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-400"
+              >
+                Compare Now
+              </button>
             </div>
           </div>
         </div>
