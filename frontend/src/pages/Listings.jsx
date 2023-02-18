@@ -30,15 +30,15 @@ function Listings() {
   const navigate = useNavigate()
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
-    iconSize: [40, 40],
+    iconSize: [30, 30],
   })
   const officeIcon = new Icon({
     iconUrl: officeIconPng,
-    iconSize: [40, 40],
+    iconSize: [30, 30],
   })
   const apartmentIcon = new Icon({
     iconUrl: apartmentIconPng,
-    iconSize: [40, 40],
+    iconSize: [30, 30],
   })
   const userIcon = new Icon({
     iconUrl: userIconPng,

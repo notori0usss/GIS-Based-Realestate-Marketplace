@@ -30,6 +30,9 @@ function Realtor() {
           <RealtorCard key={item.id} {...item} />
         ))}
       </div>
+      <div>
+        Are you a realtor?<button> Apply Here!</button>
+      </div>
     </div>
   )
 }

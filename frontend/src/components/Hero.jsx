@@ -10,7 +10,7 @@ function Hero() {
       style={{ clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0 88%)" }}
     >
       <img
-        src={HeroImg}
+        src="http://www.wallpapertip.com/wmimgs/54-541872_home-images-house-design-image-photos-pics-picture.jpg"
         alt="bg-hero"
         className="w-full h-full object-cover absolute mix-blend-overlay"
       />
@@ -19,7 +19,7 @@ function Hero() {
           <TypeWriter />
         </h1>
         <button
-          className="bg-blue-500 z-10 text-white font-bold px-5 py-3 shadow-sm uppercase rounded-lg"
+          className="bg-blue-500 z-10 text-white font-semibold px-5 py-3 shadow-sm uppercase rounded-lg"
           onClick={() => navigate("/allProperties")}
         >
           See all properties

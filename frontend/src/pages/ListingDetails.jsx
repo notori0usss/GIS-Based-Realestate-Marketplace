@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
@@ -18,11 +18,16 @@ import NearbyProperty from "../components/NearbyProperty"
 import StateContext from "../context/StateContext"
 import stadiumIconPng from "../assets/map-icons/stadium.png"
 import universityIconPng from "../assets/map-icons/university.png"
+import restaurantIconPng from "../assets/map-icons/restaurant.png"
 import hospitalIconPng from "../assets/map-icons/hospital.png"
+import airportIconPng from "../assets/map-icons/airport.png"
+import saleIconPng from "../assets/map-icons/sale.png"
+
 import { Icon, icon } from "leaflet"
 import DeleteModel from "../layout/DeleteModel"
 import Agent from "../assets/agent.png"
 import UpdateModel from "../layout/UpdateModel"
+import BookingModel from "../layout/BookingModel"
 function ListingDetails() {
   const stadiumIcon = new Icon({
     iconUrl: stadiumIconPng,
@@ -34,6 +39,18 @@ function ListingDetails() {
   })
   const hospitalIcon = new Icon({
     iconUrl: hospitalIconPng,
+    iconSize: [40, 40],
+  })
+  const restaurantIcon = new Icon({
+    iconUrl: restaurantIconPng,
+    iconSize: [40, 40],
+  })
+  const airportIcon = new Icon({
+    iconUrl: airportIconPng,
+    iconSize: [40, 40],
+  })
+  const saleIcon = new Icon({
+    iconUrl: saleIconPng,
     iconSize: [40, 40],
   })
 
@@ -94,7 +111,9 @@ function ListingDetails() {
     }
     GetAllListingInfo()
   }, [])
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [params.id])
   useEffect(() => {
     async function GetUserInfo() {
       if (state.listingInfo.seller) {
@@ -132,7 +151,7 @@ function ListingDetails() {
                   onClick={() => {
                     navigate("/listings")
                   }}
-                  className="text-yellow-600 hover:text-yellow-700"
+                  className="text-yellow-600 hover:text-blue-700"
                 >
                   Listing
                 </button>
@@ -188,7 +207,20 @@ function ListingDetails() {
               </div>
               <h2 className="text-2xl font-semibold">
                 Price:{" "}
-                <span className="text-4xl ml-4">{state.listingInfo.price}</span>
+                {state.listingInfo.property_status === "Rent" ? (
+                  <>
+                    <span className="text-4xl ml-4">
+                      {state.listingInfo.price} /{" "}
+                      <span className="text-2xl text-gray-700">
+                        {state.listingInfo.rental_frequency}
+                      </span>
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-4xl ml-4">
+                    {state.listingInfo.price}
+                  </span>
+                )}
               </h2>
             </div>
             <div className="text-gray-500 font-semibold flex">
@@ -307,9 +339,7 @@ function ListingDetails() {
                     <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
                       Chat
                     </button>
-                    <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
-                      Email
-                    </button>
+                    <BookingModel />
                   </div>
                 )}
               </div>
@@ -414,6 +444,7 @@ function ListingDetails() {
                 state.listingInfo.latitude,
                 state.listingInfo.longitude,
               ]}
+              icon={saleIcon}
             >
               <Popup>{state.listingInfo.title}</Popup>
             </Marker>
@@ -425,7 +456,11 @@ function ListingDetails() {
                   return hospitalIcon
                 } else if (poi.type === "University") {
                   return universityIcon
-                } else return stadiumIcon
+                } else if (poi.type === "Resturant") {
+                  return restaurantIcon
+                } else if (poi.type === "Airport") {
+                  return airportIcon
+                }
               }
               return (
                 <Marker

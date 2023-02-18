@@ -92,12 +92,12 @@ function Signup() {
 
         <form
           onSubmit={submitHandler}
-          className="flex flex-col w-full items-center justify-center gap-y-4"
+          className="flex flex-col w-full items-center justify-center gap-y-8"
         >
           <input
             type="text"
             placeholder="Username"
-            className="px-3 py-3 w-2/3 rounded-lg text-black"
+            className="px-3 py-3 w-2/3 text-black"
             value={state.usernameValue}
             onChange={(e) =>
               dispatch({
@@ -109,7 +109,7 @@ function Signup() {
           <input
             type="text"
             placeholder="name@email.com"
-            className="px-3 py-3 w-2/3 rounded-lg text-black"
+            className="px-3 py-3 w-2/3 text-black"
             value={state.emailValue}
             onChange={(e) =>
               dispatch({
@@ -121,7 +121,7 @@ function Signup() {
           <input
             type="password"
             placeholder="Password"
-            className="px-3 py-3 w-2/3 rounded-lg text-black"
+            className="px-3 py-3 w-2/3 text-black"
             value={state.passwordValue}
             onChange={(e) =>
               dispatch({
@@ -133,7 +133,7 @@ function Signup() {
           <input
             type="password"
             placeholder="Confirm Password"
-            className="px-3 py-3 w-2/3 rounded-lg text-black"
+            className="px-3 py-3 w-2/3 text-black"
             value={state.rePasswordValue}
             onChange={(e) =>
               dispatch({
@@ -144,7 +144,7 @@ function Signup() {
           />
 
           <button
-            className="px-3 py-3 bg-blue-500 w-2/3 rounded-lg mt-5"
+            className="px-3 py-3 bg-blue-500 w-1/3 rounded-md"
             type="submit"
           >
             Register
