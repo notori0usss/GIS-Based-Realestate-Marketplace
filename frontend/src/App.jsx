@@ -10,6 +10,7 @@ function App() {
     userId: localStorage.getItem("theUserId"),
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
+    userProfilePicture: "",
     listingInfo: "",
     subscribedInfo: 0,
   }
@@ -23,6 +24,10 @@ function App() {
         draft.userUsername = action.usernameInfo
         draft.userEmail = action.emailInfo
         draft.userIsLogged = true
+
+        break
+      case "getUserProfilePicture":
+        draft.userProfilePicture = action.profilePicture
         break
       case "logout":
         draft.userIsLogged = false
@@ -51,7 +56,6 @@ function App() {
       localStorage.removeItem("theUserId")
       localStorage.removeItem("theUserToken")
       localStorage.removeItem("theSessionId")
-      localStorage.removeItem("theUserPP")
     }
   }, [state.userIsLogged])
 

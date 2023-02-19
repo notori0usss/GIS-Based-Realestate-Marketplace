@@ -1,0 +1,88 @@
+import React, { useContext, useEffect, useState } from "react"
+import StateContext from "../context/StateContext"
+import axios from "axios"
+import { IoSend } from "react-icons/all"
+import { useNavigate, useParams } from "react-router-dom"
+import Axios from "axios"
+function Comments({ listingInfo }) {
+  const navigate = useNavigate()
+
+  const [comments, setComments] = useState(listingInfo.comments)
+  const [singleComment, setSingleComment] = useState([])
+  const GlobalState = useContext(StateContext)
+  const params = useParams()
+  function formSubmitHandler(e) {
+    e.preventDefault()
+    const newComment = {
+      userId: GlobalState.userId,
+      userName: GlobalState.userUsername,
+      profilePicture: GlobalState.userProfilePicture,
+      commentText: singleComment,
+    }
+    // setComments([...comments, newComment])
+    Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
+      comments: [...comments, newComment],
+    })
+      .then((response) => {
+        // Update the state with the new comment
+        setComments(response.data.comments)
+        setSingleComment("")
+        console.log(response.data)
+      })
+      .catch((error) => console.error(error))
+    console.log(comments)
+  }
+
+  return (
+    <div className="container max-w-6xl mx-auto py-12">
+      <h1 className="text-3xl font-bold">Comments</h1>
+      {GlobalState.userIsLogged && (
+        <form className="" onSubmit={formSubmitHandler}>
+          <div className="flex items-center my-5">
+            <img
+              className="w-10 h-10 object-cover rounded-full mx-3"
+              src={GlobalState.userProfilePicture}
+              alt=""
+            />
+            <input
+              className="w-2/3 h-9 bg-gray-300 py-5 px-2 rounded-l-2xl border border-gray-300 outline-gray-400"
+              type="text"
+              value={singleComment}
+              placeholder="Write a comment..."
+              onChange={(e) => setSingleComment(e.target.value)}
+            />
+
+            <button
+              className="font-semibold bg-blue-500 py-[9px] px-4 text-white rounded-r-2xl"
+              type="submit"
+            >
+              <IoSend className="text-2xl" />
+            </button>
+          </div>
+        </form>
+      )}
+      <div>
+        {listingInfo.comments.map((comment, index) => (
+          <div key={index} className="flex gap-2 my-3">
+            <img
+              className="w-10 h-10 object-cover rounded-full"
+              src={comment.profilePicture}
+              alt=""
+            />
+            <div className="flex flex-col bg-gray-300 rounded-lg px-4 py-2">
+              <p
+                className="font-semibold hover:underline cursor-pointer"
+                onClick={() => navigate(`/agencies/${comment.userId}`)}
+              >
+                {comment.userName}
+              </p>
+              <p>{comment.commentText}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default Comments

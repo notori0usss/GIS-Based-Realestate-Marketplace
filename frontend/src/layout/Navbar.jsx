@@ -35,7 +35,6 @@ function Navbar() {
     }
   }
 
-  const [profilePic, setProfilePic] = useState("")
   const [subscriptionStatus, setSubscriptionStatus] = useState(false)
   useEffect(() => {
     async function GetProfileInfo() {
@@ -44,8 +43,11 @@ function Navbar() {
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
         )
 
-        setProfilePic(response.data.profile_picture)
         setSubscriptionStatus(response.data.subscribed)
+        GlobalDispatch({
+          type: "getUserProfilePicture",
+          profilePicture: response.data.profile_picture,
+        })
       } catch (e) {
         console.log(e)
       }
@@ -77,11 +79,11 @@ function Navbar() {
             className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {profilePic === null ? (
+            {GlobalState.userProfilePicture === null ? (
               <Avatar className="w-10 h-10" {...config} />
             ) : (
               <img
-                src={profilePic}
+                src={GlobalState.userProfilePicture}
                 className="w-10 h-10 rounded-full object-cover"
               />
             )}

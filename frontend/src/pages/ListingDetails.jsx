@@ -28,6 +28,7 @@ import DeleteModel from "../layout/DeleteModel"
 import Agent from "../assets/agent.png"
 import UpdateModel from "../layout/UpdateModel"
 import BookingModel from "../layout/BookingModel"
+import Comments from "../components/Comments"
 function ListingDetails() {
   const stadiumIcon = new Icon({
     iconUrl: stadiumIconPng,
@@ -95,7 +96,7 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [params.id, state.listingInfo.picture1])
+  }, [params.id, state.listingInfo.picture1, state.listingInfo.comments])
 
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -429,7 +430,7 @@ function ListingDetails() {
             </div>
           )}
         </div>
-        <div className="col-span-3">
+        <div className="col-span-3 z-0">
           <MapContainer
             center={[state.listingInfo.latitude, state.listingInfo.longitude]}
             zoom={15}
@@ -477,6 +478,9 @@ function ListingDetails() {
             })}
           </MapContainer>
         </div>
+      </div>
+      <div className="bg-[#f7fdfe]">
+        <Comments listingInfo={state.listingInfo} />
       </div>
     </>
   )
