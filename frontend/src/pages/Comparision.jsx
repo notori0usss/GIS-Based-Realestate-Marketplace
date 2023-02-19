@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import Axios from "axios"
-
+import StateContext from "../context/StateContext"
 import { useNavigate, useParams } from "react-router-dom"
-import { GiHamburgerMenu } from "react-icons/all"
+import {
+  GiHamburgerMenu,
+  IoCheckmarkDoneCircleSharp,
+  MdOutlineCancel,
+} from "react-icons/all"
 import SelectProperty from "../components/SelectProperty"
+
 function Comparision() {
   const params = useParams()
   const [showFilter, setShowFilter] = useState(false)
@@ -14,7 +19,7 @@ function Comparision() {
   const [buildingTypeToggle, setBuildingTypeToggle] = useState(true)
   const [areaToggle, setAreaToggle] = useState(true)
   const [amenitiesToggle, setAmenitiesToggle] = useState(true)
-
+  const GlobalState = useContext(StateContext)
   const navigate = useNavigate()
   useEffect(() => {
     async function GetListingInfo() {
@@ -30,6 +35,7 @@ function Comparision() {
     GetListingInfo()
   }, [])
   const [compareProperties, setCompareProperties] = useState([])
+
   function getCompareProperties(item) {
     setCompareProperties(item)
     console.log(compareProperties)
@@ -102,12 +108,15 @@ function Comparision() {
       )}
       <hr className="mt-5" />
       <table className="w-full mt-6">
-        <tr className="">
-          <th className="">
-            <SelectProperty getCompareProperties={getCompareProperties} />
+        <tr className="border border-slate-200">
+          <th className="flex items-center justify-center h-[40vh]">
+            <SelectProperty
+              getCompareProperties={getCompareProperties}
+              currentProperty={propertyResponse}
+            />
           </th>
           <td>
-            <div className="flex flex-col gap-2 items-start">
+            <div className="flex flex-col gap-2 items-start h-[40vh]">
               <h2 className="text-lg font-semibold text-gray-600">
                 {propertyResponse.title}
               </h2>
@@ -187,8 +196,10 @@ function Comparision() {
         </tr>
 
         {locationToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Location</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Location
+            </td>
             <td>
               {propertyResponse.municipality
                 ? propertyResponse.municipality
@@ -205,8 +216,10 @@ function Comparision() {
         )}
 
         {bathroomToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Parking</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Parking
+            </td>
             <td className="">{propertyResponse.parking}</td>
             {compareProperties.map((property) => (
               <td>{property.parking}</td>
@@ -215,8 +228,10 @@ function Comparision() {
         )}
 
         {bedroomToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Bedroom</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Bedroom
+            </td>
             <td className="">{propertyResponse.rooms}</td>
             {compareProperties.map((property) => (
               <td>{property.rooms}</td>
@@ -225,8 +240,8 @@ function Comparision() {
         )}
 
         {buildingTypeToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Type</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">Type</td>
             <td className="">{propertyResponse.listing_type}</td>
             {compareProperties.map((property) => (
               <td>{property.listing_type}</td>
@@ -234,8 +249,8 @@ function Comparision() {
           </tr>
         )}
         {areaToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Area</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">Area</td>
             <td className="">{propertyResponse.property_area}.sqft</td>
             {compareProperties.map((property) => (
               <td>{property.property_area}</td>
@@ -244,22 +259,96 @@ function Comparision() {
         )}
 
         {amenitiesToggle && (
-          <tr className="w-full h-12">
-            <td className="text-xl font-semibold text-gray-600">Amenities</td>
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Furnished
+            </td>
             <td>
-              <div>
-                {propertyResponse.furnished ? "Furnished" : ""},
-                {propertyResponse.pool ? "Pool" : ""},
-                {propertyResponse.cctv ? "CCTV" : ""},
-                {propertyResponse.elevator ? "Elevator" : ""}
-              </div>
+              {propertyResponse.furnished ? (
+                <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+              ) : (
+                <MdOutlineCancel className="w-8 h-8 text-red-600" />
+              )}
             </td>
             {compareProperties.map((property) => (
               <td>
                 <div>
-                  {property.furnished ? "Furnished" : ""},
-                  {property.pool ? "Pool" : ""},{property.cctv ? "CCTV" : ""},
-                  {property.elevator ? "Elevator" : ""}
+                  {property.furnished ? (
+                    <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <MdOutlineCancel className="w-8 h-8 text-red-600" />
+                  )}
+                </div>
+              </td>
+            ))}
+          </tr>
+        )}
+        {amenitiesToggle && (
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">CCTV</td>
+            <td>
+              {propertyResponse.cctv ? (
+                <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+              ) : (
+                <MdOutlineCancel className="w-8 h-8 text-red-600" />
+              )}
+            </td>
+            {compareProperties.map((property) => (
+              <td>
+                <div>
+                  {property.cctv ? (
+                    <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <MdOutlineCancel className="w-8 h-8 text-red-600" />
+                  )}
+                </div>
+              </td>
+            ))}
+          </tr>
+        )}
+        {amenitiesToggle && (
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Elevator
+            </td>
+            <td>
+              {propertyResponse.elevator ? (
+                <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+              ) : (
+                <MdOutlineCancel className="w-8 h-8 text-red-600" />
+              )}
+            </td>
+            {compareProperties.map((property) => (
+              <td>
+                <div>
+                  {property.elevator ? (
+                    <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <MdOutlineCancel className="w-8 h-8 text-red-600" />
+                  )}
+                </div>
+              </td>
+            ))}
+          </tr>
+        )}
+        {amenitiesToggle && (
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">Pool</td>
+            <td>
+              {propertyResponse.pool ? (
+                <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+              ) : (
+                <MdOutlineCancel className="w-8 h-8 text-red-600" />
+              )}
+            </td>
+            {compareProperties.map((property) => (
+              <td>
+                <div>
+                  {property.pool ? (
+                    <IoCheckmarkDoneCircleSharp className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <MdOutlineCancel className="w-8 h-8 text-red-600" />
+                  )}
                 </div>
               </td>
             ))}

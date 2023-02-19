@@ -34,7 +34,7 @@ function Navbar() {
       console.error(error)
     }
   }
-  console.log(GlobalState.userIsLogged)
+
   const [profilePic, setProfilePic] = useState("")
   const [subscriptionStatus, setSubscriptionStatus] = useState(false)
   useEffect(() => {
@@ -43,7 +43,7 @@ function Navbar() {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
         )
-        console.log(response.data)
+
         setProfilePic(response.data.profile_picture)
         setSubscriptionStatus(response.data.subscribed)
       } catch (e) {
