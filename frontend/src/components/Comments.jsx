@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { IoSend } from "react-icons/all"
+import { IoSend, MdVerified } from "react-icons/all"
 import { useNavigate, useParams } from "react-router-dom"
 import Axios from "axios"
 import timeSince from "../helpers/timesince"
@@ -63,20 +63,29 @@ function Comments({ listingInfo, onCommentSubmit, deleteComment }) {
                   className="font-semibold hover:underline cursor-pointer"
                   onClick={() => navigate(`/agencies/${comment.userId}`)}
                 >
-                  {comment.userName}
+                  {comment.userName}{" "}
+                  <span>
+                    {comment.verified && (
+                      <MdVerified className="text-blue-500 text-sm inline" />
+                    )}
+                  </span>
                 </p>
                 <p>{comment.commentText}</p>
               </div>
               <div className="flex gap-3 items-center px-2">
-                <button
-                  className="text-sm font-semibold"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    deleteComment(index)
-                  }}
-                >
-                  Delete
-                </button>
+                {GlobalState.userId == comment.userId ? (
+                  <button
+                    className="text-sm font-semibold"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      deleteComment(index)
+                    }}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  ""
+                )}
                 <p className="text-xs">{timeSince(comment.time_posted)}</p>
               </div>
             </div>

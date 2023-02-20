@@ -16,6 +16,7 @@ function Comparision() {
   const [locationToggle, setLocationToggle] = useState(true)
   const [bathroomToggle, setBathroomToggle] = useState(true)
   const [bedroomToggle, setBedroomToggle] = useState(true)
+  const [parkingToggle, setParkingToggle] = useState(true)
   const [buildingTypeToggle, setBuildingTypeToggle] = useState(true)
   const [areaToggle, setAreaToggle] = useState(true)
   const [amenitiesToggle, setAmenitiesToggle] = useState(true)
@@ -42,6 +43,7 @@ function Comparision() {
     setCompareProperties(item)
     console.log(compareProperties)
   }
+
   return (
     <div className="px-20 py-10">
       <div className="flex justify-between w-full">
@@ -68,6 +70,14 @@ function Comparision() {
             onClick={() => setBathroomToggle(!bathroomToggle)}
           >
             Bathroom
+          </button>
+          <button
+            className={`px-4 py-[3px] border-2 border-blue-600 rounded-lg text-blue-500 hover:bg-blue-600 hover:text-white font-semibold   ${
+              parkingToggle ? `bg-blue-600 text-white` : ""
+            }`}
+            onClick={() => setParkingToggle(!parkingToggle)}
+          >
+            Parking
           </button>
           <button
             className={`px-4 py-[3px] border-2 border-blue-600 rounded-lg text-blue-500 hover:bg-blue-600 hover:text-white font-semibold   ${
@@ -123,7 +133,7 @@ function Comparision() {
                 {propertyResponse.title}
               </h2>
               <img
-                className="h-48 w-60 object-cover rounded-lg"
+                className="h-48 w-64 object-cover rounded-lg"
                 src={propertyResponse.picture1}
                 alt=""
               />
@@ -162,7 +172,7 @@ function Comparision() {
                   {property.title}
                 </h2>
                 <img
-                  className="h-48 w-60 object-cover rounded-lg"
+                  className="h-48 w-64 object-cover rounded-lg"
                   src={property.picture1}
                   alt=""
                 />
@@ -217,7 +227,7 @@ function Comparision() {
           </tr>
         )}
 
-        {bathroomToggle && (
+        {parkingToggle && (
           <tr className="w-full h-12 border border-slate-200">
             <td className="text-xl font-semibold text-gray-600 pl-5">
               Parking
@@ -234,9 +244,72 @@ function Comparision() {
             <td className="text-xl font-semibold text-gray-600 pl-5">
               Bedroom
             </td>
-            <td className="">{propertyResponse.rooms}</td>
+            <td className="">
+              <div className="flex items-center gap-2 ">
+                {propertyResponse.bedroomPicture1 !== null ? (
+                  <img
+                    className="w-16 h-10 object-cover rounded-lg hover:scale-150"
+                    src={propertyResponse.bedroomPicture1}
+                    alt="no"
+                  />
+                ) : (
+                  ""
+                )}
+                <p>{propertyResponse.rooms}</p>
+              </div>
+            </td>
             {compareProperties.map((property) => (
-              <td>{property.rooms}</td>
+              <td>
+                <div className="flex items-center gap-2 ">
+                  {property.bedroomPicture1 !== null ? (
+                    <img
+                      className="w-16 h-10 object-cover rounded-lg "
+                      src={property.bedroomPicture1}
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                  <p>{property.rooms}</p>
+                </div>
+              </td>
+            ))}
+          </tr>
+        )}
+        {bathroomToggle && (
+          <tr className="w-full h-12 border border-slate-200">
+            <td className="text-xl font-semibold text-gray-600 pl-5">
+              Bathroom
+            </td>
+            <td className="">
+              <div className="flex items-center gap-2 ">
+                {propertyResponse.bathPicture1 !== null ? (
+                  <img
+                    className="w-16 h-10 object-cover rounded-lg hover:scale-150"
+                    src={propertyResponse.bathPicture1}
+                    alt=""
+                  />
+                ) : (
+                  ""
+                )}
+                <p>{propertyResponse.bathroom}</p>
+              </div>
+            </td>
+            {compareProperties.map((property) => (
+              <td>
+                <div className="flex items-center gap-2 ">
+                  {property.bathPicture1 !== null ? (
+                    <img
+                      className="w-16 h-10 object-cover rounded-lg hover:scale-150"
+                      src={property.bathPicture1}
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                  <p>{property.bathroom}</p>
+                </div>
+              </td>
             ))}
           </tr>
         )}
@@ -255,7 +328,7 @@ function Comparision() {
             <td className="text-xl font-semibold text-gray-600 pl-5">Area</td>
             <td className="">{propertyResponse.property_area}.sqft</td>
             {compareProperties.map((property) => (
-              <td>{property.property_area}</td>
+              <td>{property.property_area}.sqft</td>
             ))}
           </tr>
         )}

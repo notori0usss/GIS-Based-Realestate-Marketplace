@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import StateContext from "../context/StateContext"
 import { useImmerReducer } from "use-immer"
@@ -24,7 +24,9 @@ function Agencies() {
         break
     }
   }
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   useEffect(() => {
     async function GetAgencies() {
       try {

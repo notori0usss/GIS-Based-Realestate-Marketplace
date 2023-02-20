@@ -10,6 +10,7 @@ function App() {
     userId: localStorage.getItem("theUserId"),
     userToken: localStorage.getItem("theUserToken"),
     userIsLogged: localStorage.getItem("theUserUsername") ? true : false,
+    isSubscribed: "",
     userProfilePicture: "",
     listingInfo: "",
     subscribedInfo: 0,
@@ -37,6 +38,9 @@ function App() {
         break
       case "getSubscribedInfo":
         draft.subscribedInfo = draft.subscribedInfo + 1
+        break
+      case "checkSubscribedInfo":
+        draft.isSubscribed = action.subscribedInfo
         break
     }
   }

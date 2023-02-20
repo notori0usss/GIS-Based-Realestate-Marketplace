@@ -48,6 +48,10 @@ function Navbar() {
           type: "getUserProfilePicture",
           profilePicture: response.data.profile_picture,
         })
+        GlobalDispatch({
+          type: "checkSubscribedInfo",
+          subscribedInfo: response.data.subscribed,
+        })
       } catch (e) {
         console.log(e)
       }

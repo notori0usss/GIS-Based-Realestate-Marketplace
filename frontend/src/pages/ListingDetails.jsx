@@ -12,6 +12,8 @@ import {
   TbGridDots,
   FaPhone,
   FaPhoneAlt,
+  FaShower,
+  FaDirections,
 } from "react-icons/all"
 import { Fade, Zoom } from "react-slideshow-image"
 
@@ -30,6 +32,7 @@ import Agent from "../assets/agent.png"
 import UpdateModel from "../layout/UpdateModel"
 import BookingModel from "../layout/BookingModel"
 import Comments from "../components/Comments"
+import LeafletRoutingMachine from "../components/LeafletRoutingMachine"
 function ListingDetails() {
   const GlobalState = useContext(StateContext)
 
@@ -84,7 +87,13 @@ function ListingDetails() {
         break
     }
   }
+
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  const [poiLocation, setPoiLocation] = useState([
+    state.listingInfo.latitude,
+    state.listingInfo.longitude,
+  ])
+
   useEffect(() => {
     async function GetListingInfo() {
       try {
@@ -99,7 +108,7 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [params.id, state.listingInfo.picture1])
+  }, [params.id, state.listingInfo.picture1, poiLocation])
 
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -136,13 +145,14 @@ function ListingDetails() {
     GetUserInfo()
   }, [state.listingInfo.seller])
 
-  if (state.dataIsLoading === true) {
-    return <Loading />
-  }
   const images = [
     state.listingInfo.picture1,
     state.listingInfo.picture2,
     state.listingInfo.picture3,
+    state.listingInfo.bedroomPicture1,
+    state.listingInfo.bedroomPicture2,
+    state.listingInfo.bathPicture1,
+    state.listingInfo.bathPicture2,
   ].filter((picture) => picture !== null)
 
   const onCommentSubmit = (singleComment) => {
@@ -152,6 +162,7 @@ function ListingDetails() {
       profilePicture: GlobalState.userProfilePicture,
       commentText: singleComment,
       time_posted: Date.now(),
+      verified: GlobalState.isSubscribed,
       likes: 0,
     }
     // setComments([...comments, newComment])
@@ -180,6 +191,9 @@ function ListingDetails() {
       .catch((error) => console.error(error))
   }
 
+  if (state.dataIsLoading === true) {
+    return <Loading />
+  }
   return (
     <>
       <div className="grid grid-cols-4 gap-4 px-2 py-2 bg-white">
@@ -191,7 +205,7 @@ function ListingDetails() {
                   onClick={() => {
                     navigate("/listings")
                   }}
-                  className="text-yellow-600 hover:text-blue-700"
+                  className="text-blue-600 hover:text-blue-700 hover:underline"
                 >
                   Listing
                 </button>
@@ -204,7 +218,7 @@ function ListingDetails() {
           </nav>
           <div className="slide-container overflow-hidden px-20">
             {images.length === 1 ? (
-              <div>
+              <div className="relative">
                 {images.map((image, index) => (
                   <>
                     <img
@@ -214,11 +228,10 @@ function ListingDetails() {
                         height: "70vh",
                         objectFit: "cover",
                         margin: "auto",
-                        position: "relative",
                       }}
                       src={image}
                     />
-                    <div className="absolute top-[50%] bg-white opacity-50 w-1/2 text-center h-4 text-xs overflow-hidden">
+                    <div className="absolute top-[50%] bg-white opacity-50 w-full text-center h-8 text-sm overflow-hidden">
                       @DigiDalal
                     </div>
                   </>
@@ -239,7 +252,7 @@ function ListingDetails() {
                       }}
                       src={image}
                     />
-                    <div className="absolute top-[50%] bg-white opacity-50 w-full text-center h-4 text-xs">
+                    <div className="absolute top-[50%] bg-white opacity-50 w-full text-center h-8 text-sm">
                       @DigiDalal
                     </div>
                   </>
@@ -298,6 +311,18 @@ function ListingDetails() {
                   <span className="text-lg text-gray-500">
                     {" "}
                     {state.listingInfo.parking ? state.listingInfo.parking : 0}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div className="font-semibold text-xl">Bathrooms</div>
+                <div className="flex items-center gap-3">
+                  <FaShower className="text-2xl text-gray-500" />{" "}
+                  <span className="text-lg text-gray-500">
+                    {" "}
+                    {state.listingInfo.bathroom
+                      ? state.listingInfo.bathroom
+                      : 0}
                   </span>
                 </div>
               </div>
@@ -467,17 +492,28 @@ function ListingDetails() {
                 return dist.toFixed(2)
               }
               return (
-                <div className="border-2 w-full">
-                  <div>{poi.name}</div>
+                <div className="border-2 w-full px-2 py-4 flex items-center justify-between rounded-lg">
                   <div>
-                    {poi.type} |{CalculateDistance()} Kilometers
+                    <div className="text-xl font-semibold">{poi.name}</div>
+                    <div>
+                      {poi.type} |{CalculateDistance()} Kilometers
+                    </div>
                   </div>
+                  <FaDirections
+                    className="text-4xl text-blue-500 cursor-pointer hover:text-blue-600"
+                    onClick={() =>
+                      setPoiLocation([
+                        poi.location.coordinates[0],
+                        poi.location.coordinates[1],
+                      ])
+                    }
+                  />
                 </div>
               )
             })
           ) : (
             <div className="bg-red-300 px-3 py-2 text-lg font-semibold rounded-xl">
-              Opps! No description available.
+              Oops! No description available.
             </div>
           )}
         </div>
@@ -517,6 +553,7 @@ function ListingDetails() {
               return (
                 <Marker
                   key={poi.id}
+                  className="z-10"
                   position={[
                     poi.location.coordinates[0],
                     poi.location.coordinates[1],
@@ -527,6 +564,13 @@ function ListingDetails() {
                 </Marker>
               )
             })}
+            <LeafletRoutingMachine
+              propertyLocation={[
+                state.listingInfo.latitude,
+                state.listingInfo.longitude,
+              ]}
+              poiLocation={poiLocation}
+            />
           </MapContainer>
         </div>
       </div>

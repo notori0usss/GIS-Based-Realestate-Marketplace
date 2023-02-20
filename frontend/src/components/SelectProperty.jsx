@@ -7,6 +7,7 @@ function SelectProperty({ getCompareProperties, currentProperty }) {
   const [allProperties, setAllProperties] = React.useState([])
   const [selectedProperties, setSelectedProperties] = React.useState([])
   const [finalProperties, setFinalProperties] = React.useState([])
+
   const [showAll, setShowAll] = useState(false)
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -26,6 +27,7 @@ function SelectProperty({ getCompareProperties, currentProperty }) {
   })
   function selectPropertyHandler(item) {
     const found = selectedProperties.findIndex((el) => el.id === item.id)
+
     if (found >= 0) {
       const newSelectedProperties = [...selectedProperties]
       newSelectedProperties.splice(found, 1)
@@ -37,6 +39,7 @@ function SelectProperty({ getCompareProperties, currentProperty }) {
   getCompareProperties(finalProperties)
   function addSelectedPropertyHandler() {
     setFinalProperties(selectedProperties.splice(0, 3))
+
     setShowModal(false)
   }
   return (
@@ -72,7 +75,7 @@ function SelectProperty({ getCompareProperties, currentProperty }) {
                       {filteredProperties.map((item) => (
                         <div
                           key={item.id}
-                          className={`h-60 w-60 `}
+                          className={`h-60 w-60`}
                           onClick={() => selectPropertyHandler(item)}
                         >
                           <SelectPropertyCard {...item} />
