@@ -59,8 +59,8 @@ function UserProfile({
         {totalListing}
       </div>
       <button
-        className="bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-yellow-400"
-        onClick={() => navigate("/profileupdate")}
+        className="bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-blue-400"
+        onClick={() => navigate(`/profileupdate/${sellerId}`)}
       >
         Edit Profile
       </button>

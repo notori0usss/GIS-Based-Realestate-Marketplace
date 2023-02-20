@@ -1,5 +1,5 @@
 import useGeolocation from "../hooks/useGeolocation"
-import React, { useContext, useState, useRef } from "react"
+import React, { useContext, useState, useRef, useLayoutEffect } from "react"
 import Navbar from "../layout/Navbar"
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet"
 import { Icon } from "leaflet"
@@ -75,7 +75,9 @@ function Listings() {
   const [mapLayer, setMapLayer] = useState(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
   )
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const handleToggle = () => {
     setToggle(!toggle)
     setMapLayer(

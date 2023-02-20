@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useImmerReducer } from "use-immer"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import Axios from "axios"
+import StateContext from "../context/StateContext"
+
 import Loading from "../layout/Loading"
 import {
   MdBed,
@@ -15,7 +17,6 @@ import { Fade, Zoom } from "react-slideshow-image"
 
 import "react-slideshow-image/dist/styles.css"
 import NearbyProperty from "../components/NearbyProperty"
-import StateContext from "../context/StateContext"
 import stadiumIconPng from "../assets/map-icons/stadium.png"
 import universityIconPng from "../assets/map-icons/university.png"
 import restaurantIconPng from "../assets/map-icons/restaurant.png"
@@ -30,6 +31,8 @@ import UpdateModel from "../layout/UpdateModel"
 import BookingModel from "../layout/BookingModel"
 import Comments from "../components/Comments"
 function ListingDetails() {
+  const GlobalState = useContext(StateContext)
+
   const stadiumIcon = new Icon({
     iconUrl: stadiumIconPng,
     iconSize: [40, 40],
@@ -96,7 +99,7 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [params.id, state.listingInfo.picture1, state.listingInfo.comments])
+  }, [params.id, state.listingInfo.picture1])
 
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -115,6 +118,7 @@ function ListingDetails() {
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
   }, [params.id])
+
   useEffect(() => {
     async function GetUserInfo() {
       if (state.listingInfo.seller) {
@@ -140,6 +144,41 @@ function ListingDetails() {
     state.listingInfo.picture2,
     state.listingInfo.picture3,
   ].filter((picture) => picture !== null)
+
+  const onCommentSubmit = (singleComment) => {
+    const newComment = {
+      userId: GlobalState.userId,
+      userName: GlobalState.userUsername,
+      profilePicture: GlobalState.userProfilePicture,
+      commentText: singleComment,
+      time_posted: Date.now(),
+      likes: 0,
+    }
+    // setComments([...comments, newComment])
+    Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
+      comments: [...state.listingInfo.comments, newComment],
+    })
+      .then((response) => {
+        // Update the state with the new comment
+        console.log(response.data)
+        dispatch({ type: "catchListingInfo", listingObject: response.data })
+      })
+      .catch((error) => console.error(error))
+  }
+
+  const deleteComment = (index) => {
+    let comments = state.listingInfo.comments.filter((item, id) => id !== index)
+    // setComments([...comments, newComment])
+    Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
+      comments: comments,
+    })
+      .then((response) => {
+        // Update the state with the new comment
+        console.log(response.data)
+        dispatch({ type: "catchListingInfo", listingObject: response.data })
+      })
+      .catch((error) => console.error(error))
+  }
 
   return (
     <>
@@ -167,31 +206,43 @@ function ListingDetails() {
             {images.length === 1 ? (
               <div>
                 {images.map((image, index) => (
-                  <img
-                    key={index}
-                    style={{
-                      width: "100%",
-                      height: "70vh",
-                      objectFit: "cover",
-                      margin: "auto",
-                    }}
-                    src={image}
-                  />
+                  <>
+                    <img
+                      key={index}
+                      style={{
+                        width: "100%",
+                        height: "70vh",
+                        objectFit: "cover",
+                        margin: "auto",
+                        position: "relative",
+                      }}
+                      src={image}
+                    />
+                    <div className="absolute top-[50%] bg-white opacity-50 w-1/2 text-center h-4 text-xs overflow-hidden">
+                      @DigiDalal
+                    </div>
+                  </>
                 ))}
               </div>
             ) : (
               <Fade>
                 {images.map((image, index) => (
-                  <img
-                    key={index}
-                    style={{
-                      width: "100%",
-                      height: "70vh",
-                      objectFit: "cover",
-                      margin: "auto",
-                    }}
-                    src={image}
-                  />
+                  <>
+                    <img
+                      key={index}
+                      style={{
+                        width: "100%",
+                        height: "70vh",
+                        objectFit: "cover",
+                        margin: "auto",
+                        position: "relative",
+                      }}
+                      src={image}
+                    />
+                    <div className="absolute top-[50%] bg-white opacity-50 w-full text-center h-4 text-xs">
+                      @DigiDalal
+                    </div>
+                  </>
                 ))}
               </Fade>
             )}
@@ -480,7 +531,11 @@ function ListingDetails() {
         </div>
       </div>
       <div className="bg-[#f7fdfe]">
-        <Comments listingInfo={state.listingInfo} />
+        <Comments
+          listingInfo={state.listingInfo}
+          onCommentSubmit={onCommentSubmit}
+          deleteComment={deleteComment}
+        />
       </div>
     </>
   )

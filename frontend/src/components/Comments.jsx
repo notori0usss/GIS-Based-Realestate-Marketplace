@@ -1,43 +1,31 @@
 import React, { useContext, useEffect, useState } from "react"
-import StateContext from "../context/StateContext"
-import axios from "axios"
 import { IoSend } from "react-icons/all"
 import { useNavigate, useParams } from "react-router-dom"
 import Axios from "axios"
-function Comments({ listingInfo }) {
+import timeSince from "../helpers/timesince"
+import StateContext from "../context/StateContext"
+
+function Comments({ listingInfo, onCommentSubmit, deleteComment }) {
   const navigate = useNavigate()
+  const GlobalState = useContext(StateContext)
 
   const [comments, setComments] = useState(listingInfo.comments)
   const [singleComment, setSingleComment] = useState([])
-  const GlobalState = useContext(StateContext)
   const params = useParams()
-  function formSubmitHandler(e) {
-    e.preventDefault()
-    const newComment = {
-      userId: GlobalState.userId,
-      userName: GlobalState.userUsername,
-      profilePicture: GlobalState.userProfilePicture,
-      commentText: singleComment,
-    }
-    // setComments([...comments, newComment])
-    Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
-      comments: [...comments, newComment],
-    })
-      .then((response) => {
-        // Update the state with the new comment
-        setComments(response.data.comments)
-        setSingleComment("")
-        console.log(response.data)
-      })
-      .catch((error) => console.error(error))
-    console.log(comments)
-  }
+  function formSubmitHandler(e) {}
 
   return (
     <div className="container max-w-6xl mx-auto py-12">
       <h1 className="text-3xl font-bold">Comments</h1>
       {GlobalState.userIsLogged && (
-        <form className="" onSubmit={formSubmitHandler}>
+        <form
+          className=""
+          onSubmit={(e) => {
+            e.preventDefault()
+            onCommentSubmit(singleComment)
+            setSingleComment("")
+          }}
+        >
           <div className="flex items-center my-5">
             <img
               className="w-10 h-10 object-cover rounded-full mx-3"
@@ -69,14 +57,28 @@ function Comments({ listingInfo }) {
               src={comment.profilePicture}
               alt=""
             />
-            <div className="flex flex-col bg-gray-300 rounded-lg px-4 py-2">
-              <p
-                className="font-semibold hover:underline cursor-pointer"
-                onClick={() => navigate(`/agencies/${comment.userId}`)}
-              >
-                {comment.userName}
-              </p>
-              <p>{comment.commentText}</p>
+            <div className="flex flex-col">
+              <div className="flex flex-col bg-gray-300 rounded-lg px-4 py-2">
+                <p
+                  className="font-semibold hover:underline cursor-pointer"
+                  onClick={() => navigate(`/agencies/${comment.userId}`)}
+                >
+                  {comment.userName}
+                </p>
+                <p>{comment.commentText}</p>
+              </div>
+              <div className="flex gap-3 items-center px-2">
+                <button
+                  className="text-sm font-semibold"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    deleteComment(index)
+                  }}
+                >
+                  Delete
+                </button>
+                <p className="text-xs">{timeSince(comment.time_posted)}</p>
+              </div>
             </div>
           </div>
         ))}

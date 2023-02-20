@@ -57,7 +57,7 @@ class Listing(models.Model):
     property_area = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-
+    bathroom = models.IntegerField(blank=True, null=True)
     picture1 = models.ImageField(
         blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
     picture2 = models.ImageField(
@@ -66,14 +66,14 @@ class Listing(models.Model):
         blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
 
     bathPicture1 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y,%m/%d/", default="user.png")
+        blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
 
     bathPicture2 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y,%m/%d/", default="user.png")
+        blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
     bedroomPicture1 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y,%m/%d/", default="user.png")
+        blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
     bedroomPicture2 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y,%m/%d/", default="user.png")
+        blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
 
     comments = models.JSONField(default=list)
 

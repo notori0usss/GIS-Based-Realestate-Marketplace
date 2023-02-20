@@ -33,7 +33,7 @@ function Pages() {
           <Route path="/realtors" element={<Realtor />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
-          <Route path="/profileupdate" element={<ProfileUpdate />} />
+          <Route path="/profileupdate/:id" element={<ProfileUpdate />} />
           <Route path="/agencies/:id" element={<AgencyDetail />} />
           <Route path="/listings/:id" element={<ListingDetails />} />
           <Route path="/compare/:id" element={<Comparision />} />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from "axios"
 import { useImmerReducer } from "use-immer"
@@ -23,6 +23,9 @@ function Profile() {
     sendRequest: 0,
     dataIsLoading: true,
   }
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   function ReducerFunction(draft, action) {
     switch (action.type) {
       case "catchuserProfileInfo":

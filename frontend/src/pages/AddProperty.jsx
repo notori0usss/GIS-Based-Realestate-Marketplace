@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from "react"
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useLayoutEffect,
+} from "react"
 import Navbar from "../layout/Navbar"
 import { useImmerReducer } from "use-immer"
 import PropertyForm from "../components/PropertyForm"
@@ -16,6 +22,9 @@ function AddProperty() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   //Initial States for Form
   const initialState = {
     titleValue: "",
@@ -29,6 +38,7 @@ function AddProperty() {
     priceValue: "",
     rentalFrequencyValue: "",
     roomsValue: "",
+    bathroomValue: "",
     parkingValue: "",
     propertyAreaValue: "",
     furnishedValue: false,
@@ -95,6 +105,9 @@ function AddProperty() {
         break
       case "catchRoomsChange":
         draft.roomsValue = action.roomsChosen
+        break
+      case "catchBathroomChange":
+        draft.bathroomValue = action.bathroomChosen
         break
       case "catchParkingChange":
         draft.parkingValue = action.parkingChosen
@@ -194,6 +207,7 @@ function AddProperty() {
           formData.append("rooms", state.roomsValue),
           formData.append("parking", state.parkingValue),
           formData.append("furnished", state.furnishedValue),
+          formData.append("bathroom", state.bathroomValue),
           formData.append("pool", state.poolValue),
           formData.append("elevator", state.elevatorValue),
           formData.append("cctv", state.cctvValue),
@@ -479,7 +493,7 @@ function AddProperty() {
         />
 
         <h1 className="font-semibold text-sm text-gray-500">
-          Mention number of Rooms and Parking space here.
+          Mention number of Rooms,Bathrooms & Parking space here.
         </h1>
         <div className="flex gap-4">
           <input
@@ -497,12 +511,24 @@ function AddProperty() {
           <input
             className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
             type="number"
-            value={state.parkingValue}
+            value={state.parkingValue.trim()}
             placeholder="Parking"
             onChange={(e) =>
               dispatch({
                 type: "catchParkingChange",
                 parkingChosen: e.target.value,
+              })
+            }
+          />
+          <input
+            className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
+            type="number"
+            value={state.bathroomValue.trim()}
+            placeholder="Bathrooms"
+            onChange={(e) =>
+              dispatch({
+                type: "catchBathroomChange",
+                bathroomChosen: e.target.value,
               })
             }
           />

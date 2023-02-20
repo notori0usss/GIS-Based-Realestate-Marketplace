@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import Hero from "../components/Hero"
 import Feature from "../components/feature/Feature"
 import Recommended from "../components/Recommended"
@@ -43,7 +43,9 @@ function Home() {
       source.cancel
     }
   }, [])
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);

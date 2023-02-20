@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react"
 import Axios from "axios"
 import StateContext from "../context/StateContext"
 import { useNavigate, useParams } from "react-router-dom"
@@ -35,7 +35,9 @@ function Comparision() {
     GetListingInfo()
   }, [])
   const [compareProperties, setCompareProperties] = useState([])
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   function getCompareProperties(item) {
     setCompareProperties(item)
     console.log(compareProperties)

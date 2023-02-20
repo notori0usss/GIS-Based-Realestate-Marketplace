@@ -52,12 +52,18 @@ function ProductCard(
       key={id}
     >
       <div className="relative">
-        <img
-          className="w-full h-[15rem] object-cover cursor-pointer "
-          src={picture1}
-          alt=""
-          onClick={() => navigate(`/listings/${id}`)}
-        />
+        <div>
+          <img
+            className="w-full h-[15rem] object-cover cursor-pointer relative"
+            src={picture1}
+            alt=""
+            onClick={() => navigate(`/listings/${id}`)}
+          />
+          <div className="absolute top-[50%] bg-white opacity-50 w-full text-center h-4 text-xs">
+            @DigiDalal
+          </div>
+        </div>
+
         {property_status === "Sale" ? (
           <p className="absolute top-4 left-0 bg-green-300 text-green-700 rounded-r-lg px-2 py-1 font-bold text-sm shadow-sm">
             For {property_status}
