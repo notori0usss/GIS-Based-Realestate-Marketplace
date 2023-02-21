@@ -1,20 +1,52 @@
-import React, { useState } from "react"
-
-function SearchBar({ getSearchTitle }, ref) {
+import React, { useEffect, useState } from "react"
+import L from "leaflet"
+const BASE_URL = "https://nominatim.openstreetmap.org/search?"
+const params = {
+  q: "",
+  format: "json",
+  addressdetails: "addressdetails",
+}
+function SearchBar({ getSearchTitle, getSearchPolygon }, ref) {
   const [query, setQuery] = useState("")
-  const [lat, setLat] = useState(27.667286988735277)
-  const [lng, setLng] = useState(85.27796966687711)
 
-  if (query === "kirtipur") {
-    setLat(27.667286988735277)
-    setLng(85.27796966687711)
-  }
+  const [result, setResult] = useState(null)
+  // useEffect(() => {
+  //   if (result && result.geojson && result.geojson.coordinates) {
+  //     // If the result includes a polygon, create a Leaflet Polygon object and add it to the map
+  //     const polygonCoords = result.geojson.coordinates
+  //     const polygon = L.polygon(polygonCoords)
+  //     polygon.addTo(ref.current)
+  //     // Fit the map to the bounds of the polygon
+  //     ref.current.fitBounds(polygon.getBounds())
+  //   }
+  // }, [result])
   function searchHandler(e) {
     e.preventDefault()
     getSearchTitle(query.toLowerCase())
-    ref.current.flyTo([lat, lng], 14, {
-      animate: true,
-    })
+    const params = {
+      q: `${query}, Nepal`,
+      format: "json",
+      addressDetails: 1,
+      polygon_geojson: 1,
+    }
+    const queryString = new URLSearchParams(params).toString()
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    }
+
+    fetch(`${BASE_URL}${queryString}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const parsedResult = JSON.parse(result)[0]
+        setResult(parsedResult)
+        getSearchPolygon(parsedResult.geojson.coordinates)
+
+        ref.current.flyTo([parsedResult.lat, parsedResult.lon], 14, {
+          animate: true,
+        })
+      })
+      .catch((err) => console.log(err))
   }
   return (
     <form onSubmit={searchHandler}>

@@ -1,10 +1,10 @@
 import React from "react"
 import { useContext } from "react"
 import StateContext from "../context/StateContext"
-import ProductCard from "../layout/ProductCard"
 import { useState } from "react"
 import Loading from "../layout/Loading"
 import { FaSearch } from "react-icons/fa"
+import LikeProductCard from "./LikeProductCard"
 function AllProperties() {
   const GlobalState = useContext(StateContext)
   const allListings = GlobalState.listingInfo
@@ -33,7 +33,7 @@ function AllProperties() {
       <div className="grid grid-cols-3 gap-5">
         {search(allListings)?.map((item) => (
           <div className="h-30 w-30" key={item.id}>
-            <ProductCard {...item} />
+            <LikeProductCard {...item} />
           </div>
         ))}
       </div>

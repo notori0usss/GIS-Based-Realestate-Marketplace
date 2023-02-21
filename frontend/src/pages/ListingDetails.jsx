@@ -407,7 +407,7 @@ function ListingDetails() {
                 {userId == state.userInfo.seller ? (
                   <div className="flex items-center mt-5 gap-3">
                     <h2 className="font-semibold">Make Changes: </h2>
-                    <UpdateModel />
+                    <UpdateModel listingInfo={state.listingInfo} />
                     <DeleteModel />
                   </div>
                 ) : (
@@ -423,8 +423,9 @@ function ListingDetails() {
             </div>
             <div className="w-full bg-[#f7fdfe] border-2 rounded-lg px-3 py-5">
               <h1 className="text-xl font-semibold">Properties Nearby</h1>
-              {Array.from(state.allListingInfo)
-                .slice(0, 3)
+              {Array.from(state.listingInfo.listing_within_radius)
+                .filter((item) => item.id !== state.listingInfo.id)
+                .splice(0, 3)
                 .map((item) => (
                   <NearbyProperty {...item} key={item.id} />
                 ))}

@@ -73,7 +73,8 @@ function Comments({ listingInfo, onCommentSubmit, deleteComment }) {
                 <p>{comment.commentText}</p>
               </div>
               <div className="flex gap-3 items-center px-2">
-                {GlobalState.userId == comment.userId ? (
+                {GlobalState.userIsLogged &&
+                GlobalState.userId === comment.userId ? (
                   <button
                     className="text-sm font-semibold"
                     onClick={(e) => {

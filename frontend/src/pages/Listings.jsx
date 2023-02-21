@@ -58,14 +58,18 @@ function Listings() {
     }
   }
   const [searchTitle, setSearchTitle] = useState("")
+  const [searchPolygon, setSearchPolygon] = useState("")
   function getSearchTitle(query) {
     setSearchTitle(query)
+  }
+  function getSearchPolygon(polygon) {
+    setSearchPolygon(polygon)
   }
 
   function areaDisplay() {
     if (searchTitle === "kirtipur") {
       return <Polygon positions={Kirtipur} />
-    } else if (searchTitle === "balkot") {
+    } else if (searchTitle === "balkot,bhaktapur") {
       return <Polygon positions={Balkot} />
     }
   }
@@ -114,7 +118,11 @@ function Listings() {
 
   return (
     <div className="relative">
-      <SearchBar ref={mapRef} getSearchTitle={getSearchTitle} />
+      <SearchBar
+        ref={mapRef}
+        getSearchTitle={getSearchTitle}
+        getSearchPolygon={getSearchPolygon}
+      />
       <button
         className="absolute z-10 top-[3%] right-[1%] bg-white rounded-md p-2"
         onClick={handleToggle}

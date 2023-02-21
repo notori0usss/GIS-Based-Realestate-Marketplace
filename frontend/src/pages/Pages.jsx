@@ -16,6 +16,7 @@ import Agencies from "./Agencies"
 import AgencyDetail from "../components/AgencyDetail"
 import ListingDetails from "./ListingDetails"
 import Comparision from "./Comparision"
+import LikedItems from "../components/LikedItems"
 function Pages() {
   return (
     <>
@@ -37,6 +38,7 @@ function Pages() {
           <Route path="/agencies/:id" element={<AgencyDetail />} />
           <Route path="/listings/:id" element={<ListingDetails />} />
           <Route path="/compare/:id" element={<Comparision />} />
+          <Route path="/likeditems" element={<LikedItems />} />
         </Routes>
       </BrowserRouter>
     </>

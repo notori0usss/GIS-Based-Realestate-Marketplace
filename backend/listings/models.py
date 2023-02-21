@@ -75,7 +75,7 @@ class Listing(models.Model):
     bedroomPicture2 = models.ImageField(
         blank=True, null=True, upload_to="pictures/%Y,%m/%d/")
 
-    comments = models.JSONField(blank=True,null=True,default=list)
+    comments = models.JSONField(blank=True, null=True, default=list)
 
 
 def __str__(self):

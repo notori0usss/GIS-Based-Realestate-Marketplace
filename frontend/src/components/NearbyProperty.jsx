@@ -10,6 +10,7 @@ function NearbyProperty({
   rooms,
   property_area,
   municipality,
+  title,
 }) {
   const navigate = useNavigate()
   return (
@@ -17,11 +18,12 @@ function NearbyProperty({
       <img
         onClick={() => navigate(`/listings/${id}`)}
         className="w-1/3 object-cover h-[13vh] rounded-xl cursor-pointer"
-        src={picture1}
+        src={`http://127.0.0.1:8000${picture1}`}
         alt=""
       />
       <div className="flex flex-col justify-center ml-2">
         <h1 className="text-xl font-semibold">Rs. {price}</h1>
+
         <p className="text-gray-500 font-semibold">
           {area},{municipality ? municipality : "--"}
         </p>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Heading from "./Heading"
-import ProductCard from "../layout/ProductCard"
+import LikeProductCard from "./LikeProductCard"
 
 function Recommended({ allListings }) {
   return (
@@ -19,7 +19,7 @@ function Recommended({ allListings }) {
             .slice(0, 3)
             .map((item) => (
               <div className="h-30 w-30" key={item.id}>
-                <ProductCard {...item} />
+                <LikeProductCard {...item} />
               </div>
             ))}
       </div>

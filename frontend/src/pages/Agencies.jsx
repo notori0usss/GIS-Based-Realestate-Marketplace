@@ -58,7 +58,8 @@ function Agencies() {
           (item) =>
             item.agency_name &&
             item.phone_number &&
-            item.subscribed && (
+            item.subscribed &&
+            item.seller_listings_count !== 0 && (
               <li key={item.id}>
                 <AgencyCard {...item} />
               </li>
