@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from "react"
 import BgImg from "../assets/bgimg.png"
 import { useNavigate } from "react-router-dom"
+import { IoMdArrowRoundBack } from "react-icons/io"
 export default function CheckOut() {
   const navigate = useNavigate()
   return (
-    <div className="xl:mx-auto xl:container py-20  px-6">
+    <div className="xl:mx-auto xl:container px-6">
+      <nav className="rounded-md w-full">
+        <ol className="list-reset flex py-4">
+          <li>
+            <button
+              onClick={() => {
+                navigate("/")
+              }}
+              className="text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-2"
+            >
+              <IoMdArrowRoundBack /> Back
+            </button>
+          </li>
+        </ol>
+      </nav>
       <div className="lg:flex items-center justify-between">
         <div className=" lg:w-1/2 w-full">
           <p className="text-base leading-4 text-gray-600">Choose your plan</p>

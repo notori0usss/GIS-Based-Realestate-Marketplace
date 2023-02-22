@@ -2,7 +2,7 @@ import useGeolocation from "../hooks/useGeolocation"
 import React, { useContext, useState, useRef, useLayoutEffect } from "react"
 import Navbar from "../layout/Navbar"
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet"
-import { Icon } from "leaflet"
+import { Icon, polygon } from "leaflet"
 
 import Axios from "axios"
 
@@ -65,11 +65,11 @@ function Listings() {
   function getSearchPolygon(polygon) {
     setSearchPolygon(polygon)
   }
-
+  console.log(searchPolygon)
   function areaDisplay() {
     if (searchTitle === "kirtipur") {
       return <Polygon positions={Kirtipur} />
-    } else if (searchTitle === "balkot,bhaktapur") {
+    } else if (searchTitle.toLowerCase().includes("balkot")) {
       return <Polygon positions={Balkot} />
     }
   }

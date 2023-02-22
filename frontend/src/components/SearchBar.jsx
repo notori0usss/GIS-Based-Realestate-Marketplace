@@ -41,7 +41,7 @@ function SearchBar({ getSearchTitle, getSearchPolygon }, ref) {
         const parsedResult = JSON.parse(result)[0]
         setResult(parsedResult)
         getSearchPolygon(parsedResult.geojson.coordinates)
-
+        console.log(parsedResult)
         ref.current.flyTo([parsedResult.lat, parsedResult.lon], 14, {
           animate: true,
         })

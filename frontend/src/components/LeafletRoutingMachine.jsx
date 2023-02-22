@@ -24,6 +24,15 @@ export default function LeafletRoutingMachine({
         L.latLng(propertyLocation[0], propertyLocation[1]),
         L.latLng(poiLocation[0], poiLocation[1]),
       ],
+      lineOptions: {
+        styles: [
+          {
+            color: "blue",
+            opacity: 0.6,
+            weight: 4,
+          },
+        ],
+      },
       routeWhileDragging: false,
     }).addTo(map)
 

@@ -17,10 +17,12 @@ import AgencyDetail from "../components/AgencyDetail"
 import ListingDetails from "./ListingDetails"
 import Comparision from "./Comparision"
 import LikedItems from "../components/LikedItems"
+import Promotion from "../layout/Promotion"
 function Pages() {
   return (
     <>
       <BrowserRouter>
+        <Promotion />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
