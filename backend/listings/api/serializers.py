@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from listings.models import Listing, PointInterest
+from listings.models import Listing, PointInterest, Booking
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import Point
 
@@ -11,6 +11,12 @@ class ListingSerializer(serializers.ModelSerializer):
     seller_profile_picture = serializers.SerializerMethodField()
     listing_pois_within_radius = serializers.SerializerMethodField()
     listing_within_radius = serializers.SerializerMethodField()
+    bookings = serializers.SerializerMethodField()
+
+    def get_bookings(self, obj):
+        queryset = Booking.objects.filter(listing=obj)
+        serialized_data = BookingSerializer(queryset, many=True).data
+        return serialized_data
 
     def get_listing_within_radius(self, obj):
         query = Listing.objects.filter(
@@ -58,3 +64,9 @@ class NearbySerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = '__all__'
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['id', 'user', 'listing', 'date_booked', 'status']

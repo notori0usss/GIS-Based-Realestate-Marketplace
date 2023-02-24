@@ -1,7 +1,11 @@
-import React from "react"
+import React, { useState, useContext } from "react"
+import StateContext from "../context/StateContext"
 
 function BookingModel() {
   const [showModal, setShowModal] = React.useState(false)
+  const [value, setValue] = useState("")
+  console.log(value)
+  const GlobalState = useContext(StateContext)
 
   return (
     <div>
@@ -30,7 +34,14 @@ function BookingModel() {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto"></div>
+                <div className="relative p-6 flex-auto">
+                  {/* <DatePicker onChange={onChange} value={value} isOpen={true} /> */}
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                  />
+                </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
@@ -43,6 +54,9 @@ function BookingModel() {
                   <button
                     className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
+                    onClick={() => {
+                      setShowModal(false)
+                    }}
                   >
                     Send Request
                   </button>

@@ -30,19 +30,19 @@ function Listings() {
   const navigate = useNavigate()
   const houseIcon = new Icon({
     iconUrl: houseIconPng,
-    iconSize: [30, 30],
+    iconSize: [35, 35],
   })
   const officeIcon = new Icon({
     iconUrl: officeIconPng,
-    iconSize: [30, 30],
+    iconSize: [35, 35],
   })
   const apartmentIcon = new Icon({
     iconUrl: apartmentIconPng,
-    iconSize: [30, 30],
+    iconSize: [35, 35],
   })
   const userIcon = new Icon({
     iconUrl: userIconPng,
-    iconSize: [30, 30],
+    iconSize: [35, 35],
   })
 
   const ZOOM_LEVEL = 16
@@ -77,7 +77,7 @@ function Listings() {
   const [dataLoading, setDataLoading] = useState(true)
   const [toggle, setToggle] = useState(false)
   const [mapLayer, setMapLayer] = useState(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   )
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
@@ -86,8 +86,8 @@ function Listings() {
     setToggle(!toggle)
     setMapLayer(
       toggle
-        ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-        : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        ? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
     )
   }
   useEffect(() => {
@@ -129,12 +129,14 @@ function Listings() {
       >
         <ImStack className="w-6 h-6 rounded-lg text-black" />
       </button>
-      <button
-        className="absolute z-10 top-[5%] right-[1%] bg-white rounded-md p-2"
-        onClick={showMyLocation}
-      >
-        <RiUserLocationFill className="w-6 h-6 rounded-lg text-red-700" />
-      </button>
+      {GlobalState.userIsLogged && (
+        <button
+          className="absolute z-10 top-[5%] right-[1%] bg-white rounded-md p-2"
+          onClick={showMyLocation}
+        >
+          <RiUserLocationFill className="w-6 h-6 rounded-lg text-red-700" />
+        </button>
+      )}
       {/* <div className="w-full h-10 rounded-full top-2 bg-gray-600 absolute z-10"></div> */}
       <div className="grid grid-cols-4 grid-rows-1">
         <div className="col-span-1 flex items-center gap-5 justify-start flex-col px-3 py-5 w-full">
@@ -145,13 +147,13 @@ function Listings() {
         <div className="h-[100vh] col-span-3 sticky top-0">
           <MapContainer
             center={[27.712714725156008, 85.34253917397493]}
-            zoom={16}
+            zoom={12}
             scrollWheelZoom={true}
             ref={mapRef}
           >
             <TileLayer url={mapLayer} />
             {areaDisplay()}
-            {location.loaded && !location.error && (
+            {location.loaded && !location.error && GlobalState.userIsLogged && (
               <Marker
                 icon={userIcon}
                 position={[location.coordinates.lat, location.coordinates.lng]}

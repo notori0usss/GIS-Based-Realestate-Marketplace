@@ -8,7 +8,7 @@ function Promotion() {
   const GlobalState = useContext(StateContext)
   return (
     <>
-      {!GlobalState.isSubscribed && isOpen && (
+      {!GlobalState.isSubscribed && isOpen && GlobalState.userIsLogged && (
         <div className="w-full h-[6vh] flex items-center justify-center max-w-5xl mx-auto gap-2">
           Are you a seller?{" "}
           <Link

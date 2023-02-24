@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.gis.geos import Point
 from random import choices
 from django.contrib.auth import get_user_model
+from users.models import Profile
 
 User = get_user_model()
 
@@ -97,3 +98,20 @@ class PointInterest(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Booking(models.Model):
+    user = models.IntegerField(blank=True, null=True)
+    seller = models.IntegerField(blank=True, null=True)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    date_booked = models.DateTimeField(default=timezone.now)
+    choices_status = (
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    )
+    status = models.CharField(
+        max_length=50, choices=choices_status, default='Pending')
+
+    def __str__(self):
+        return f"{self.user} booked {self.listing.title}"

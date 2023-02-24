@@ -33,6 +33,7 @@ import UpdateModel from "../layout/UpdateModel"
 import BookingModel from "../layout/BookingModel"
 import Comments from "../components/Comments"
 import LeafletRoutingMachine from "../components/LeafletRoutingMachine"
+import BookingCard from "../components/BookingCard"
 function ListingDetails() {
   const GlobalState = useContext(StateContext)
 
@@ -190,7 +191,7 @@ function ListingDetails() {
       })
       .catch((error) => console.error(error))
   }
-
+  console.log(GlobalState.userId)
   if (state.dataIsLoading === true) {
     return <Loading />
   }
@@ -416,6 +417,7 @@ function ListingDetails() {
                     <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
                       Chat
                     </button>
+
                     <BookingModel />
                   </div>
                 )}
@@ -431,27 +433,35 @@ function ListingDetails() {
                 ))}
             </div>
           </div>
-          <div className="mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 relative h-[50vh]">
-            <img
-              src={Agent}
-              alt=""
-              className="absolute w-1/2 right-0 object-cover h-2/3 bottom-0"
-            />
-            <div className="flex flex-col gap-5 items-start w-full h-full">
-              <div className="text-2xl font-semibold">
-                Confused What you Looking for?
-              </div>
-              <p className="text-gray-500">
-                Don't Worry! Compare Properties here!
-              </p>
-              <button
-                onClick={() => navigate(`/compare/${state.listingInfo.id}`)}
-                className="justify-self-center mt-16 rounded-2xl px-6 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-400"
-              >
-                Compare Now
-              </button>
+          {userId == state.userInfo.seller ? (
+            <div className="overflow-y-auto max-h-[50vh] mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 ">
+              <h1 className="text-xl font-semibold mb-2">Booking Requests</h1>
+
+              <BookingCard bookingInfo={state.listingInfo.bookings} />
             </div>
-          </div>
+          ) : (
+            <div className="mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 relative h-[50vh]">
+              <img
+                src={Agent}
+                alt=""
+                className="absolute w-1/2 right-0 object-cover h-2/3 bottom-0"
+              />
+              <div className="flex flex-col gap-5 items-start w-full h-full">
+                <div className="text-2xl font-semibold">
+                  Confused What you Looking for?
+                </div>
+                <p className="text-gray-500">
+                  Don't Worry! Compare Properties here!
+                </p>
+                <button
+                  onClick={() => navigate(`/compare/${state.listingInfo.id}`)}
+                  className="justify-self-center mt-16 rounded-2xl px-6 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-400"
+                >
+                  Compare Now
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="h-[80vh] grid grid-cols-4 rounded-lg p-12 bg-[#f7fdfe]">
