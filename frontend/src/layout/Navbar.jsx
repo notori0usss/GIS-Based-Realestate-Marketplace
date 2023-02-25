@@ -53,6 +53,10 @@ function Navbar() {
           type: "checkSubscribedInfo",
           subscribedInfo: response.data.subscribed,
         })
+        GlobalDispatch({
+          type: "getUserObject",
+          userValue: response.data,
+        })
       } catch (e) {
         console.log(e)
       }

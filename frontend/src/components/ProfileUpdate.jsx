@@ -10,14 +10,16 @@ function ProfileUpdate() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
-
+  console.log(GlobalState.userObject.agency_name)
   const initialState = {
     userProfile: {},
-    agencyNameValue: "",
-    phoneNumberValue: "",
-    bioValue: "",
+    agencyNameValue: GlobalState.userObject?.agency_name,
+    phoneNumberValue: GlobalState.userObject?.phone_number,
+    firstNameValue: GlobalState.userObject?.f_name,
+    lastNameValue: GlobalState.userObject?.l_name,
+    bioValue: GlobalState.userObject?.bio,
     uploadedPictureValue: [],
-    profilePictureValue: "http://127.0.0.1:8000/media/user.png",
+    profilePictureValue: GlobalState.userObject?.profile_picture,
     sendRequest: 0,
   }
   function ReducerFunction(draft, action) {
@@ -37,6 +39,12 @@ function ProfileUpdate() {
       case "catchBioChange":
         draft.bioValue = action.bioChosen
         break
+      case "catchFirstNameChange":
+        draft.firstNameValue = action.firstNameChosen
+        break
+      case "catchLastNameChange":
+        draft.lastNameValue = action.lastNameChosen
+        break
       case "catchProfilePictureChange":
         draft.profilePictureValue = action.profilePictureChosen
         break
@@ -48,6 +56,7 @@ function ProfileUpdate() {
         break
     }
   }
+
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
   useEffect(() => {
     async function GetProfileInfo() {
@@ -55,8 +64,7 @@ function ProfileUpdate() {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
         )
-        console.log(response.data)
-        setUserInfo(response.data)
+
         dispatch({ type: "catchuserProfileInfo", profileObject: response.data })
       } catch (e) {
         console.log(e)
@@ -73,7 +81,7 @@ function ProfileUpdate() {
       })
     }
   }, [state.uploadedPictureValue])
-  console.log(GlobalState.userId)
+
   useEffect(() => {
     if (state.sendRequest) {
       async function UpdateProfile() {
@@ -81,6 +89,8 @@ function ProfileUpdate() {
         formData.append("agency_name", state.agencyNameValue),
           formData.append("phone_number", state.phoneNumberValue),
           formData.append("bio", state.bioValue),
+          formData.append("f_name", state.firstNameValue),
+          formData.append("l_name", state.lastNameValue),
           formData.append("profile_picture", state.profilePictureValue),
           formData.append("seller", GlobalState.userId)
 
@@ -105,7 +115,7 @@ function ProfileUpdate() {
     console.log("submit bho")
     dispatch({ type: "changeSendRequest" })
   }
-  console.log(state.userProfile.agency_name)
+
   return (
     <>
       {state.userProfile.agency_name === null ||
@@ -132,6 +142,32 @@ function ProfileUpdate() {
           className="flex flex-col gap-5 w-1/2 mt-10"
           onSubmit={submitHandler}
         >
+          <div className="flex gap-2">
+            <input
+              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              type="text"
+              value={state.firstNameValue}
+              placeholder="First Name"
+              onChange={(e) =>
+                dispatch({
+                  type: "catchFirstNameChange",
+                  firstNameChosen: e.target.value,
+                })
+              }
+            />
+            <input
+              className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+              type="text"
+              value={state.lastNameValue}
+              placeholder="Last Name"
+              onChange={(e) =>
+                dispatch({
+                  type: "catchLastNameChange",
+                  lastNameChosen: e.target.value,
+                })
+              }
+            />
+          </div>
           <input
             className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
             type="text"
@@ -156,6 +192,7 @@ function ProfileUpdate() {
               })
             }
           />
+
           <div className="flex items-center justify-center w-full ">
             <label
               htmlFor="dropzone-file"
@@ -180,12 +217,12 @@ function ProfileUpdate() {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload</span> or
-                      drag and drop
+                      <span className="font-semibold">
+                        To Change your PP Click to upload
+                      </span>{" "}
+                      or drag and drop
                     </p>
-                    <p className="text-xs text-gray-500 ">
-                      PNG, JPG or GIF (MAX. 5 Pictures)
-                    </p>
+                    <p className="text-xs text-gray-500 ">PNG, JPG or GIF</p>
                   </>
                 ) : (
                   <p className="mb-2 text-sm text-gray-500">

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from listings.models import Listing
 from listings.models import PointInterest, Booking
-from .forms import PoisForm, BookingForm
+from .forms import BookingForm, PoisForm
 
 
 class PoiAdmin(admin.ModelAdmin):

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.gis.geos import Point
-from .models import PointInterest, Booking
+from .models import Booking, PointInterest
 
 
 class PoisForm(forms.ModelForm):
@@ -29,7 +29,8 @@ class PoisForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['user', 'seller', 'listing', 'date_booked', 'status']
+        fields = ['f_name', 'l_name', 'booker', 'seller',
+                  'listing', 'date_booked', 'status']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

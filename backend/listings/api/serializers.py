@@ -69,4 +69,4 @@ class NearbySerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['id', 'user', 'listing', 'date_booked', 'status']
+        fields = ['id', 'booker', 'listing', 'date_booked', 'status']

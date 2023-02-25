@@ -14,6 +14,7 @@ function App() {
     userProfilePicture: "",
     listingInfo: "",
     subscribedInfo: 0,
+    userObject: [],
   }
   function ReducerFunction(draft, action) {
     switch (action.type) {
@@ -41,6 +42,9 @@ function App() {
         break
       case "checkSubscribedInfo":
         draft.isSubscribed = action.subscribedInfo
+        break
+      case "getUserObject":
+        draft.userObject = action.userValue
         break
     }
   }

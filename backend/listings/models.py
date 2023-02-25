@@ -101,8 +101,11 @@ class PointInterest(models.Model):
 
 
 class Booking(models.Model):
-    user = models.IntegerField(blank=True, null=True)
+    booker = models.IntegerField(blank=True, null=True)
     seller = models.IntegerField(blank=True, null=True)
+    f_name = models.CharField(max_length=10, null=True)
+    l_name = models.CharField(max_length=10, null=True)
+
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     date_booked = models.DateTimeField(default=timezone.now)
     choices_status = (
@@ -114,4 +117,4 @@ class Booking(models.Model):
         max_length=50, choices=choices_status, default='Pending')
 
     def __str__(self):
-        return f"{self.user} booked {self.listing.title}"
+        return f"{self.booker} booked {self.listing.title}"

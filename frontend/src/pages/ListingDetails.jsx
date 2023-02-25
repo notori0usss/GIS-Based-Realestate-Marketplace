@@ -436,8 +436,9 @@ function ListingDetails() {
           {userId == state.userInfo.seller ? (
             <div className="overflow-y-auto max-h-[50vh] mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 ">
               <h1 className="text-xl font-semibold mb-2">Booking Requests</h1>
-
-              <BookingCard bookingInfo={state.listingInfo.bookings} />
+              {state.listingInfo.bookings.map((item) => (
+                <BookingCard bookingInfo={item} />
+              ))}
             </div>
           ) : (
             <div className="mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 relative h-[50vh]">
