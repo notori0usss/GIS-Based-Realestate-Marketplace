@@ -23,8 +23,17 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/listings/', listings_api_views.ListingList.as_view()),
+    path('api/bookings/', listings_api_views.BookingList.as_view()),
+
+
     path('api/listings/create/', listings_api_views.ListingCreate.as_view()),
     path('api/listings/<int:pk>/', listings_api_views.ListingDetail.as_view()),
+    path('api/bookings/<int:pk>/', listings_api_views.BookingDetail.as_view()),
+    path('api/bookings/<int:pk>/update/',
+         listings_api_views.BookingUpdateAPIView.as_view()),
+    path('api/bookings/<int:pk>/update_status/',
+         listings_api_views.BookingUpdateAPIView.as_view(), name='booking_update_status'),
+
     path('api/listings/<int:pk>/delete/',
          listings_api_views.ListingDelete.as_view()),
     path('api/listings/<int:pk>/update/',

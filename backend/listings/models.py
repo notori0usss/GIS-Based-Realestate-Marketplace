@@ -1,3 +1,6 @@
+from django.core.files import File
+import PIL
+from io import BytesIO
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.contrib.gis.geos import Point
@@ -6,6 +9,17 @@ from django.contrib.auth import get_user_model
 from users.models import Profile
 
 User = get_user_model()
+
+
+def compress(picture):
+    if picture:
+        pic = PIL.Image.open(picture)
+        buf = BytesIO()
+        pic.save(buf, 'JPEG', quality=35)
+        new_pic = File(buf, name=picture.name)
+        return new_pic
+    else:
+        return None
 
 
 class Listing(models.Model):
@@ -83,6 +97,24 @@ def __str__(self):
     return self.title
 
 
+def save(self, *args, **kwargs):
+    new_picture1 = compress(self.picture1)
+    self.picture1 = new_picture1
+    new_picture2 = compress(self.picture2)
+    self.picture2 = new_picture2
+    new_picture3 = compress(self.picture3)
+    self.picture3 = new_picture3
+    new_bathPicture1 = compress(self.bathPicture1)
+    self.bathPicture1 = new_bathPicture1
+    new_bathPicture2 = compress(self.bathPicture2)
+    self.bathPicture2 = new_bathPicture2
+    new_bedroomPicture1 = compress(self.bedroomPicture1)
+    self.bedroomPicture1 = new_bedroomPicture1
+    new_bedroomPicture2 = compress(self.bedroomPicture2)
+    self.bedroomPicture2 = new_bedroomPicture2
+    super().save(*args, **kwargs)
+
+
 class PointInterest(models.Model):
     name = models.CharField(max_length=120, blank=True, null=True)
     choices_type = (
@@ -107,14 +139,17 @@ class Booking(models.Model):
     l_name = models.CharField(max_length=10, null=True)
 
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+
     date_booked = models.DateTimeField(default=timezone.now)
     choices_status = (
         ('Pending', 'Pending'),
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected'),
+        ('Completed', 'Completed'),
+
     )
     status = models.CharField(
-        max_length=50, choices=choices_status, default='Pending')
+        max_length=100, choices=choices_status, default='Pending')
 
     def __str__(self):
         return f"{self.booker} booked {self.listing.title}"

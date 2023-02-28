@@ -13,6 +13,8 @@ import Timeline from "../components/Timeline"
 import Footer from "../components/Footer"
 import Banner from "../components/Banner"
 import Promo from "../components/Promo"
+import { motion as m } from "framer-motion"
+
 function Home() {
   const location = useLocation()
   const GlobalDispatch = useContext(DispatchContext)
@@ -79,7 +81,11 @@ function Home() {
     return <Loading />
   }
   return (
-    <>
+    <m.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.75 }}
+    >
       <Hero />
       <Feature allListings={allListings} />
       <Recommended allListings={allListings} />
@@ -87,7 +93,7 @@ function Home() {
       <Banner />
       <Promo />
       <Footer />
-    </>
+    </m.div>
   )
 }
 

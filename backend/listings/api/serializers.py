@@ -19,25 +19,41 @@ class ListingSerializer(serializers.ModelSerializer):
         return serialized_data
 
     def get_listing_within_radius(self, obj):
-        query = Listing.objects.filter(
-            latitude__range=(obj.latitude - 0.04, obj.latitude + 0.04),
-            longitude__range=(obj.longitude - 0.04, obj.longitude + 0.04)
-        ).order_by('-id')
-        query_serialized = NearbySerializer(query, many=True)
-        return query_serialized.data
+        try:
+            query = Listing.objects.filter(
+                latitude__range=(obj.latitude - 0.04, obj.latitude + 0.04),
+                longitude__range=(obj.longitude - 0.04, obj.longitude + 0.04)
+            ).order_by('-id')
+            query_serialized = NearbySerializer(query, many=True)
+            return query_serialized.data
+        except AttributeError as e:
+            print("err", e)
+            return None
 
     def get_listing_pois_within_radius(self, obj):
-        listing_location = Point(obj.latitude, obj.longitude, srid=4326)
-        query = PointInterest.objects.filter(
-            location__distance_lt=(listing_location, D(km=1.01)))
-        query_serialized = PoiSerializer(query, many=True)
-        return query_serialized.data
+        try:
+            listing_location = Point(obj.latitude, obj.longitude, srid=4326)
+            query = PointInterest.objects.filter(
+                location__distance_lt=(listing_location, D(km=1.01)))
+            query_serialized = PoiSerializer(query, many=True)
+            return query_serialized.data
+        except AttributeError as e:
+            print("err", e)
+            return None
 
     def get_seller_agency_name(self, obj):
-        return obj.seller.profile.agency_name
+        try:
+            return obj.seller.profile.agency_name
+        except AttributeError as e:
+            print("AttributeError:", e)
+            return None
 
     def get_seller_profile_picture(self, obj):
-        return obj.seller.profile.profile_picture.url
+        try:
+            return obj.seller.profile.profile_picture.url
+        except AttributeError as e:
+            print("Attr Error", e)
+            return None
 
     def get_seller_username(self, obj):
         try:
@@ -69,4 +85,11 @@ class NearbySerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['id', 'booker', 'listing', 'date_booked', 'status']
+        fields = ['id', 'f_name', 'l_name', 'booker',
+                  'listing', 'date_booked', 'status']
+
+
+class BookingStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['status']

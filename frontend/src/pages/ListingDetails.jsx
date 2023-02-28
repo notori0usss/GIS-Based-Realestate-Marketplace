@@ -94,7 +94,11 @@ function ListingDetails() {
     state.listingInfo.latitude,
     state.listingInfo.longitude,
   ])
-
+  const [status, setStatus] = useState("")
+  const getStatus = (value) => {
+    setStatus(value)
+  }
+  console.log(status)
   useEffect(() => {
     async function GetListingInfo() {
       try {
@@ -109,7 +113,7 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [params.id, state.listingInfo.picture1, poiLocation])
+  }, [params.id, state.listingInfo.picture1, poiLocation, status])
 
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -436,9 +440,11 @@ function ListingDetails() {
           {userId == state.userInfo.seller ? (
             <div className="overflow-y-auto max-h-[50vh] mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 ">
               <h1 className="text-xl font-semibold mb-2">Booking Requests</h1>
-              {state.listingInfo.bookings.map((item) => (
-                <BookingCard bookingInfo={item} />
-              ))}
+              {state.listingInfo.bookings
+                .filter((item) => item.status === "Pending")
+                .map((item, idx) => (
+                  <BookingCard key={idx} {...item} getStatus={getStatus} />
+                ))}
             </div>
           ) : (
             <div className="mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 relative h-[50vh]">

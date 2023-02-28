@@ -18,11 +18,13 @@ import ListingDetails from "./ListingDetails"
 import Comparision from "./Comparision"
 import LikedItems from "../components/LikedItems"
 import Promotion from "../layout/Promotion"
+import MyBookings from "./MyBookings"
+import ProfilePage from "../components/ProfilePage"
 function Pages() {
   return (
     <>
       <BrowserRouter>
-        <Promotion />
+        {/* <Promotion /> */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -38,9 +40,12 @@ function Pages() {
           <Route path="/allProperties" element={<AllProperties />} />
           <Route path="/profileupdate/:id" element={<ProfileUpdate />} />
           <Route path="/agencies/:id" element={<AgencyDetail />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
+
           <Route path="/listings/:id" element={<ListingDetails />} />
           <Route path="/compare/:id" element={<Comparision />} />
           <Route path="/likeditems" element={<LikedItems />} />
+          <Route path="/mybookings" element={<MyBookings />} />
         </Routes>
       </BrowserRouter>
     </>

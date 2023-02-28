@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react"
 import StateContext from "../context/StateContext"
-
+import DatePicker from "react-date-picker"
 function BookingModel() {
   const [showModal, setShowModal] = React.useState(false)
-  const [value, setValue] = useState("")
+  const [value, onChange] = useState(new Date())
   console.log(value)
   const GlobalState = useContext(StateContext)
-
   return (
     <div>
       <button
@@ -35,11 +34,10 @@ function BookingModel() {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  {/* <DatePicker onChange={onChange} value={value} isOpen={true} /> */}
-                  <input
-                    type="text"
+                  <DatePicker
+                    onChange={onChange}
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    isOpen={false}
                   />
                 </div>
                 {/*footer*/}

@@ -4,11 +4,11 @@ import { Link } from "react-router-dom"
 import StateContext from "../context/StateContext"
 
 function Promotion() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const GlobalState = useContext(StateContext)
   return (
     <>
-      {!GlobalState.isSubscribed && isOpen && GlobalState.userIsLogged && (
+      {!GlobalState.isSubscribed && !isOpen && GlobalState.userIsLogged && (
         <div className="w-full h-[6vh] flex items-center justify-center max-w-5xl mx-auto gap-2">
           Are you a seller?{" "}
           <Link

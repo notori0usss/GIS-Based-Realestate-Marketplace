@@ -10,7 +10,7 @@ import { FaHeart } from "react-icons/fa"
 import DispatchContext from "../context/DispatchContext"
 import { useEffect } from "react"
 import { MdVerified } from "react-icons/md"
-
+import { motion as m } from "framer-motion"
 function Navbar() {
   const GlobalState = useContext(StateContext)
   const GlobalDispatch = useContext(DispatchContext)
@@ -71,14 +71,19 @@ function Navbar() {
       </Link>
       <ul className="flex items-center gap-x-7 justify-center">
         {navItems.map((navItem, index) => (
-          <li key={index}>
+          <m.li
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.75 }}
+            key={index}
+          >
             <NavLink
               to={navItem.path}
               className={({ isActive }) => (isActive ? "text-blue-500" : "")}
             >
               {navItem.title}
             </NavLink>
-          </li>
+          </m.li>
         ))}
       </ul>
       {GlobalState.userIsLogged ? (
@@ -148,6 +153,17 @@ function Navbar() {
                   ) : (
                     ""
                   )}
+                  <li>
+                    <button
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => {
+                        navigate("/mybookings")
+                        setIsOpen(false)
+                      }}
+                    >
+                      My Bookings
+                    </button>
+                  </li>
                 </ul>
 
                 <div className="py-2" onClick={handleLogout}>

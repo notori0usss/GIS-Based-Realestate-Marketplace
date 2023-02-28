@@ -6,4 +6,4 @@ frontend/src/assets
 
 frontend/public/dummyIng
 
-frontend/src/assets/map-icons
+./frontend/src/assets/map-icons

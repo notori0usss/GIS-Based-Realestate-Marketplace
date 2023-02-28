@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Img1 from "../assets/listings/p-1.png"
 import { BiMap } from "react-icons/bi"
 import { MdBed, MdCarRental } from "react-icons/md"
@@ -9,6 +9,8 @@ import Avatar, { genConfig } from "react-nice-avatar"
 import { useContext } from "react"
 import StateContext from "../context/StateContext"
 import { useNavigate } from "react-router-dom"
+import { motion as m } from "framer-motion"
+import { useInView } from "framer-motion"
 function ProductCard(
   {
     id,
@@ -32,6 +34,8 @@ function ProductCard(
   },
   ref
 ) {
+  const iref = useRef(null)
+  const isInView = useInView(iref, { once: true })
   const ZOOM_LEVEL = 18
   const showPropertyLocation = () => {
     ref.current.flyTo([latitude, longitude], ZOOM_LEVEL, { animate: true })
@@ -47,7 +51,13 @@ function ProductCard(
     setTimeElapsed(timeElapsed)
   }, [])
   return (
-    <div
+    <m.div
+      ref={iref}
+      style={{
+        transform: isInView ? "none" : "scale(0.9)",
+        opacity: isInView ? 1 : 0,
+        transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.2s",
+      }}
       className="flex flex-col w-full h-full shadow-lg hover:shadow-2xl transistion-all duration-150 rounded-md "
       key={id}
     >
@@ -127,7 +137,7 @@ function ProductCard(
           </span>
         )}
       </div>
-    </div>
+    </m.div>
   )
 }
 

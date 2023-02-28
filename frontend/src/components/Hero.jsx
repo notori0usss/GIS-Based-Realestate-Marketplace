@@ -2,6 +2,7 @@ import React from "react"
 import HeroImg from "../assets/services.jpg"
 import TypeWriter from "./TypeWriter"
 import { useNavigate } from "react-router-dom"
+import Home from "../assets/home.jpg"
 function Hero() {
   const navigate = useNavigate()
   return (
@@ -10,7 +11,7 @@ function Hero() {
       style={{ clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0 88%)" }}
     >
       <img
-        src="http://www.wallpapertip.com/wmimgs/54-541872_home-images-house-design-image-photos-pics-picture.jpg"
+        src={Home}
         alt="bg-hero"
         className="w-full h-full object-cover absolute mix-blend-overlay"
       />
