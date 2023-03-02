@@ -126,8 +126,7 @@ function Navbar() {
                   aria-labelledby="dropdownUserAvatarButton"
                 >
                   <li>
-                    <a
-                      href="#"
+                    <button
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       onClick={() => {
                         navigate("/profile")
@@ -135,14 +134,14 @@ function Navbar() {
                       }}
                     >
                       Profile
-                    </a>
+                    </button>
                   </li>
                   {GlobalState.userEmail === "admin@digidalal.com" ||
                   GlobalState.userEmail === "dhunganaswaroop@gmail.com" ? (
                     <li>
                       <a
                         href="http://127.0.0.1:8000/admin/"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                         onClick={() => {
                           setIsOpen(false)
                         }}
@@ -155,7 +154,7 @@ function Navbar() {
                   )}
                   <li>
                     <button
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                       onClick={() => {
                         navigate("/mybookings")
                         setIsOpen(false)
@@ -164,6 +163,19 @@ function Navbar() {
                       My Bookings
                     </button>
                   </li>
+                  {subscriptionStatus && (
+                    <li>
+                      <button
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
+                        onClick={() => {
+                          navigate("/propertybookings")
+                          setIsOpen(false)
+                        }}
+                      >
+                        Property Bookings
+                      </button>
+                    </li>
+                  )}
                 </ul>
 
                 <div className="py-2" onClick={handleLogout}>

@@ -1,13 +1,9 @@
-const date = (date) => {
-  const timestamp = new Date(timestampStr)
-
-  const year = timestamp.getUTCFullYear()
-  const month = timestamp.getUTCMonth() + 1
-  const day = timestamp.getUTCDate()
-
-  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`
-  return formattedDate
+import moment from "moment"
+const dateFormat = (isoDate) => {
+  const dateMoment = moment(isoDate)
+  const year = dateMoment.year()
+  const month = dateMoment.month() + 1 // moment.js months are 0-based
+  const day = dateMoment.date()
+  return `${day}/${month}/${year}`
 }
-export default date
+export default dateFormat

@@ -98,6 +98,10 @@ function ListingDetails() {
   const getStatus = (value) => {
     setStatus(value)
   }
+  const [sentBooking, setSentBooking] = useState("")
+  function getSentBooking(value) {
+    setSentBooking(value)
+  }
   console.log(status)
   useEffect(() => {
     async function GetListingInfo() {
@@ -113,7 +117,7 @@ function ListingDetails() {
       }
     }
     GetListingInfo()
-  }, [params.id, state.listingInfo.picture1, poiLocation, status])
+  }, [params.id, state.listingInfo.picture1, poiLocation, status, sentBooking])
 
   useEffect(() => {
     async function GetAllListingInfo() {
@@ -195,10 +199,23 @@ function ListingDetails() {
       })
       .catch((error) => console.error(error))
   }
-  console.log(GlobalState.userId)
+  if (state.userInfo) {
+    var found = false
+    const bookings = state.listingInfo.bookings
+
+    for (let i = 0; i < bookings.length; i++) {
+      if (bookings[i].booker == GlobalState.userId) {
+        found = true
+        break // If you want to exit the loop after finding the first match
+      }
+    }
+  }
+
   if (state.dataIsLoading === true) {
     return <Loading />
   }
+  console.log(GlobalState.userId)
+
   return (
     <>
       <div className="grid grid-cols-4 gap-4 px-2 py-2 bg-white">
@@ -422,7 +439,17 @@ function ListingDetails() {
                       Chat
                     </button>
 
-                    <BookingModel />
+                    {!found ? (
+                      <BookingModel
+                        listing={state.listingInfo.id}
+                        seller={state.listingInfo.seller}
+                        getSentBooking={getSentBooking}
+                      />
+                    ) : (
+                      <button className="px-4 py-1 font-semibold text-gray-500 bg-white border-2 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-3xl">
+                        Sent Booking
+                      </button>
+                    )}
                   </div>
                 )}
               </div>

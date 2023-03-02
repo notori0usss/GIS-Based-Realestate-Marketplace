@@ -20,6 +20,7 @@ import LikedItems from "../components/LikedItems"
 import Promotion from "../layout/Promotion"
 import MyBookings from "./MyBookings"
 import ProfilePage from "../components/ProfilePage"
+import PropertyBookings from "./PropertyBookings"
 function Pages() {
   return (
     <>
@@ -46,6 +47,7 @@ function Pages() {
           <Route path="/compare/:id" element={<Comparision />} />
           <Route path="/likeditems" element={<LikedItems />} />
           <Route path="/mybookings" element={<MyBookings />} />
+          <Route path="/propertybookings" element={<PropertyBookings />} />
         </Routes>
       </BrowserRouter>
     </>

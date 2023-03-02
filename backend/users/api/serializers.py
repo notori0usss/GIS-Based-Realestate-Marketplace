@@ -8,6 +8,26 @@ class ProfileSerializer(serializers.ModelSerializer):
     seller_listings = serializers.SerializerMethodField()
     seller_listings_count = serializers.SerializerMethodField()
     my_bookings = serializers.SerializerMethodField()
+    my_listings_bookings = serializers.SerializerMethodField()
+
+    def get_my_listings_bookings(self, obj):
+        # Get the listings owned by the seller
+        listings = Listing.objects.filter(seller=obj.seller.id)
+        listing_ids = [listing.id for listing in listings]
+
+        # Get the bookings associated with the seller's listings
+        bookings = Booking.objects.filter(listing_id__in=listing_ids)
+        booking_serialized = BookingSerializer(bookings, many=True)
+        booking_data = booking_serialized.data
+
+        # Add the associated listing object to the serialized data of the bookings
+        for booking in booking_data:
+            booking_listing = next(
+                (listing for listing in listings if listing.id == booking["listing"]), None)
+            if booking_listing:
+                booking["listing"] = ListingSerializer(booking_listing).data
+
+        return booking_data
 
     def get_seller_listings(self, obj):
         query = Listing.objects.filter(seller=obj.seller)

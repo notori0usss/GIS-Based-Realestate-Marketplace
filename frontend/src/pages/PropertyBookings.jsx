@@ -3,8 +3,9 @@ import StateContext from "../context/StateContext"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom"
 import dateFormat from "../helpers/date"
-function MyBookings() {
+function PropertyBookings() {
   const GlobalState = useContext(StateContext)
+  const [req, setReq] = useState(0)
   const [data, setData] = useState([])
   const navigate = useNavigate()
   useEffect(() => {
@@ -13,19 +14,38 @@ function MyBookings() {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
         )
-        setData(response.data.my_bookings)
+        setData(response.data.my_listings_bookings)
         console.log()
       } catch (e) {
         console.log(e)
       }
     }
     GetProfileInfo()
-  }, [])
-  console.log(data)
+  }, [req])
+
+  function onClickHander(value, id) {
+    setReq(req + 1)
+    async function UpdateBooking() {
+      const formData = new FormData()
+      formData.append("status", value)
+      try {
+        const response = await Axios.patch(
+          `http://127.0.0.1:8000/api/bookings/${id}/update/`,
+          formData
+        )
+        console.log(response)
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    }
+    UpdateBooking()
+  }
 
   return (
     <div className="max-w-7xl container mx-auto flex flex-col items-center justify-center">
-      <h2 className="text-3xl text-gray-700 font-bold my-10">Your Bookings</h2>
+      <h2 className="text-3xl text-gray-700 font-bold my-10">
+        Your Property Bookings
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {data.map((item) => (
           <div className="bg-blue-100 rounded-xl flex flex-col gap-5 overflow-hidden">
@@ -59,9 +79,25 @@ function MyBookings() {
                 Status: {item.status}
               </div>
               <button className="font-semibold hover:underline">
-                {item.listing.seller_agency_name}
+                {item.f_name} {item.l_name}
               </button>
             </div>
+            {item.status === "Pending" && (
+              <div className="w-full flex items-center justify-center pb-2">
+                <button
+                  onClick={() => onClickHander("Approved", item.id)}
+                  className="px-5 py-1 bg-blue-500 text-white font-semibold mr-2 rounded"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => onClickHander("Rejected", item.id)}
+                  className="px-5 py-1 bg-red-500 text-white font-semibold mr-2 rounded"
+                >
+                  Decline
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -69,4 +105,4 @@ function MyBookings() {
   )
 }
 
-export default MyBookings
+export default PropertyBookings

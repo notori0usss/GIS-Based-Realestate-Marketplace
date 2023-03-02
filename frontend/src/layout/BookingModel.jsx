@@ -1,11 +1,40 @@
 import React, { useState, useContext } from "react"
 import StateContext from "../context/StateContext"
+import Axios from "axios"
 import DatePicker from "react-date-picker"
-function BookingModel() {
+function BookingModel({ listing, seller, getSentBooking }) {
   const [showModal, setShowModal] = React.useState(false)
   const [value, onChange] = useState(new Date())
-  console.log(value)
+
+  let date = value.toISOString()
+  const [fname, setFname] = useState("")
+  const [lname, setLname] = useState("")
   const GlobalState = useContext(StateContext)
+  function submitHandler() {
+    setShowModal(false)
+
+    async function DateSender() {
+      const formData = new FormData()
+      formData.append("f_name", fname),
+        formData.append("l_name", lname),
+        formData.append("date_booked", date),
+        formData.append("booker", GlobalState.userId),
+        formData.append("listing", listing),
+        formData.append("seller", seller)
+
+      try {
+        const response = await Axios.post(
+          `http://127.0.0.1:8000/api/bookings/create/`,
+          formData
+        )
+        console.log(response)
+        getSentBooking(response)
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    }
+    DateSender()
+  }
   return (
     <div>
       <button
@@ -33,11 +62,26 @@ function BookingModel() {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-6 flex flex-col justify-center items-center gap-10">
+                  <h2 className="text-xl font-semibold">Pick a Date</h2>
                   <DatePicker
+                    showIcon
+                    className="w-full"
                     onChange={onChange}
                     value={value}
                     isOpen={false}
+                  />
+                  <input
+                    value={fname}
+                    onChange={(e) => setFname(e.target.value)}
+                    placeholder="name"
+                    type="text"
+                  />
+                  <input
+                    value={lname}
+                    onChange={(e) => setLname(e.target.value)}
+                    type="text"
+                    placeholder="lname"
                   />
                 </div>
                 {/*footer*/}
@@ -52,9 +96,7 @@ function BookingModel() {
                   <button
                     className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => {
-                      setShowModal(false)
-                    }}
+                    onClick={submitHandler}
                   >
                     Send Request
                   </button>

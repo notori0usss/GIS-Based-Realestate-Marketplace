@@ -27,12 +27,13 @@ urlpatterns = [
 
 
     path('api/listings/create/', listings_api_views.ListingCreate.as_view()),
+
     path('api/listings/<int:pk>/', listings_api_views.ListingDetail.as_view()),
     path('api/bookings/<int:pk>/', listings_api_views.BookingDetail.as_view()),
     path('api/bookings/<int:pk>/update/',
          listings_api_views.BookingUpdateAPIView.as_view()),
-    path('api/bookings/<int:pk>/update_status/',
-         listings_api_views.BookingUpdateAPIView.as_view(), name='booking_update_status'),
+    path('api/bookings/create/', listings_api_views.BookingCreate.as_view()),
+
 
     path('api/listings/<int:pk>/delete/',
          listings_api_views.ListingDelete.as_view()),
