@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import StateContext from "../context/StateContext"
 import Axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import dateFormat from "../helpers/date"
 function PropertyBookings() {
   const GlobalState = useContext(StateContext)
@@ -15,14 +15,13 @@ function PropertyBookings() {
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
         )
         setData(response.data.my_listings_bookings)
-        console.log()
       } catch (e) {
         console.log(e)
       }
     }
     GetProfileInfo()
   }, [req])
-
+  console.log(data)
   function onClickHander(value, id) {
     setReq(req + 1)
     async function UpdateBooking() {
@@ -78,9 +77,12 @@ function PropertyBookings() {
               >
                 Status: {item.status}
               </div>
-              <button className="font-semibold hover:underline">
+              <Link
+                to={`/profile/${item.booker}`}
+                className="font-semibold hover:underline"
+              >
                 {item.f_name} {item.l_name}
-              </button>
+              </Link>
             </div>
             {item.status === "Pending" && (
               <div className="w-full flex items-center justify-center pb-2">

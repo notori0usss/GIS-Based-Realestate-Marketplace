@@ -9,15 +9,11 @@ class Realtors(models.Model):
     description = models.TextField(blank=True, max_length=50)
     phone = models.CharField(max_length=20)
     email = models.CharField(max_length=100)
-    choices_agent = (
-        ('Buyers Agent', 'Buyers Agent'),
-        ('Listing Agent', 'Listing Agen'),
-        ('Relocation', 'Relocation'),
-        ('Forclosure', 'Forclosure'),
-        ('Other', 'Other'),
-    )
-    agent_type = models.CharField(
-        max_length=100, choices=choices_agent, default='Other')
+    buyers_agent = models.BooleanField(default=False)
+    listing_agent = models.BooleanField(default=False)
+    relocation_agent = models.BooleanField(default=False)
+    forclosure_agent = models.BooleanField(default=False)
+
     is_verified = models.BooleanField(default=False)
 
     def __str__(self):

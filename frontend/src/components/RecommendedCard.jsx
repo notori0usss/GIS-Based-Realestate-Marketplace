@@ -78,13 +78,13 @@ function RecommendedCard({
 
   return (
     <div
-      className="flex flex-col w-full h-full shadow-lg hover:shadow-2xl transistion-all duration-150 rounded-md "
+      className="flex flex-col w-[400px] h-full shadow-lg hover:shadow-2xl transistion-all duration-150 rounded-xl "
       key={id}
     >
       <div className="relative">
         <div>
           <img
-            className="w-full h-[15rem] object-cover cursor-pointer relative"
+            className="w-full h-[15rem] object-cover cursor-pointer relative rounded-t-xl"
             src={`http://127.0.0.1:8000${picture1}`}
             alt=""
             onClick={() => navigate(`/listings/${id}`)}

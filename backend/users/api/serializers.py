@@ -39,7 +39,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                         nearby_properties.append((property, distance))
             nearby_properties.sort(key=lambda x: x[1])  # sort by distance
             # get the closest 3 properties
-            closest_properties = [p[0] for p in nearby_properties[:3]]
+            closest_properties = [p[0] for p in nearby_properties[:6]]
             query_serialized = NearbySerializer(closest_properties, many=True)
             return query_serialized.data
         except AttributeError as e:

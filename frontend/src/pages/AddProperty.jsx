@@ -113,16 +113,16 @@ function AddProperty() {
         draft.parkingValue = action.parkingChosen
         break
       case "catchFurnishedChange":
-        draft.furnishedValue = action.furnishedChosen
+        draft.furnishedValue = !draft.furnishedValue
         break
       case "catchPoolChange":
-        draft.poolValue = action.poolChosen
+        draft.poolValue = !draft.poolValue
         break
       case "catchElevatorChange":
-        draft.elevatorValue = action.elevatorChosen
+        draft.elevatorValue = !draft.elevatorValue
         break
       case "catchCctvChange":
-        draft.cctvValue = action.cctvChosen
+        draft.cctvValue = !draft.cctvValue
         break
       case "catchPicture1Change":
         draft.picture1Value = action.picture1Chosen
@@ -620,7 +620,6 @@ function AddProperty() {
               onChange={(e) =>
                 dispatch({
                   type: "catchFurnishedChange",
-                  furnishedChosen: e.target.value,
                 })
               }
             />{" "}
@@ -635,7 +634,6 @@ function AddProperty() {
               onChange={(e) =>
                 dispatch({
                   type: "catchPoolChange",
-                  poolChosen: e.target.value,
                 })
               }
             />{" "}
@@ -650,7 +648,6 @@ function AddProperty() {
               onChange={(e) =>
                 dispatch({
                   type: "catchElevatorChange",
-                  elevatorChosen: e.target.value,
                 })
               }
             />{" "}
@@ -664,7 +661,6 @@ function AddProperty() {
               onChange={(e) =>
                 dispatch({
                   type: "catchCctvChange",
-                  cctvChosen: e.target.value,
                 })
               }
             />{" "}
