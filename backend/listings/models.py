@@ -11,15 +11,15 @@ from users.models import Profile
 User = get_user_model()
 
 
-def compress(picture):
-    if picture:
-        pic = PIL.Image.open(picture)
-        buf = BytesIO()
-        pic.save(buf, 'JPEG', quality=35)
-        new_pic = File(buf, name=picture.name)
-        return new_pic
-    else:
-        return None
+# def compress(picture):
+#     if picture:
+#         pic = PIL.Image.open(picture)
+#         buf = BytesIO()
+#         pic.save(buf, 'JPEG', quality=35)
+#         new_pic = File(buf, name=picture.name)
+#         return new_pic
+#     else:
+#         return None
 
 
 class Listing(models.Model):
@@ -97,22 +97,22 @@ def __str__(self):
     return self.title
 
 
-def save(self, *args, **kwargs):
-    new_picture1 = compress(self.picture1)
-    self.picture1 = new_picture1
-    new_picture2 = compress(self.picture2)
-    self.picture2 = new_picture2
-    new_picture3 = compress(self.picture3)
-    self.picture3 = new_picture3
-    new_bathPicture1 = compress(self.bathPicture1)
-    self.bathPicture1 = new_bathPicture1
-    new_bathPicture2 = compress(self.bathPicture2)
-    self.bathPicture2 = new_bathPicture2
-    new_bedroomPicture1 = compress(self.bedroomPicture1)
-    self.bedroomPicture1 = new_bedroomPicture1
-    new_bedroomPicture2 = compress(self.bedroomPicture2)
-    self.bedroomPicture2 = new_bedroomPicture2
-    super().save(*args, **kwargs)
+# def save(self, *args, **kwargs):
+#     new_picture1 = compress(self.picture1)
+#     self.picture1 = new_picture1
+#     new_picture2 = compress(self.picture2)
+#     self.picture2 = new_picture2
+#     new_picture3 = compress(self.picture3)
+#     self.picture3 = new_picture3
+#     new_bathPicture1 = compress(self.bathPicture1)
+#     self.bathPicture1 = new_bathPicture1
+#     new_bathPicture2 = compress(self.bathPicture2)
+#     self.bathPicture2 = new_bathPicture2
+#     new_bedroomPicture1 = compress(self.bedroomPicture1)
+#     self.bedroomPicture1 = new_bedroomPicture1
+#     new_bedroomPicture2 = compress(self.bedroomPicture2)
+#     self.bedroomPicture2 = new_bedroomPicture2
+#     super().save(*args, **kwargs)
 
 
 class PointInterest(models.Model):
@@ -155,6 +155,6 @@ class Booking(models.Model):
         return f"{self.booker} booked {self.listing.title}"
 
     def update_status_if_date_passed(self):
-        if self.status == 'Pending' and self.date_booked <= timezone.now():
+        if self.status == 'Approved' and self.date_booked <= timezone.now():
             self.status = 'Completed'
             self.save()

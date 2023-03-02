@@ -12,10 +12,21 @@ class ListingSerializer(serializers.ModelSerializer):
     listing_pois_within_radius = serializers.SerializerMethodField()
     listing_within_radius = serializers.SerializerMethodField()
     bookings = serializers.SerializerMethodField()
+    booked_dates = serializers.SerializerMethodField()
 
     def get_bookings(self, obj):
         queryset = Booking.objects.filter(listing=obj)
         serialized_data = BookingSerializer(queryset, many=True).data
+        return serialized_data
+
+    def get_booked_dates(self, obj):
+        queryset = Booking.objects.filter(listing=obj, status='Approved')
+        serialized_data = BookingSerializer(queryset, many=True).data
+
+        # Modify the serialized data to only include the date_booked field for each approved booking
+        serialized_data = [booking['date_booked']
+                           for booking in serialized_data if booking['status'] == 'Approved']
+
         return serialized_data
 
     def get_listing_within_radius(self, obj):
