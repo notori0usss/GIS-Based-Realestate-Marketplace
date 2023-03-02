@@ -21,6 +21,7 @@ function Home() {
   const GlobalState = useContext(StateContext)
   const [allListings, setAllListings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
+  const [userInfo, setUserInfo] = useState([])
   useEffect(() => {
     const source = Axios.CancelToken.source()
     async function GetAllListings() {
@@ -44,6 +45,20 @@ function Home() {
     return () => {
       source.cancel
     }
+  }, [])
+  useEffect(() => {
+    async function GetProfileInfo() {
+      try {
+        const response = await Axios.get(
+          `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
+        )
+        console.log(response.data)
+        setUserInfo(response.data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    GetProfileInfo()
   }, [])
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
@@ -88,7 +103,7 @@ function Home() {
     >
       <Hero />
       <Feature allListings={allListings} />
-      <Recommended allListings={allListings} />
+      <Recommended allListings={allListings} userInfo={userInfo} />
       <Timeline />
       <Banner />
       <Promo />

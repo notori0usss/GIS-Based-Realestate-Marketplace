@@ -16,6 +16,8 @@ class Profile(models.Model):
     profile_picture = models.ImageField(
         upload_to='profile_pictures/%Y/%m/%d', default="user.png")
     subscribed = models.BooleanField(default=False, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return f"Profile of {self.seller.username}"

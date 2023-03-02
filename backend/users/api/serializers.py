@@ -2,6 +2,13 @@ from rest_framework import serializers
 from users.models import Profile
 from listings.models import Listing, Booking
 from listings.api.serializers import ListingSerializer, BookingSerializer
+import math
+
+
+class NearbySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Listing
+        fields = '__all__'
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -9,6 +16,35 @@ class ProfileSerializer(serializers.ModelSerializer):
     seller_listings_count = serializers.SerializerMethodField()
     my_bookings = serializers.SerializerMethodField()
     my_listings_bookings = serializers.SerializerMethodField()
+    listing_within_my_radius = serializers.SerializerMethodField()
+
+    def get_listing_within_my_radius(self, obj):
+        try:
+            R = 6371  # radius of Earth in km
+            query = Listing.objects.all()
+            nearby_properties = []
+            for property in query:
+                if property.latitude and property.longitude and obj.latitude and obj.longitude:
+                    lat1, lon1 = math.radians(
+                        obj.latitude), math.radians(obj.longitude)
+                    lat2, lon2 = math.radians(
+                        property.latitude), math.radians(property.longitude)
+                    dlat = lat2 - lat1
+                    dlon = lon2 - lon1
+                    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * \
+                        math.cos(lat2) * math.sin(dlon / 2) ** 2
+                    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+                    distance = R * c
+                    if distance <= 100:  # 5 km radius
+                        nearby_properties.append((property, distance))
+            nearby_properties.sort(key=lambda x: x[1])  # sort by distance
+            # get the closest 3 properties
+            closest_properties = [p[0] for p in nearby_properties[:3]]
+            query_serialized = NearbySerializer(closest_properties, many=True)
+            return query_serialized.data
+        except AttributeError as e:
+            print("err", e)
+            return None
 
     def get_my_listings_bookings(self, obj):
         # Get the listings owned by the seller

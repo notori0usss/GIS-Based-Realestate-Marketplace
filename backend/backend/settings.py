@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     "corsheaders",
-    'realtor',
+    'realtors',
     'djoser',
     'rest_framework.authtoken',
     'payments',
@@ -144,17 +144,17 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-STRIPE_SECRET_KEY='sk_test_51MVzfYHRJSBCMAgS1HjxbQ2pXVHNqrkvfYnaZdgRkh7G25rforo11ODcxWf1llpfEpNOQK3p8rDJduwjWdXOQQFQ00BotxgYWM'
-SITE_URL="http://127.0.0.1:5173"
+STRIPE_SECRET_KEY = 'sk_test_51MVzfYHRJSBCMAgS1HjxbQ2pXVHNqrkvfYnaZdgRkh7G25rforo11ODcxWf1llpfEpNOQK3p8rDJduwjWdXOQQFQ00BotxgYWM'
+SITE_URL = "http://127.0.0.1:5173"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 REST_FRAMEWORK = {
@@ -164,6 +164,6 @@ REST_FRAMEWORK = {
 }
 
 DJOSER = {
-    'USER_CREATE_PASSWORD_RETYPE':True,
-    'SEND_ACTIVATION_EMAIL':False
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': False
 }

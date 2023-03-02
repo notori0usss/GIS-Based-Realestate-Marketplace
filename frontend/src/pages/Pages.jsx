@@ -21,6 +21,8 @@ import Promotion from "../layout/Promotion"
 import MyBookings from "./MyBookings"
 import ProfilePage from "../components/ProfilePage"
 import PropertyBookings from "./PropertyBookings"
+import RealtorForm from "../components/RealtorForm"
+import RealtorTable from "./RealtorTable"
 function Pages() {
   return (
     <>
@@ -37,6 +39,8 @@ function Pages() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/realtors" element={<Realtor />} />
+          <Route path="/realtorform" element={<RealtorForm />} />
+          <Route path="/realtortable" element={<RealtorTable />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/allProperties" element={<AllProperties />} />
           <Route path="/profileupdate/:id" element={<ProfileUpdate />} />

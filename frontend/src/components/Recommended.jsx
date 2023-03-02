@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import Heading from "./Heading"
 import LikeProductCard from "./LikeProductCard"
 import { motion as m } from "framer-motion"
 import { useInView } from "framer-motion"
-function Recommended({ allListings }) {
+import StateContext from "../context/StateContext"
+import RecommendedCard from "./RecommendedCard"
+function Recommended({ allListings, userInfo }) {
+  console.log(userInfo.listing_within_my_radius)
+  const GlobalState = useContext(StateContext)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   return (
@@ -27,14 +31,27 @@ function Recommended({ allListings }) {
           transition: "all 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) 0.2s",
         }}
       >
-        {allListings &&
-          Array.from(allListings)
-            .slice(0, 3)
-            .map((item) => (
-              <div className="h-30 w-30" key={item.id}>
-                <LikeProductCard {...item} />
-              </div>
-            ))}
+        {GlobalState.userIsLogged && userInfo.latitude && userInfo.longitude ? (
+          <>
+            {userInfo.listing_within_my_radius &&
+              userInfo.listing_within_my_radius.map((item) => (
+                <div className="h-30 w-30" key={item.id}>
+                  <RecommendedCard {...item} userInfo={userInfo} />
+                </div>
+              ))}
+          </>
+        ) : (
+          <>
+            {allListings &&
+              Array.from(allListings)
+                .slice(0, 3)
+                .map((item) => (
+                  <div className="h-30 w-30" key={item.id}>
+                    <LikeProductCard {...item} />
+                  </div>
+                ))}
+          </>
+        )}
       </m.div>
     </div>
   )
