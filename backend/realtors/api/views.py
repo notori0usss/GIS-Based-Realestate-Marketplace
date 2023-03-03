@@ -18,6 +18,11 @@ class RealtorUpdate(generics.UpdateAPIView):
     serializer_class = RealtorSerializer
 
 
+class RealtorDelete(generics.DestroyAPIView):
+    queryset = Realtors.objects.all()
+    serializer_class = RealtorSerializer
+
+
 class RealtorCreate(generics.CreateAPIView):
     queryset = Realtors.objects.all()
     serializer_class = RealtorSerializer

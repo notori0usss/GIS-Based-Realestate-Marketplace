@@ -46,9 +46,17 @@ function Realtor() {
             <RealtorCard key={item.id} {...item} />
           ))}
         </div>
-        <div>
+        <hr />
+        <div className="mt-10 bg-blue-200 text-center py-2 px-5 rounded-full">
           Are you a realtor?
-          <button onClick={() => navigate("/realtorform")}> Apply Here!</button>
+          <br />
+          <button
+            onClick={() => navigate("/realtorform")}
+            className="font-semibold text-gray-700"
+          >
+            {" "}
+            Apply Here!
+          </button>
         </div>
       </div>
     </>

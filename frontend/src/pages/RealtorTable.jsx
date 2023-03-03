@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react"
 import Axios from "axios"
 import StateContext from "../context/StateContext"
-import { FcApprove, FcDisapprove } from "react-icons/fc"
+import { FcApprove, FcDisapprove, FcFullTrash } from "react-icons/fc"
+import { useNavigate } from "react-router-dom"
 function RealtorTable() {
   const [realtors, setRealtors] = useState([])
   const [sendRequest, setSendRequest] = useState(0)
   const GlobalState = useContext(StateContext)
+  const [count, setCount] = useState(0)
+  const navigate = useNavigate()
   useEffect(() => {
     async function GetRealtor() {
       try {
@@ -17,7 +20,7 @@ function RealtorTable() {
       }
     }
     GetRealtor()
-  }, [sendRequest])
+  }, [sendRequest, count])
   function clickerHandler(value, id) {
     async function ChangeVerify() {
       const formData = new FormData()
@@ -35,6 +38,19 @@ function RealtorTable() {
     }
     ChangeVerify()
   }
+
+  async function deleteHandler(id) {
+    try {
+      const response = await Axios.delete(
+        `http://127.0.0.1:8000/api/realtors/${id}/delete/`
+      )
+      navigate("/realtortable")
+      setCount(count + 1)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div>
       <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
@@ -122,6 +138,10 @@ function RealtorTable() {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex justify-end gap-4 text-3xl">
+                    <FcFullTrash
+                      className="cursor-pointer"
+                      onClick={() => deleteHandler(item.id)}
+                    />
                     <FcDisapprove
                       className="cursor-pointer"
                       onClick={() => clickerHandler(false, item.id)}

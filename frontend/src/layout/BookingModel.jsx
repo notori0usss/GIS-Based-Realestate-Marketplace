@@ -66,23 +66,29 @@ function BookingModel({ listing, seller, getSentBooking }) {
                   <h2 className="text-xl font-semibold">Pick a Date</h2>
                   <DatePicker
                     showIcon
-                    className="w-full"
+                    className="w-full py-1 rounded-lg"
                     onChange={onChange}
                     value={value}
                     isOpen={false}
                   />
-                  <input
-                    value={fname}
-                    onChange={(e) => setFname(e.target.value)}
-                    placeholder="name"
-                    type="text"
-                  />
-                  <input
-                    value={lname}
-                    onChange={(e) => setLname(e.target.value)}
-                    type="text"
-                    placeholder="lname"
-                  />
+                  <div className="space-x-4">
+                    <label htmlFor="">First Name:</label>
+                    <input
+                      className="text-lg px-2 py-2 border-black border-2 rounded-lg"
+                      value={fname}
+                      onChange={(e) => setFname(e.target.value)}
+                      placeholder="name"
+                      type="text"
+                    />
+                    <label htmlFor="">Last Name:</label>
+                    <input
+                      className="text-lg px-2 py-2 border-black border-2 rounded-lg"
+                      value={lname}
+                      onChange={(e) => setLname(e.target.value)}
+                      type="text"
+                      placeholder="lname"
+                    />
+                  </div>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

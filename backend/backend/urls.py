@@ -43,6 +43,9 @@ urlpatterns = [
     path('api/realtors/verified/', realtors_api_views.IsVerifiedView.as_view()),
     path('api/realtors/<int:pk>/update/',
          realtors_api_views.RealtorUpdate.as_view()),
+    path('api/realtors/<int:pk>/delete/',
+         realtors_api_views.RealtorDelete.as_view()),
+
     path('api/profiles/', users_api_views.ProfileList.as_view()),
     path('api/profiles/<int:seller>/', users_api_views.ProfileDetail.as_view()),
     path('api/profiles/<int:seller>/update/',
