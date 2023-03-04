@@ -133,10 +133,12 @@ class PointInterest(models.Model):
 
 
 class Booking(models.Model):
-    booker = models.IntegerField(blank=True, null=True)
+    booker = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True)
     seller = models.IntegerField(blank=True, null=True)
     f_name = models.CharField(max_length=50, null=True)
     l_name = models.CharField(max_length=50, null=True)
+    phone_number = models.CharField(max_length=50, null=True)
 
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
 

@@ -29,7 +29,7 @@ class PoisForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['f_name', 'l_name', 'booker', 'seller',
+        fields = ['f_name', 'l_name', 'booker', 'phone_number', 'seller',
                   'listing', 'date_booked', 'status']
 
     def __init__(self, *args, **kwargs):

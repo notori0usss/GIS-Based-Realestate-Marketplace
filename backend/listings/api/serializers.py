@@ -94,10 +94,18 @@ class NearbySerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    booker_profile_picture = serializers.SerializerMethodField()
+
+    def get_booker_profile_picture(self, obj):
+        try:
+            return obj.booker.profile.profile_picture.url
+        except AttributeError as e:
+            print("Attr Error", e)
+            return None
+
     class Meta:
         model = Booking
-        fields = ['id', 'f_name', 'l_name', 'booker',
-                  'listing', 'date_booked', 'status']
+        fields = '__all__'
 
 
 class BookingStatusUpdateSerializer(serializers.ModelSerializer):
