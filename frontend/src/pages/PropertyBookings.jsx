@@ -45,6 +45,17 @@ function PropertyBookings() {
       <h2 className="text-3xl text-gray-700 font-bold my-10">
         Your Property Bookings
       </h2>
+      {data.length === 0 ? (
+        <div className="h-fit w-fit">
+          <img
+            className="w-full h-full"
+            src="https://th.bing.com/th/id/OIP.VqqBt3f-4Udxi1wp6IpLKgHaEo?pid=ImgDet&rs=1"
+            alt=""
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {data.map((item) => (
           <div className="bg-blue-100 rounded-xl flex flex-col gap-5 overflow-hidden">

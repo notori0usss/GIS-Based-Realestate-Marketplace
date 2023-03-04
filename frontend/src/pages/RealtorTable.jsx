@@ -3,10 +3,12 @@ import Axios from "axios"
 import StateContext from "../context/StateContext"
 import { FcApprove, FcDisapprove, FcFullTrash } from "react-icons/fc"
 import { useNavigate } from "react-router-dom"
+import DispatchContext from "../context/DispatchContext"
 function RealtorTable() {
   const [realtors, setRealtors] = useState([])
   const [sendRequest, setSendRequest] = useState(0)
   const GlobalState = useContext(StateContext)
+  const GlobalDispatch = useContext(DispatchContext)
   const [count, setCount] = useState(0)
   const navigate = useNavigate()
   useEffect(() => {
@@ -21,6 +23,7 @@ function RealtorTable() {
     }
     GetRealtor()
   }, [sendRequest, count])
+
   function clickerHandler(value, id) {
     async function ChangeVerify() {
       const formData = new FormData()
@@ -50,6 +53,20 @@ function RealtorTable() {
       console.error(error)
     }
   }
+  async function ChangeSubscription(value, id) {
+    const subscribedStatus = new FormData()
+    subscribedStatus.append("subscribed", value)
+    try {
+      const response = await Axios.patch(
+        `http://127.0.0.1:8000/api/profiles/${id}/update/`,
+        subscribedStatus
+      )
+      console.log(response)
+      GlobalDispatch({ type: "getSubscribedInfo" })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -77,12 +94,12 @@ function RealtorTable() {
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100">
             {realtors.map((item) => (
-              <tr className="hover:bg-gray-50">
+              <tr key={item.id} className="hover:bg-gray-50">
                 <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
                   <div className="relative h-10 w-10">
                     <img
                       className="h-full w-full rounded-full object-cover object-center"
-                      src={item.photo}
+                      src={`http://127.0.0.1:8000${item.profile_picture}`}
                       alt=""
                     />
                   </div>
@@ -144,11 +161,17 @@ function RealtorTable() {
                     />
                     <FcDisapprove
                       className="cursor-pointer"
-                      onClick={() => clickerHandler(false, item.id)}
+                      onClick={() => {
+                        clickerHandler(false, item.id)
+                        ChangeSubscription(false, item.user)
+                      }}
                     />
                     <FcApprove
                       className="cursor-pointer"
-                      onClick={() => clickerHandler(true, item.id)}
+                      onClick={() => {
+                        clickerHandler(true, item.id)
+                        ChangeSubscription(true, item.user)
+                      }}
                     />
                   </div>
                 </td>

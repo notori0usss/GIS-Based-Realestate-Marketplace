@@ -1,6 +1,26 @@
 import React from "react"
 
-function RealtorCard({ name, photo, phone, description, email }) {
+function RealtorCard({
+  name,
+  profile_picture,
+  phone,
+  description,
+  email,
+  forclosure_agent,
+  listing_agent,
+  buyers_agent,
+  relocation_agent,
+}) {
+  const handleClick = () => {
+    const recipient = email
+    const subject = "Regarding your real estate services"
+    const emailBody =
+      "Hi, I am interested in your real estate services. Please let me know how we can take this forward."
+
+    const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${emailBody}`
+    window.location.href = mailtoLink
+  }
+
   return (
     <div className="w-72 bg-gray-100 flex items-center flex-col shadow-md rounded-md">
       <div
@@ -8,7 +28,7 @@ function RealtorCard({ name, photo, phone, description, email }) {
         style={{ clipPath: " polygon(0 0, 100% 0, 100% 80%, 0 70%)" }}
       ></div>
       <img
-        src={photo}
+        src={`http://127.0.0.1:8000${profile_picture}`}
         alt=""
         className="w-32 h-32 rounded-full border-4 object-cover absolute mt-10"
       />
@@ -16,7 +36,29 @@ function RealtorCard({ name, photo, phone, description, email }) {
         <h1 className="text-lg font-semibold text-gray-700">{name}</h1>
         <div className="w-1/5 rounded-full bg-gray-600 h-1"></div>
         <p className="text-sm text-gray-500 mt-5 text-center">{description}</p>
-        <button>Message</button>
+        <button onClick={handleClick}>Message</button>
+      </div>
+      <div className="flex gap-2">
+        {forclosure_agent && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+            Forclosure
+          </span>
+        )}
+        {listing_agent && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-yellow-50 px-2 py-1 text-xs font-semibold text-yellow-600">
+            Listing
+          </span>
+        )}{" "}
+        {buyers_agent && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+            Buyers
+          </span>
+        )}{" "}
+        {relocation_agent && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-pink-50 px-2 py-1 text-xs font-semibold text-pink-600">
+            Relocation
+          </span>
+        )}
       </div>
       <div
         className="h-10 bg-blue-500 w-full"

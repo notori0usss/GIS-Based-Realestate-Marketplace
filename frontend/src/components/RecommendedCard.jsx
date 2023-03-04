@@ -84,7 +84,7 @@ function RecommendedCard({
       <div className="relative">
         <div>
           <img
-            className="w-full h-[15rem] object-cover cursor-pointer relative rounded-t-xl"
+            className="w-full h-[12rem] object-cover cursor-pointer relative"
             src={`http://127.0.0.1:8000${picture1}`}
             alt=""
             onClick={() => navigate(`/listings/${id}`)}
@@ -105,7 +105,7 @@ function RecommendedCard({
         )}
       </div>
 
-      <div className="flex items-center w-full p-4 justify-between">
+      <div className="flex items-center w-full p-3 justify-between">
         <div className="">
           <h1 className="font-semibold text-gray-700 text-lg">{title}</h1>
           <div className="flex items-center text-md text-blue-600 gap-x-3 ">
@@ -121,13 +121,13 @@ function RecommendedCard({
         />
       </div>
       <hr className="my-2" />
-      <div className="flex items-center justify-between px-5 py-2">
+      <div className="flex items-center justify-between px-3 py-2">
         {property_status === "Rent" ? (
-          <button className="bg-blue-500 text-white px-3 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
+          <button className="bg-blue-500 text-white px-3 py-2 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}/<span className="text-xs">{rental_frequency}</span>
           </button>
         ) : (
-          <button className="bg-blue-500 text-white px-3 py-3 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
+          <button className="bg-blue-500 text-white px-3 py-2 rounded-lg font-bold spacing text-md w-2/3 tracking-wider">
             Rs.{price}
           </button>
         )}

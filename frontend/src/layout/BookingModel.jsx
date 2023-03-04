@@ -7,18 +7,18 @@ function BookingModel({ listing, seller, getSentBooking }) {
   const [value, onChange] = useState(new Date())
 
   let date = value.toISOString()
-  const [fname, setFname] = useState("")
-  const [lname, setLname] = useState("")
+
   const GlobalState = useContext(StateContext)
+  console.log(GlobalState.userObject)
   function submitHandler() {
     setShowModal(false)
 
     async function DateSender() {
       const formData = new FormData()
-      formData.append("f_name", fname),
-        formData.append("l_name", lname),
+      formData.append("f_name", GlobalState.userObject.f_name),
+        formData.append("l_name", GlobalState.userObject.f_name),
         formData.append("date_booked", date),
-        formData.append("booker", GlobalState.userId),
+        formData.append("booker", localStorage.getItem("theUserId")),
         formData.append("listing", listing),
         formData.append("seller", seller)
 
@@ -30,7 +30,7 @@ function BookingModel({ listing, seller, getSentBooking }) {
         console.log(response)
         getSentBooking(response)
       } catch (error) {
-        console.log(error.response.data)
+        console.log(error.response)
       }
     }
     DateSender()
@@ -63,7 +63,9 @@ function BookingModel({ listing, seller, getSentBooking }) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex flex-col justify-center items-center gap-10">
-                  <h2 className="text-xl font-semibold">Pick a Date</h2>
+                  <h2 className="text-base font-semibold">
+                    You can see the free dates for booking
+                  </h2>
                   <DatePicker
                     showIcon
                     className="w-full py-1 rounded-lg"
@@ -71,21 +73,36 @@ function BookingModel({ listing, seller, getSentBooking }) {
                     value={value}
                     isOpen={false}
                   />
-                  <div className="space-x-4">
+                  <h2 className="text-base font-semibold">
+                    Your Contact Details
+                  </h2>
+                  <div className="flex gap-4 items-center">
                     <label htmlFor="">First Name:</label>
                     <input
-                      className="text-lg px-2 py-2 border-black border-2 rounded-lg"
-                      value={fname}
-                      onChange={(e) => setFname(e.target.value)}
+                      className="text-lg px-2 py-2 rounded-lg"
+                      value={GlobalState.userObject.f_name}
                       placeholder="name"
+                      disabled
                       type="text"
                     />
+                  </div>
+                  <div className="flex gap-4 items-center">
                     <label htmlFor="">Last Name:</label>
                     <input
-                      className="text-lg px-2 py-2 border-black border-2 rounded-lg"
-                      value={lname}
-                      onChange={(e) => setLname(e.target.value)}
+                      className="text-lg px-2 py-2 rounded-lg"
+                      value={GlobalState.userObject.l_name}
                       type="text"
+                      disabled
+                      placeholder="lname"
+                    />
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <label htmlFor="">Your Contact:</label>
+                    <input
+                      className="text-lg px-2 py-2 rounded-lg"
+                      value={GlobalState.userObject.phone_number}
+                      type="text"
+                      disabled
                       placeholder="lname"
                     />
                   </div>

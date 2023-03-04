@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom"
-function BookingCard({ f_name, l_name, booker, id, getStatus }) {
+function BookingCard({
+  f_name,
+  l_name,
+  booker,
+  booker_profile_picture,
+  id,
+  getStatus,
+}) {
   function onClickHander(value) {
     getStatus(value)
     async function UpdateBooking() {
@@ -23,11 +30,11 @@ function BookingCard({ f_name, l_name, booker, id, getStatus }) {
   const navigate = useNavigate()
   return (
     <div className="flex items-center justify-center gap-2 bg-white my-2 border-2 py-4">
-      {/* <img
+      <img
         className="w-16 h-16 rounded-lg object-cover"
-        src={userInfo.profile_picture}
+        src={`http://127.0.0.1:8000${booker_profile_picture}`}
         alt=""
-      /> */}
+      />
 
       <div className="space-y-3">
         <div>

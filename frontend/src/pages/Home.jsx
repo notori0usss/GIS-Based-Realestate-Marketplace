@@ -68,7 +68,7 @@ function Home() {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);
     const values = QueryString.parse(location.search)
-    // console.log(values.success)
+    console.log(values.success)
     if (values.success) {
       async function ChangeSubscription() {
         const subscribedStatus = new FormData()

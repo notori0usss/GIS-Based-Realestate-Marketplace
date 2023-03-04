@@ -22,7 +22,7 @@ function Realtor() {
       }
     }
     GetRealtor()
-  }, [])
+  }, [GlobalState.userIsLogged])
   return (
     <>
       {GlobalState.userEmail === "admin@digidalal.com" ||
@@ -47,17 +47,29 @@ function Realtor() {
           ))}
         </div>
         <hr />
-        <div className="mt-10 bg-blue-200 text-center py-2 px-5 rounded-full">
-          Are you a realtor?
-          <br />
-          <button
-            onClick={() => navigate("/realtorform")}
-            className="font-semibold text-gray-700"
-          >
-            {" "}
-            Apply Here!
-          </button>
-        </div>
+        {!GlobalState.isSubscribed && GlobalState.userIsLogged && (
+          <div className="mt-10 bg-blue-200 text-center py-2 px-5 rounded-full">
+            Are you a realtor?
+            <br />
+            {GlobalState.userObject.f_name !== null &&
+            GlobalState.userObject.l_name !== null &&
+            GlobalState.userObject.phone_number !== null ? (
+              <button
+                onClick={() => navigate("/realtorform")}
+                className="font-semibold text-gray-700"
+              >
+                Apply Here!
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate(`/profileupdate/${GlobalState.userId}`)}
+                className="font-semibold text-gray-700"
+              >
+                Update Profile
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </>
   )

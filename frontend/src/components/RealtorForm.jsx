@@ -1,12 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Heading from "./Heading"
+import StateContext from "../context/StateContext"
 function RealtorForm() {
   const initialState = {
     nameValue: "",
-    photoValue: "",
     cvValue: "",
     descriptionValue: "",
     phoneValue: "",
@@ -21,9 +21,6 @@ function RealtorForm() {
     switch (action.type) {
       case "catchNameChange":
         draft.nameValue = action.nameChosen
-        break
-      case "catchPhotoChange":
-        draft.photoValue = action.photoChosen
         break
       case "catchPhoneChange":
         draft.phoneValue = action.phoneChosen
@@ -56,12 +53,17 @@ function RealtorForm() {
     }
   }
   const navigate = useNavigate()
+  const GlobalState = useContext(StateContext)
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  const [photoURL, setPhotoURL] = useState(
+    GlobalState.userObject.profile_picture
+  )
   function submitHandler(e) {
     e.preventDefault()
     console.log("form done")
     dispatch({ type: "changeStatus" })
   }
+
   useEffect(() => {
     if (state.status) {
       async function AddCv() {
@@ -75,7 +77,8 @@ function RealtorForm() {
           formData.append("forclosure_agent", state.foreclosureValue),
           formData.append("relocation_agent", state.relocationValue),
           formData.append("listing_agent", state.listingValue),
-          formData.append("buyers_agent", state.buyerValue)
+          formData.append("buyers_agent", state.buyerValue),
+          formData.append("user", GlobalState.userId)
         // console.log(response)
         try {
           const response = await Axios.post(
@@ -97,11 +100,28 @@ function RealtorForm() {
         title={"Please Fill Up the Form"}
         subtitle={"Don't Apply if you have already"}
       />
+      <p className="text-xs font-semibold text-gray-500 py-2">
+        Note: These Data will be displayed in the Realtor Section. Please Fill
+        up correct datas.
+      </p>
       <form
         encType="multipart/form-data"
         className="flex flex-col container mx-auto max-w-5xl gap-2 border-2 p-10 rounded-3xl shadow"
         onSubmit={submitHandler}
       >
+        <label
+          htmlFor="img"
+          className=" w-20 h-20 text-lg font-semibold self-center relative overflow-hidden group cursor-pointer"
+        >
+          <div className="absolute bg-black opacity-0 bottom-0 w-full h-full rounded-full group-hover:opacity-50 flex items-center justify-center text-white text-[10px]">
+            <p>Change</p>
+          </div>
+          <img
+            src={photoURL}
+            className="w-full h-full object-cover rounded-full"
+            alt=""
+          />
+        </label>
         <label htmlFor="" className="text-lg font-semibold">
           Name:
         </label>
@@ -153,20 +173,7 @@ function RealtorForm() {
             })
           }
         />
-        <label htmlFor="" className="text-lg font-semibold">
-          Photo:
-        </label>
-        <input
-          className="text-lg px-2 py-4"
-          type="file"
-          accept="image/png,image/gif,image/jpeg"
-          onChange={(e) =>
-            dispatch({
-              type: "catchPhotoChange",
-              photoChosen: e.target.files[0],
-            })
-          }
-        />
+
         <label htmlFor="" className="text-lg font-semibold">
           Bio:<span className="text-sm text-gray-500">(Max 25 Letters)</span>
         </label>
