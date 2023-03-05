@@ -7,3 +7,5 @@ frontend/src/assets
 frontend/public/dummyIng
 
 fyp.code-workspace
+backend/backend/settings.py
+backend/backend/__pycache__/settings.cpython-310.pyc
