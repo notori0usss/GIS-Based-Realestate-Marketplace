@@ -9,6 +9,7 @@ import { BsFillGrid3X3GapFill } from "react-icons/all"
 import { MdVerified } from "react-icons/md"
 import ProfileListCard from "./ProfileListCard"
 import BookingCard from "./BookingCard"
+import dateFormat from "../helpers/date"
 function ProfilePage() {
   const params = useParams()
   const initialState = {
@@ -89,7 +90,7 @@ function ProfilePage() {
                 <h2 className="text-xl font-bold text-gray-700">
                   {item.listing.title}
                 </h2>
-                <p>Booking On: {}</p>
+                <p>Booking On: {dateFormat(item.date_booked)}</p>
               </div>
 
               <div className="flex justify-between items-center gap-4 px-5 py-2">
