@@ -1,48 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import Pusher from 'pusher-js';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import StateContext from '../context/StateContext';
+
 function Chat() {
+  const receiver = useParams().id;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const GlobalState = useContext(StateContext);
+  const userId = GlobalState.userId; // assuming this is defined somewhere
+  console.log(message, messages, userId, receiver);
   useEffect(() => {
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('0d100fa8463c75b144ba', {
-      cluster: 'ap2',
+    // fetch previous messages from the backend
+    axios.get(`/api/messages/${userId}/${receiver}/`).then((response) => {
+      setMessages(response.data);
     });
+  }, [userId, receiver]);
 
-    var channel = pusher.subscribe('chat');
-    channel.bind('message', function (data) {
-      set;
-    });
-  }, []);
+  useEffect(() => {
+    // create a WebSocket connection
+    const ws = new WebSocket(
+      `ws://localhost:8000/ws/chat/${userId}/${receiver}/`
+    );
+
+    // listen for messages from the WebSocket server
+    ws.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      setMessages([...messages, newMessage]);
+    };
+
+    // close the WebSocket connection when the component unmounts
+    return () => {
+      ws.close();
+    };
+  }, [userId, receiver, messages]);
+
   function sendMessage(e) {
     e.preventDefault();
+
+    // send the message to the WebSocket server
+    const ws = new WebSocket(
+      `ws://localhost:8000/ws/chat/${userId}/${receiver}/`
+    );
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ message }));
+      ws.close();
+    };
+
+    // add the message to the state
+    setMessages([...messages, { sender: userId, message }]);
+    setMessage('');
   }
+
   return (
     <div className="w-full h-[90vh] shadow-lg rounded-lg">
       <div className="flex flex-row justify-between bg-white h-full">
-        <div className="flex flex-col w-2/5 border-r-2 overflow-y-auto">
-          {messages.map((item) => (
-            <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
-              <div className="w-1/4">
-                <img
-                  src="https://source.unsplash.com/_7LbC5J-jw4/600x600"
-                  className="object-cover h-12 w-12 rounded-full"
-                  alt=""
-                />
-              </div>
-              <div className="w-full">
-                <div className="text-lg font-semibold">{item.userId}</div>
-                <span className="text-gray-500">{item.message}</span>
-              </div>
-            </div>
-          ))}
-        </div>
         <div className="w-full px-5 flex flex-col justify-between">
           <div className="flex flex-col mt-5">
             <div className="flex justify-end mb-4">
               <div className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
-                Welcome to group everyone !
+                Welcome to the chat!
               </div>
               <img
                 src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
@@ -50,17 +67,29 @@ function Chat() {
                 alt=""
               />
             </div>
-
-            <div className="flex justify-start mb-4">
-              <img
-                src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-                className="object-cover h-8 w-8 rounded-full"
-                alt=""
-              />
-              <div className="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
-                happy holiday guys!
+            {messages.map((item) => (
+              <div
+                key={item.id}
+                className={`flex justify-${
+                  item.sender === userId ? 'end' : 'start'
+                } mb-4`}
+              >
+                <img
+                  src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                  className="object-cover h-8 w-8 rounded-full"
+                  alt=""
+                />
+                <div
+                  className={`ml-2 py-3 px-4 rounded-${
+                    item.sender === userId
+                      ? 'bl-3xl rounded-tl-3xl rounded-tr-xl bg-blue-400 text-white'
+                      : 'br-3xl rounded-tr-3xl rounded-tl-xl bg-gray-400 text-white'
+                  }`}
+                >
+                  {item.message}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
           <form className="py-5" onSubmit={sendMessage}>
             <input

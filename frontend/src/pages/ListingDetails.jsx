@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { useImmerReducer } from "use-immer"
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
-import Axios from "axios"
-import StateContext from "../context/StateContext"
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useImmerReducer } from 'use-immer';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import Axios from 'axios';
+import StateContext from '../context/StateContext';
 
-import Loading from "../layout/Loading"
+import Loading from '../layout/Loading';
 import {
   MdBed,
   FaCarSide,
@@ -14,128 +14,128 @@ import {
   FaPhoneAlt,
   FaShower,
   FaDirections,
-} from "react-icons/all"
-import { Fade, Zoom } from "react-slideshow-image"
+} from 'react-icons/all';
+import { Fade, Zoom } from 'react-slideshow-image';
 
-import "react-slideshow-image/dist/styles.css"
-import NearbyProperty from "../components/NearbyProperty"
-import stadiumIconPng from "../assets/map-icons/stadium.png"
-import universityIconPng from "../assets/map-icons/university.png"
-import restaurantIconPng from "../assets/map-icons/restaurant.png"
-import hospitalIconPng from "../assets/map-icons/hospital.png"
-import airportIconPng from "../assets/map-icons/airport.png"
-import saleIconPng from "../assets/map-icons/sale.png"
+import 'react-slideshow-image/dist/styles.css';
+import NearbyProperty from '../components/NearbyProperty';
+import stadiumIconPng from '../assets/map-icons/stadium.png';
+import universityIconPng from '../assets/map-icons/university.png';
+import restaurantIconPng from '../assets/map-icons/restaurant.png';
+import hospitalIconPng from '../assets/map-icons/hospital.png';
+import airportIconPng from '../assets/map-icons/airport.png';
+import saleIconPng from '../assets/map-icons/sale.png';
 
-import { Icon, icon } from "leaflet"
-import DeleteModel from "../layout/DeleteModel"
-import Agent from "../assets/agent.png"
-import UpdateModel from "../layout/UpdateModel"
-import BookingModel from "../layout/BookingModel"
-import Comments from "../components/Comments"
-import LeafletRoutingMachine from "../components/LeafletRoutingMachine"
-import BookingCard from "../components/BookingCard"
+import { Icon, icon } from 'leaflet';
+import DeleteModel from '../layout/DeleteModel';
+import Agent from '../assets/agent.png';
+import UpdateModel from '../layout/UpdateModel';
+import BookingModel from '../layout/BookingModel';
+import Comments from '../components/Comments';
+import LeafletRoutingMachine from '../components/LeafletRoutingMachine';
+import BookingCard from '../components/BookingCard';
 function ListingDetails() {
-  const GlobalState = useContext(StateContext)
+  const GlobalState = useContext(StateContext);
 
   const stadiumIcon = new Icon({
     iconUrl: stadiumIconPng,
     iconSize: [40, 40],
-  })
+  });
   const universityIcon = new Icon({
     iconUrl: universityIconPng,
     iconSize: [40, 40],
-  })
+  });
   const hospitalIcon = new Icon({
     iconUrl: hospitalIconPng,
     iconSize: [40, 40],
-  })
+  });
   const restaurantIcon = new Icon({
     iconUrl: restaurantIconPng,
     iconSize: [40, 40],
-  })
+  });
   const airportIcon = new Icon({
     iconUrl: airportIconPng,
     iconSize: [40, 40],
-  })
+  });
   const saleIcon = new Icon({
     iconUrl: saleIconPng,
     iconSize: [40, 40],
-  })
+  });
 
-  const navigate = useNavigate()
-  const params = useParams()
-  const userId = localStorage.getItem("theUserId")
-  console.log(userId)
+  const navigate = useNavigate();
+  const params = useParams();
+  const userId = localStorage.getItem('theUserId');
+  console.log(userId);
   const initialState = {
-    listingInfo: "",
-    allListingInfo: "",
+    listingInfo: '',
+    allListingInfo: '',
     dataIsLoading: true,
-    userInfo: "",
-  }
+    userInfo: '',
+  };
   function ReducerFunction(draft, action) {
     switch (action.type) {
-      case "catchAllListingInfo":
-        draft.allListingInfo = action.allListingObject
-        break
-      case "catchListingInfo":
-        draft.listingInfo = action.listingObject
-        break
-      case "loadingDone":
-        draft.dataIsLoading = false
-        break
-      case "catchUserInfo":
-        draft.userInfo = action.userObject
-        break
+      case 'catchAllListingInfo':
+        draft.allListingInfo = action.allListingObject;
+        break;
+      case 'catchListingInfo':
+        draft.listingInfo = action.listingObject;
+        break;
+      case 'loadingDone':
+        draft.dataIsLoading = false;
+        break;
+      case 'catchUserInfo':
+        draft.userInfo = action.userObject;
+        break;
     }
   }
 
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
   const [poiLocation, setPoiLocation] = useState([
     state.listingInfo.latitude,
     state.listingInfo.longitude,
-  ])
-  const [status, setStatus] = useState("")
+  ]);
+  const [status, setStatus] = useState('');
   const getStatus = (value) => {
-    setStatus(value)
-  }
-  const [sentBooking, setSentBooking] = useState("")
+    setStatus(value);
+  };
+  const [sentBooking, setSentBooking] = useState('');
   function getSentBooking(value) {
-    setSentBooking(value)
+    setSentBooking(value);
   }
-  console.log(status)
+  console.log(status);
   useEffect(() => {
     async function GetListingInfo() {
       try {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/listings/${params.id}/`
-        )
-        console.log(response.data)
-        dispatch({ type: "loadingDone" })
-        dispatch({ type: "catchListingInfo", listingObject: response.data })
+        );
+        console.log(response.data);
+        dispatch({ type: 'loadingDone' });
+        dispatch({ type: 'catchListingInfo', listingObject: response.data });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetListingInfo()
-  }, [params.id, state.listingInfo.picture1, poiLocation, status, sentBooking])
+    GetListingInfo();
+  }, [params.id, state.listingInfo.picture1, poiLocation, status, sentBooking]);
 
   useEffect(() => {
     async function GetAllListingInfo() {
       try {
-        const response = await Axios.get("http://127.0.0.1:8000/api/listings/")
+        const response = await Axios.get('http://127.0.0.1:8000/api/listings/');
         dispatch({
-          type: "catchAllListingInfo",
+          type: 'catchAllListingInfo',
           allListingObject: response.data,
-        })
+        });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetAllListingInfo()
-  }, [])
+    GetAllListingInfo();
+  }, []);
   useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  }, [params.id])
+    window.scrollTo(0, 0);
+  }, [params.id]);
 
   useEffect(() => {
     async function GetUserInfo() {
@@ -143,16 +143,16 @@ function ListingDetails() {
         try {
           const response = await Axios.get(
             `http://127.0.0.1:8000/api/profiles/${state.listingInfo.seller}/`
-          )
-          dispatch({ type: "catchUserInfo", userObject: response.data })
+          );
+          dispatch({ type: 'catchUserInfo', userObject: response.data });
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
       }
     }
 
-    GetUserInfo()
-  }, [state.listingInfo.seller])
+    GetUserInfo();
+  }, [state.listingInfo.seller]);
 
   const images = [
     state.listingInfo.picture1,
@@ -162,7 +162,7 @@ function ListingDetails() {
     state.listingInfo.bedroomPicture2,
     state.listingInfo.bathPicture1,
     state.listingInfo.bathPicture2,
-  ].filter((picture) => picture !== null)
+  ].filter((picture) => picture !== null);
 
   const onCommentSubmit = (singleComment) => {
     const newComment = {
@@ -173,48 +173,50 @@ function ListingDetails() {
       time_posted: Date.now(),
       verified: GlobalState.isSubscribed,
       likes: 0,
-    }
+    };
     // setComments([...comments, newComment])
     Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
       comments: [...state.listingInfo.comments, newComment],
     })
       .then((response) => {
         // Update the state with the new comment
-        console.log(response.data)
-        dispatch({ type: "catchListingInfo", listingObject: response.data })
+        console.log(response.data);
+        dispatch({ type: 'catchListingInfo', listingObject: response.data });
       })
-      .catch((error) => console.error(error))
-  }
+      .catch((error) => console.error(error));
+  };
 
   const deleteComment = (index) => {
-    let comments = state.listingInfo.comments.filter((item, id) => id !== index)
+    let comments = state.listingInfo.comments.filter(
+      (item, id) => id !== index
+    );
     // setComments([...comments, newComment])
     Axios.patch(`http://127.0.0.1:8000/api/listings/${params.id}/update/`, {
       comments: comments,
     })
       .then((response) => {
         // Update the state with the new comment
-        console.log(response.data)
-        dispatch({ type: "catchListingInfo", listingObject: response.data })
+        console.log(response.data);
+        dispatch({ type: 'catchListingInfo', listingObject: response.data });
       })
-      .catch((error) => console.error(error))
-  }
+      .catch((error) => console.error(error));
+  };
   if (state.userInfo) {
-    var found = false
-    const bookings = state.listingInfo.bookings
+    var found = false;
+    const bookings = state.listingInfo.bookings;
 
     for (let i = 0; i < bookings.length; i++) {
       if (bookings[i].booker == GlobalState.userId) {
-        found = true
-        break // If you want to exit the loop after finding the first match
+        found = true;
+        break; // If you want to exit the loop after finding the first match
       }
     }
   }
 
   if (state.dataIsLoading === true) {
-    return <Loading />
+    return <Loading />;
   }
-  console.log(GlobalState.userId)
+  console.log(GlobalState.userId);
 
   return (
     <>
@@ -225,7 +227,7 @@ function ListingDetails() {
               <li>
                 <button
                   onClick={() => {
-                    navigate("/listings")
+                    navigate('/listings');
                   }}
                   className="text-blue-600 hover:text-blue-700 hover:underline"
                 >
@@ -246,10 +248,10 @@ function ListingDetails() {
                     <img
                       key={index}
                       style={{
-                        width: "100%",
-                        height: "70vh",
-                        objectFit: "cover",
-                        margin: "auto",
+                        width: '100%',
+                        height: '70vh',
+                        objectFit: 'cover',
+                        margin: 'auto',
                       }}
                       src={image}
                     />
@@ -266,11 +268,11 @@ function ListingDetails() {
                     <img
                       key={index}
                       style={{
-                        width: "100%",
-                        height: "70vh",
-                        objectFit: "cover",
-                        margin: "auto",
-                        position: "relative",
+                        width: '100%',
+                        height: '70vh',
+                        objectFit: 'cover',
+                        margin: 'auto',
+                        position: 'relative',
                       }}
                       src={image}
                     />
@@ -293,11 +295,11 @@ function ListingDetails() {
                 </h2>
               </div>
               <h2 className="text-2xl font-semibold">
-                Price:{" "}
-                {state.listingInfo.property_status === "Rent" ? (
+                Price:{' '}
+                {state.listingInfo.property_status === 'Rent' ? (
                   <>
                     <span className="text-4xl ml-4">
-                      {state.listingInfo.price} /{" "}
+                      {state.listingInfo.price} /{' '}
                       <span className="text-2xl text-gray-700">
                         {state.listingInfo.rental_frequency}
                       </span>
@@ -313,14 +315,14 @@ function ListingDetails() {
             <div className="text-gray-500 font-semibold flex">
               {state.listingInfo.municipality
                 ? state.listingInfo.municipality
-                : "--"}
+                : '--'}
               , {state.listingInfo.area}
             </div>
             <div className="mt-10 flex gap-20 items-center">
               <div>
                 <div className="font-semibold text-xl">Rooms</div>
                 <div className="flex items-center gap-3">
-                  <MdBed className="text-2xl text-gray-500" />{" "}
+                  <MdBed className="text-2xl text-gray-500" />{' '}
                   <span className="text-lg text-gray-500">
                     {state.listingInfo.rooms}
                   </span>
@@ -329,9 +331,9 @@ function ListingDetails() {
               <div>
                 <div className="font-semibold text-xl">Parking</div>
                 <div className="flex items-center gap-3">
-                  <FaCarSide className="text-2xl text-gray-500" />{" "}
+                  <FaCarSide className="text-2xl text-gray-500" />{' '}
                   <span className="text-lg text-gray-500">
-                    {" "}
+                    {' '}
                     {state.listingInfo.parking ? state.listingInfo.parking : 0}
                   </span>
                 </div>
@@ -339,9 +341,9 @@ function ListingDetails() {
               <div>
                 <div className="font-semibold text-xl">Bathrooms</div>
                 <div className="flex items-center gap-3">
-                  <FaShower className="text-2xl text-gray-500" />{" "}
+                  <FaShower className="text-2xl text-gray-500" />{' '}
                   <span className="text-lg text-gray-500">
-                    {" "}
+                    {' '}
                     {state.listingInfo.bathroom
                       ? state.listingInfo.bathroom
                       : 0}
@@ -351,7 +353,7 @@ function ListingDetails() {
               <div>
                 <div className="font-semibold text-xl">Area</div>
                 <div className="flex items-center gap-3">
-                  <TbGridDots className="text-2xl text-gray-500" />{" "}
+                  <TbGridDots className="text-2xl text-gray-500" />{' '}
                   <span className="text-lg text-gray-500">
                     {state.listingInfo.property_area}.sqft
                   </span>
@@ -435,7 +437,10 @@ function ListingDetails() {
                 ) : (
                   <div className="flex items-center mt-5 gap-3">
                     <h2 className="font-semibold">Contact Host: </h2>
-                    <button className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl">
+                    <button
+                      className="px-4 py-1 font-semibold text-blue-500 bg-white border-2 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl"
+                      onClick={() => navigate(`/chat/${state.userInfo.seller}`)}
+                    >
                       Chat
                     </button>
 
@@ -468,7 +473,7 @@ function ListingDetails() {
             <div className="overflow-y-auto max-h-[50vh] mt-4 bg-[#f7fdfe] border-2 w-full rounded-lg px-4 py-8 ">
               <h1 className="text-xl font-semibold mb-2">Booking Requests</h1>
               {state.listingInfo.bookings
-                .filter((item) => item.status === "Pending")
+                .filter((item) => item.status === 'Pending')
                 .map((item, idx) => (
                   <BookingCard key={idx} {...item} getStatus={getStatus} />
                 ))}
@@ -500,32 +505,32 @@ function ListingDetails() {
       </div>
       <div className="h-[80vh] grid grid-cols-4 rounded-lg p-12 bg-[#f7fdfe]">
         <div className="flex items-center flex-col gap-5">
-          {state.listingInfo.listing_pois_within_radius !== "" ? (
+          {state.listingInfo.listing_pois_within_radius !== '' ? (
             state.listingInfo?.listing_pois_within_radius.map((poi) => {
               function DegreeToRadian(coordinate) {
-                return (coordinate * Math.PI) / 180
+                return (coordinate * Math.PI) / 180;
               }
               function CalculateDistance() {
-                const latitude1 = DegreeToRadian(state.listingInfo.latitude)
-                const longitude1 = DegreeToRadian(state.listingInfo.longitude)
+                const latitude1 = DegreeToRadian(state.listingInfo.latitude);
+                const longitude1 = DegreeToRadian(state.listingInfo.longitude);
 
-                const latitude2 = DegreeToRadian(poi.location.coordinates[0])
-                const longitude2 = DegreeToRadian(poi.location.coordinates[1])
+                const latitude2 = DegreeToRadian(poi.location.coordinates[0]);
+                const longitude2 = DegreeToRadian(poi.location.coordinates[1]);
 
                 // The formula
-                const latDiff = latitude2 - latitude1
-                const lonDiff = longitude2 - longitude1
-                const R = 6371000 / 1000
+                const latDiff = latitude2 - latitude1;
+                const lonDiff = longitude2 - longitude1;
+                const R = 6371000 / 1000;
 
                 const a =
                   Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
                   Math.cos(latitude1) *
                     Math.cos(latitude2) *
                     Math.sin(lonDiff / 2) *
-                    Math.sin(lonDiff / 2)
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+                    Math.sin(lonDiff / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-                const d = R * c
+                const d = R * c;
 
                 const dist =
                   Math.acos(
@@ -533,8 +538,8 @@ function ListingDetails() {
                       Math.cos(latitude1) *
                         Math.cos(latitude2) *
                         Math.cos(lonDiff)
-                  ) * R
-                return dist.toFixed(2)
+                  ) * R;
+                return dist.toFixed(2);
               }
               return (
                 <div className="border-2 w-full px-2 py-4 flex items-center justify-between rounded-lg">
@@ -554,7 +559,7 @@ function ListingDetails() {
                     }
                   />
                 </div>
-              )
+              );
             })
           ) : (
             <div className="bg-red-300 px-3 py-2 text-lg font-semibold rounded-xl">
@@ -583,16 +588,16 @@ function ListingDetails() {
             </Marker>
             {state.listingInfo.listing_pois_within_radius.map((poi) => {
               function PoiIcon() {
-                if (poi.type === "Stadium") {
-                  return stadiumIcon
-                } else if (poi.type === "Hospital") {
-                  return hospitalIcon
-                } else if (poi.type === "University") {
-                  return universityIcon
-                } else if (poi.type === "Resturant") {
-                  return restaurantIcon
-                } else if (poi.type === "Airport") {
-                  return airportIcon
+                if (poi.type === 'Stadium') {
+                  return stadiumIcon;
+                } else if (poi.type === 'Hospital') {
+                  return hospitalIcon;
+                } else if (poi.type === 'University') {
+                  return universityIcon;
+                } else if (poi.type === 'Resturant') {
+                  return restaurantIcon;
+                } else if (poi.type === 'Airport') {
+                  return airportIcon;
                 }
               }
               return (
@@ -607,7 +612,7 @@ function ListingDetails() {
                 >
                   <Popup>{poi.name}</Popup>
                 </Marker>
-              )
+              );
             })}
             <LeafletRoutingMachine
               propertyLocation={[
@@ -627,7 +632,7 @@ function ListingDetails() {
         />
       </div>
     </>
-  )
+  );
 }
 
-export default ListingDetails
+export default ListingDetails;

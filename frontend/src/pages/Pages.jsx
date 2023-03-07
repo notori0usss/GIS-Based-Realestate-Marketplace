@@ -47,7 +47,8 @@ function Pages() {
           <Route path="/profileupdate/:id" element={<ProfileUpdate />} />
           <Route path="/agencies/:id" element={<AgencyDetail />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat/:id" element={<Chat />} />
+
           <Route path="/listings/:id" element={<ListingDetails />} />
           <Route path="/compare/:id" element={<Comparision />} />
           <Route path="/likeditems" element={<LikedItems />} />

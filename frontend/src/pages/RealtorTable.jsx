@@ -1,70 +1,70 @@
-import React, { useState, useContext, useEffect } from "react"
-import Axios from "axios"
-import StateContext from "../context/StateContext"
-import { FcApprove, FcDisapprove, FcFullTrash } from "react-icons/fc"
-import { useNavigate } from "react-router-dom"
-import DispatchContext from "../context/DispatchContext"
+import React, { useState, useContext, useEffect } from 'react';
+import Axios from 'axios';
+import StateContext from '../context/StateContext';
+import { FcApprove, FcDisapprove, FcFullTrash } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
+import DispatchContext from '../context/DispatchContext';
 function RealtorTable() {
-  const [realtors, setRealtors] = useState([])
-  const [sendRequest, setSendRequest] = useState(0)
-  const GlobalState = useContext(StateContext)
-  const GlobalDispatch = useContext(DispatchContext)
-  const [count, setCount] = useState(0)
-  const navigate = useNavigate()
+  const [realtors, setRealtors] = useState([]);
+  const [sendRequest, setSendRequest] = useState(0);
+  const GlobalState = useContext(StateContext);
+  const GlobalDispatch = useContext(DispatchContext);
+  const [count, setCount] = useState(0);
+  const navigate = useNavigate();
   useEffect(() => {
     async function GetRealtor() {
       try {
-        const response = await Axios.get("http://127.0.0.1:8000/api/realtors/")
-        console.log(response.data)
-        setRealtors(response.data)
+        const response = await Axios.get('http://127.0.0.1:8000/api/realtors/');
+        console.log(response.data);
+        setRealtors(response.data);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetRealtor()
-  }, [sendRequest, count])
+    GetRealtor();
+  }, [sendRequest, count]);
 
   function clickerHandler(value, id) {
     async function ChangeVerify() {
-      const formData = new FormData()
-      formData.append("is_verified", value)
+      const formData = new FormData();
+      formData.append('is_verified', value);
       try {
         const response = await Axios.patch(
           `http://127.0.0.1:8000/api/realtors/${id}/update/`,
           formData
-        )
-        console.log(response.data)
-        setSendRequest(sendRequest + 1)
+        );
+        console.log(response.data);
+        setSendRequest(sendRequest + 1);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    ChangeVerify()
+    ChangeVerify();
   }
 
   async function deleteHandler(id) {
     try {
       const response = await Axios.delete(
         `http://127.0.0.1:8000/api/realtors/${id}/delete/`
-      )
-      navigate("/realtortable")
-      setCount(count + 1)
+      );
+      navigate('/realtortable');
+      setCount(count + 1);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
   async function ChangeSubscription(value, id) {
-    const subscribedStatus = new FormData()
-    subscribedStatus.append("subscribed", value)
+    const subscribedStatus = new FormData();
+    subscribedStatus.append('subscribed', value);
     try {
       const response = await Axios.patch(
         `http://127.0.0.1:8000/api/profiles/${id}/update/`,
         subscribedStatus
-      )
-      console.log(response)
-      GlobalDispatch({ type: "getSubscribedInfo" })
+      );
+      console.log(response);
+      GlobalDispatch({ type: 'getSubscribedInfo' });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -140,12 +140,12 @@ function RealtorTable() {
                       <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
                         Listing
                       </span>
-                    )}{" "}
+                    )}{' '}
                     {item.buyers_agent && (
                       <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
                         Buyers
                       </span>
-                    )}{" "}
+                    )}{' '}
                     {item.relocation_agent && (
                       <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
                         Relocation
@@ -162,15 +162,15 @@ function RealtorTable() {
                     <FcDisapprove
                       className="cursor-pointer"
                       onClick={() => {
-                        clickerHandler(false, item.id)
-                        ChangeSubscription(false, item.user)
+                        clickerHandler(false, item.id);
+                        ChangeSubscription(false, item.user);
                       }}
                     />
                     <FcApprove
                       className="cursor-pointer"
                       onClick={() => {
-                        clickerHandler(true, item.id)
-                        ChangeSubscription(true, item.user)
+                        clickerHandler(true, item.id);
+                        ChangeSubscription(true, item.user);
                       }}
                     />
                   </div>
@@ -181,7 +181,7 @@ function RealtorTable() {
         </table>
       </div>
     </div>
-  )
+  );
 }
 
-export default RealtorTable
+export default RealtorTable;
