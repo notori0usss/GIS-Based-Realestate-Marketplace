@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'payments',
+    'rtchat',
+    'channels',
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',

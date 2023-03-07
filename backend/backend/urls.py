@@ -18,6 +18,8 @@ from django.urls import path, include
 from listings.api import views as listings_api_views
 from realtors.api import views as realtors_api_views
 from users.api import views as users_api_views
+from rtchat.api import views as chats_api_views
+
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -51,6 +53,8 @@ urlpatterns = [
     path('api/profiles/<int:seller>/update/',
          users_api_views.ProfileUpdate.as_view()),
 
+    path('api/chat/', chats_api_views.ChatList.as_view()),
+    path('api/message/', chats_api_views.MessageList.as_view()),
 
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
