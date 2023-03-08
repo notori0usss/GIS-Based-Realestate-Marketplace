@@ -21,3 +21,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile of {self.seller.username}"
+
+
+class OnlineUser(models.Model):
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username

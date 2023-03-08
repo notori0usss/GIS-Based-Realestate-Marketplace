@@ -1,69 +1,74 @@
-import React, { useContext } from "react"
-import { Link, NavLink, useNavigate } from "react-router-dom"
-import { navItems } from "../data/navbar"
-import StateContext from "../context/StateContext"
-import { useState } from "react"
-import Axios from "axios"
-import Avatar, { genConfig } from "react-nice-avatar"
-import { FaHeart } from "react-icons/fa"
+import React, { useContext } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { navItems } from '../data/navbar';
+import StateContext from '../context/StateContext';
+import { useState } from 'react';
+import Axios from 'axios';
+import Avatar, { genConfig } from 'react-nice-avatar';
+import { FaHeart } from 'react-icons/fa';
 
-import DispatchContext from "../context/DispatchContext"
-import { useEffect } from "react"
-import { MdVerified } from "react-icons/md"
-import { motion as m } from "framer-motion"
+import DispatchContext from '../context/DispatchContext';
+import { useEffect } from 'react';
+import { MdVerified } from 'react-icons/md';
+import { motion as m } from 'framer-motion';
 function Navbar() {
-  const GlobalState = useContext(StateContext)
-  const GlobalDispatch = useContext(DispatchContext)
-  const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(false)
-  const [config, setConfig] = useState("")
+  const GlobalState = useContext(StateContext);
+  const GlobalDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [config, setConfig] = useState('');
 
   async function handleLogout() {
     try {
       const response = await Axios.post(
-        "http://127.0.0.1:8000/api-auth-djoser/token/logout/",
+        'http://127.0.0.1:8000/api-auth-djoser/token/logout/',
         GlobalState.userToken,
         {
-          headers: { Authorization: "Token ".concat(GlobalState.userToken) },
+          headers: { Authorization: 'Token '.concat(GlobalState.userToken) },
         }
-      )
-      console.log(response)
-      GlobalDispatch({ type: "logout" })
-      setIsOpen(false)
-      navigate("/")
+      );
+      console.log(response);
+      GlobalDispatch({ type: 'logout' });
+      setIsOpen(false);
+      navigate('/');
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
-  const [subscriptionStatus, setSubscriptionStatus] = useState(false)
+  const [subscriptionStatus, setSubscriptionStatus] = useState(false);
   useEffect(() => {
     async function GetProfileInfo() {
       try {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
-        )
+        );
 
-        setSubscriptionStatus(response.data.subscribed)
+        setSubscriptionStatus(response.data.subscribed);
         GlobalDispatch({
-          type: "getUserProfilePicture",
+          type: 'getUserProfilePicture',
           profilePicture: response.data.profile_picture,
-        })
+        });
         GlobalDispatch({
-          type: "checkSubscribedInfo",
+          type: 'checkSubscribedInfo',
           subscribedInfo: response.data.subscribed,
-        })
+        });
         GlobalDispatch({
-          type: "getUserObject",
+          type: 'getUserObject',
           userValue: response.data,
-        })
+        });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetProfileInfo()
-  }, [GlobalState.userIsLogged, subscriptionStatus, GlobalState.subscribedInfo])
-
+    GetProfileInfo();
+  }, [
+    GlobalState.userIsLogged,
+    subscriptionStatus,
+    GlobalState.subscribedInfo,
+    GlobalState.userProfilePicture,
+  ]);
+  console.log(GlobalState.userProfilePicture);
   return (
     <nav className="flex flex-row justify-between items-center px-10 py-5 bg-gray-700 text-white sticky top-0 z-20">
       <Link to="/" className="font-pacifico text-xl">
@@ -79,7 +84,7 @@ function Navbar() {
           >
             <NavLink
               to={navItem.path}
-              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+              className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
             >
               {navItem.title}
             </NavLink>
@@ -91,7 +96,7 @@ function Navbar() {
           <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-2 relative">
             <FaHeart
               className="w-8 h-8 text-blue-500"
-              onClick={() => navigate("/likeditems")}
+              onClick={() => navigate('/likeditems')}
             />
           </div>
           <div className="relative">
@@ -129,35 +134,35 @@ function Navbar() {
                     <button
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       onClick={() => {
-                        navigate("/profile")
-                        setIsOpen(false)
+                        navigate('/profile');
+                        setIsOpen(false);
                       }}
                     >
                       Profile
                     </button>
                   </li>
-                  {GlobalState.userEmail === "admin@digidalal.com" ||
-                  GlobalState.userEmail === "dhunganaswaroop@gmail.com" ? (
+                  {GlobalState.userEmail === 'admin@digidalal.com' ||
+                  GlobalState.userEmail === 'dhunganaswaroop@gmail.com' ? (
                     <li>
                       <a
                         href="http://127.0.0.1:8000/admin/"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                         onClick={() => {
-                          setIsOpen(false)
+                          setIsOpen(false);
                         }}
                       >
                         Admin
                       </a>
                     </li>
                   ) : (
-                    ""
+                    ''
                   )}
                   <li>
                     <button
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                       onClick={() => {
-                        navigate("/mybookings")
-                        setIsOpen(false)
+                        navigate('/mybookings');
+                        setIsOpen(false);
                       }}
                     >
                       My Bookings
@@ -168,8 +173,8 @@ function Navbar() {
                       <button
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                         onClick={() => {
-                          navigate("/propertybookings")
-                          setIsOpen(false)
+                          navigate('/propertybookings');
+                          setIsOpen(false);
                         }}
                       >
                         Property Bookings
@@ -193,13 +198,13 @@ function Navbar() {
       ) : (
         <button
           className="hover:text-white bg-blue-500 hover:bg-blue-400 text-gray-200 px-5 py-2 font-semibold rounded-lg"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate('/login')}
         >
           Login
         </button>
       )}
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

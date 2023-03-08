@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
-import Axios from "axios"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function BookingCard({
   f_name,
   l_name,
@@ -10,24 +10,24 @@ function BookingCard({
   getStatus,
 }) {
   function onClickHander(value) {
-    getStatus(value)
+    getStatus(value);
     async function UpdateBooking() {
-      const formData = new FormData()
-      formData.append("status", value)
+      const formData = new FormData();
+      formData.append('status', value);
       try {
         const response = await Axios.patch(
           `http://127.0.0.1:8000/api/bookings/${id}/update/`,
           formData
-        )
-        console.log(response)
+        );
+        console.log(response);
       } catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
       }
     }
-    UpdateBooking()
+    UpdateBooking();
   }
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center gap-2 bg-white my-2 border-2 py-4">
       <img
@@ -46,20 +46,20 @@ function BookingCard({
           </button>
         </div>
         <button
-          onClick={() => onClickHander("Approved")}
+          onClick={() => onClickHander('Approved')}
           className="px-4 py-1 bg-blue-500 text-white font-semibold mr-2"
         >
           Approve
         </button>
         <button
-          onClick={() => onClickHander("Rejected")}
+          onClick={() => onClickHander('Rejected')}
           className="px-4 py-1 bg-red-500 text-white font-semibold mr-2"
         >
           Decline
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default BookingCard
+export default BookingCard;

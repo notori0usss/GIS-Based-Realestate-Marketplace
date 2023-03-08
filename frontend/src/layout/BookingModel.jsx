@@ -1,39 +1,39 @@
-import React, { useState, useContext } from "react"
-import StateContext from "../context/StateContext"
-import Axios from "axios"
-import DatePicker from "react-date-picker"
+import React, { useState, useContext } from 'react';
+import StateContext from '../context/StateContext';
+import Axios from 'axios';
+import DatePicker from 'react-date-picker';
 function BookingModel({ listing, seller, getSentBooking }) {
-  const [showModal, setShowModal] = React.useState(false)
-  const [value, onChange] = useState(new Date())
+  const [showModal, setShowModal] = React.useState(false);
+  const [value, onChange] = useState(new Date());
 
-  let date = value.toISOString()
+  let date = value.toISOString();
 
-  const GlobalState = useContext(StateContext)
-  console.log(GlobalState.userObject)
+  const GlobalState = useContext(StateContext);
+  console.log(GlobalState.userObject);
   function submitHandler() {
-    setShowModal(false)
+    setShowModal(false);
 
     async function DateSender() {
-      const formData = new FormData()
-      formData.append("f_name", GlobalState.userObject.f_name),
-        formData.append("l_name", GlobalState.userObject.f_name),
-        formData.append("date_booked", date),
-        formData.append("booker", localStorage.getItem("theUserId")),
-        formData.append("listing", listing),
-        formData.append("seller", seller)
+      const formData = new FormData();
+      formData.append('f_name', GlobalState.userObject.f_name),
+        formData.append('l_name', GlobalState.userObject.l_name),
+        formData.append('date_booked', date),
+        formData.append('booker', localStorage.getItem('theUserId')),
+        formData.append('listing', listing),
+        formData.append('seller', seller);
 
       try {
         const response = await Axios.post(
           `http://127.0.0.1:8000/api/bookings/create/`,
           formData
-        )
-        console.log(response)
-        getSentBooking(response)
+        );
+        console.log(response);
+        getSentBooking(response);
       } catch (error) {
-        console.log(error.response)
+        console.log(error.response);
       }
     }
-    DateSender()
+    DateSender();
   }
   return (
     <div>
@@ -131,7 +131,7 @@ function BookingModel({ listing, seller, getSentBooking }) {
         </>
       ) : null}
     </div>
-  )
+  );
 }
 
-export default BookingModel
+export default BookingModel;

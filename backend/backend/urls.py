@@ -53,8 +53,12 @@ urlpatterns = [
     path('api/profiles/<int:seller>/update/',
          users_api_views.ProfileUpdate.as_view()),
 
-    path('api/chat/', chats_api_views.ChatList.as_view()),
-    path('api/message/', chats_api_views.MessageList.as_view()),
+    path('api/chats/', chats_api_views.ChatRoomView.as_view()),
+    path('api/users/<int:userId>/chats/',
+         chats_api_views.ChatRoomView.as_view()),
+
+    path('api/chats/<str:roomId>/messages/',
+         chats_api_views.MessagesView.as_view()),
 
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),

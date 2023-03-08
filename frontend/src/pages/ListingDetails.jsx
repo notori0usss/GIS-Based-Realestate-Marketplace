@@ -452,7 +452,7 @@ function ListingDetails() {
                       />
                     ) : (
                       <button className="px-4 py-1 font-semibold text-gray-500 bg-white border-2 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-3xl">
-                        Sent Booking
+                        Cancel Booking
                       </button>
                     )}
                   </div>

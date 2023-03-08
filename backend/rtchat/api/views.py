@@ -1,13 +1,35 @@
-from rtchat.models import Chat, Message
-from .serializers import MessageSerializer, ChatSerializer
-from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import LimitOffsetPagination
+from rtchat.api.serializers import ChatRoomSerializer, ChatMessageSerializer
+from rtchat.models import ChatRoom, ChatMessage
 
 
-class ChatList(generics.ListAPIView):
-    queryset = Chat.objects.all()
-    serializer_class = ChatSerializer
+class ChatRoomView(APIView):
+    def get(self, request, userId):
+        chatRooms = ChatRoom.objects.filter(member=userId)
+        serializer = ChatRoomSerializer(
+            chatRooms, many=True, context={"request": request}
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = ChatRoomSerializer(
+            data=request.data, context={"request": request}
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class MessageList(generics.ListAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
+class MessagesView(ListAPIView):
+    serializer_class = ChatMessageSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        roomId = self.kwargs['roomId']
+        return ChatMessage.objects.\
+            filter(chat__roomId=roomId).order_by('-timestamp')

@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Axios from "axios"
-import { useImmerReducer } from "use-immer"
-import StateContext from "../context/StateContext"
-import DispatchContext from "../context/DispatchContext"
-import UserProfile from "../components/UserProfile"
-import UserIcon from "../assets/user.png"
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import { useImmerReducer } from 'use-immer';
+import StateContext from '../context/StateContext';
+import DispatchContext from '../context/DispatchContext';
+import UserProfile from '../components/UserProfile';
+import UserIcon from '../assets/user.png';
 function ProfileUpdate() {
-  const GlobalState = useContext(StateContext)
-  const GlobalDispatch = useContext(DispatchContext)
-  const navigate = useNavigate()
-  console.log(GlobalState.userObject.agency_name)
+  const GlobalState = useContext(StateContext);
+  const GlobalDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
+  // console.log(GlobalState.userObject.agency_name);
   const initialState = {
     userProfile: {},
     agencyNameValue: GlobalState.userObject?.agency_name,
@@ -21,99 +21,106 @@ function ProfileUpdate() {
     uploadedPictureValue: [],
     profilePictureValue: GlobalState.userObject?.profile_picture,
     sendRequest: 0,
-  }
+  };
   function ReducerFunction(draft, action) {
     switch (action.type) {
-      case "catchuserProfileInfo":
-        draft.userProfile = action.profileObject
-        break
-      case "catchAgencyNameChange":
-        draft.agencyNameValue = action.agencyNameChosen
-        break
-      case "catchPhoneNumberChange":
-        draft.phoneNumberValue = action.phoneNumberChosen
-        break
-      case "catchUploadPictureChange":
-        draft.uploadedPictureValue = action.uploadedPictureChosen
-        break
-      case "catchBioChange":
-        draft.bioValue = action.bioChosen
-        break
-      case "catchFirstNameChange":
-        draft.firstNameValue = action.firstNameChosen
-        break
-      case "catchLastNameChange":
-        draft.lastNameValue = action.lastNameChosen
-        break
-      case "catchProfilePictureChange":
-        draft.profilePictureValue = action.profilePictureChosen
-        break
-      case "catchSubscribedChange":
-        draft.bio = action.bioChosen
-        break
-      case "changeSendRequest":
-        draft.sendRequest = draft.sendRequest + 1
-        break
+      case 'catchuserProfileInfo':
+        draft.userProfile = action.profileObject;
+        break;
+      case 'catchAgencyNameChange':
+        draft.agencyNameValue = action.agencyNameChosen;
+        break;
+      case 'catchPhoneNumberChange':
+        draft.phoneNumberValue = action.phoneNumberChosen;
+        break;
+      case 'catchUploadPictureChange':
+        draft.uploadedPictureValue = action.uploadedPictureChosen;
+        break;
+      case 'catchBioChange':
+        draft.bioValue = action.bioChosen;
+        break;
+      case 'catchFirstNameChange':
+        draft.firstNameValue = action.firstNameChosen;
+        break;
+      case 'catchLastNameChange':
+        draft.lastNameValue = action.lastNameChosen;
+        break;
+      case 'catchProfilePictureChange':
+        draft.profilePictureValue = action.profilePictureChosen;
+        break;
+      case 'catchSubscribedChange':
+        draft.bio = action.bioChosen;
+        break;
+      case 'changeSendRequest':
+        draft.sendRequest = draft.sendRequest + 1;
+        break;
     }
   }
 
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
   useEffect(() => {
     async function GetProfileInfo() {
       try {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
-        )
+        );
 
-        dispatch({ type: "catchuserProfileInfo", profileObject: response.data })
+        dispatch({
+          type: 'catchuserProfileInfo',
+          profileObject: response.data,
+        });
+        GlobalDispatch({
+          type: 'getUserProfilePicture',
+          profilePicture: response.data.profile_picture,
+        });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetProfileInfo()
-  }, [])
+    GetProfileInfo();
+  }, []);
 
   useEffect(() => {
     if (state.uploadedPictureValue[0]) {
       dispatch({
-        type: "catchProfilePictureChange",
+        type: 'catchProfilePictureChange',
         profilePictureChosen: state.uploadedPictureValue[0],
-      })
+      });
     }
-  }, [state.uploadedPictureValue])
+  }, [state.uploadedPictureValue]);
 
   useEffect(() => {
     if (state.sendRequest) {
       async function UpdateProfile() {
-        const formData = new FormData()
-        formData.append("agency_name", state.agencyNameValue),
-          formData.append("phone_number", state.phoneNumberValue),
-          formData.append("bio", state.bioValue),
-          formData.append("f_name", state.firstNameValue),
-          formData.append("l_name", state.lastNameValue),
-          formData.append("profile_picture", state.profilePictureValue),
-          formData.append("seller", GlobalState.userId)
+        const formData = new FormData();
+        formData.append('agency_name', state.agencyNameValue),
+          formData.append('phone_number', state.phoneNumberValue),
+          formData.append('bio', state.bioValue),
+          formData.append('f_name', state.firstNameValue),
+          formData.append('l_name', state.lastNameValue),
+          formData.append('profile_picture', state.profilePictureValue),
+          formData.append('seller', GlobalState.userId);
 
         try {
           const response = await Axios.patch(
             `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/update/`,
             formData
-          )
-          console.log(response)
-          navigate("/profile")
+          );
+          console.log(response);
+          navigate('/profile');
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
-      UpdateProfile()
+      UpdateProfile();
     }
-  }, [state.sendRequest])
+  }, [state.sendRequest]);
 
   //form submit
   function submitHandler(e) {
-    e.preventDefault()
-    console.log("submit bho")
-    dispatch({ type: "changeSendRequest" })
+    e.preventDefault();
+    console.log('submit bho');
+    dispatch({ type: 'changeSendRequest' });
   }
 
   return (
@@ -150,7 +157,7 @@ function ProfileUpdate() {
               placeholder="First Name"
               onChange={(e) =>
                 dispatch({
-                  type: "catchFirstNameChange",
+                  type: 'catchFirstNameChange',
                   firstNameChosen: e.target.value,
                 })
               }
@@ -162,7 +169,7 @@ function ProfileUpdate() {
               placeholder="Last Name"
               onChange={(e) =>
                 dispatch({
-                  type: "catchLastNameChange",
+                  type: 'catchLastNameChange',
                   lastNameChosen: e.target.value,
                 })
               }
@@ -175,7 +182,7 @@ function ProfileUpdate() {
             placeholder="Agency Name"
             onChange={(e) =>
               dispatch({
-                type: "catchAgencyNameChange",
+                type: 'catchAgencyNameChange',
                 agencyNameChosen: e.target.value,
               })
             }
@@ -187,7 +194,7 @@ function ProfileUpdate() {
             placeholder="Phone Number"
             onChange={(e) =>
               dispatch({
-                type: "catchPhoneNumberChange",
+                type: 'catchPhoneNumberChange',
                 phoneNumberChosen: e.target.value,
               })
             }
@@ -219,7 +226,7 @@ function ProfileUpdate() {
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">
                         To Change your PP Click to upload
-                      </span>{" "}
+                      </span>{' '}
                       or drag and drop
                     </p>
                     <p className="text-xs text-gray-500 ">PNG, JPG or GIF</p>
@@ -230,7 +237,7 @@ function ProfileUpdate() {
                       {state.uploadedPictureValue ? (
                         <li>{state.uploadedPictureValue[0].name}</li>
                       ) : (
-                        ""
+                        ''
                       )}
                     </span>
                   </p>
@@ -244,9 +251,9 @@ function ProfileUpdate() {
                 accept="image/png,image/gif,image/jpeg"
                 onChange={(e) => {
                   dispatch({
-                    type: "catchUploadPictureChange",
+                    type: 'catchUploadPictureChange',
                     uploadedPictureChosen: e.target.files,
-                  })
+                  });
                 }}
               />
             </label>
@@ -259,7 +266,7 @@ function ProfileUpdate() {
             placeholder="Bio"
             onChange={(e) =>
               dispatch({
-                type: "catchBioChange",
+                type: 'catchBioChange',
                 bioChosen: e.target.value,
               })
             }
@@ -269,7 +276,7 @@ function ProfileUpdate() {
               Save
             </button>
             <button
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate('/profile')}
               className="w-1/2 bg-red-400 py-3 rounded-md font-semibold text-white"
             >
               Go Back
@@ -278,7 +285,7 @@ function ProfileUpdate() {
         </form>
       </div>
     </>
-  )
+  );
 }
 
-export default ProfileUpdate
+export default ProfileUpdate;

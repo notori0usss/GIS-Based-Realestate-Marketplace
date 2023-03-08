@@ -1,21 +1,24 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-
-class Chat(models.Model):
-    participants = models.ManyToManyField(User, related_name='chats')
-    created_at = models.DateTimeField(auto_now_add=True)
+from shortuuidfield import ShortUUIDField
+from users.models import Profile as User
 
 
-class Message(models.Model):
-    chat = models.ForeignKey(
-        Chat, on_delete=models.CASCADE, related_name='messages')
-    sender = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='sent_messages')
-    content = models.TextField()
+class ChatRoom(models.Model):
+    roomId = ShortUUIDField()
+    type = models.CharField(max_length=10, default='DM')
+    member = models.ManyToManyField(User)
+    name = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return self.roomId + ' -> ' + str(self.name)
+
+
+class ChatMessage(models.Model):
+    chat = models.ForeignKey(ChatRoom, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    message = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.sender}: {self.content}'
+        return self.message

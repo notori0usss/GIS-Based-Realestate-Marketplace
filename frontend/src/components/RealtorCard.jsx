@@ -62,14 +62,14 @@ function RealtorCard({
       </div>
       <button
         onClick={handleClick}
-        className="right-4 top-[8rem] bg-blue-500 mt-4 px-2 flex items-center gap-2 text-white py-1 rounded-full"
+        className="right-4 top-[8rem] bg-blue-500 mt-4 px-2 flex items-center gap-2 text-white py-1 rounded-full my-2"
       >
         Message Now! <FaFacebookMessenger />
       </button>
-      <div
+      {/* <div
         className="h-10 bg-blue-500 w-full"
         style={{ clipPath: 'polygon(0 30%, 100% 10%, 100% 100%, 0 100%)' }}
-      ></div>
+      ></div> */}
     </div>
   );
 }
