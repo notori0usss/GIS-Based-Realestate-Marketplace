@@ -9,7 +9,7 @@ from rtchat.models import ChatRoom, ChatMessage
 
 class ChatRoomView(APIView):
     def get(self, request, userId):
-        chatRooms = ChatRoom.objects.filter(member=userId)
+        chatRooms = ChatRoom.objects.filter(member__seller__id=userId)
         serializer = ChatRoomSerializer(
             chatRooms, many=True, context={"request": request}
         )

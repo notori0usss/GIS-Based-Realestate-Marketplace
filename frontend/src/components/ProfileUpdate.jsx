@@ -18,6 +18,10 @@ function ProfileUpdate() {
     firstNameValue: GlobalState.userObject?.f_name,
     lastNameValue: GlobalState.userObject?.l_name,
     bioValue: GlobalState.userObject?.bio,
+    facebookValue: GlobalState.userObject?.facebook_link,
+    youtubeValue: GlobalState.userObject?.youtube_link,
+    tiktokValue: GlobalState.userObject?.tiktok_link,
+
     uploadedPictureValue: [],
     profilePictureValue: GlobalState.userObject?.profile_picture,
     sendRequest: 0,
@@ -45,6 +49,15 @@ function ProfileUpdate() {
       case 'catchLastNameChange':
         draft.lastNameValue = action.lastNameChosen;
         break;
+      case 'catchFacebookLinkChange':
+        draft.facebookValue = action.facebookLinkChosen;
+        break;
+      case 'catchYoutubeLinkChange':
+        draft.youtubeValue = action.youtubeLinkChosen;
+        break;
+      case 'catchTiktokLinkChange':
+        draft.tiktokValue = action.tiktokLinkChosen;
+        break;
       case 'catchProfilePictureChange':
         draft.profilePictureValue = action.profilePictureChosen;
         break;
@@ -58,6 +71,7 @@ function ProfileUpdate() {
   }
 
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
+
   useEffect(() => {
     async function GetProfileInfo() {
       try {
@@ -99,7 +113,10 @@ function ProfileUpdate() {
           formData.append('f_name', state.firstNameValue),
           formData.append('l_name', state.lastNameValue),
           formData.append('profile_picture', state.profilePictureValue),
-          formData.append('seller', GlobalState.userId);
+          formData.append('seller', GlobalState.userId),
+          formData.append('facebook_link', state.facebookValue),
+          formData.append('youtube_link', state.youtubeValue),
+          formData.append('tiktok_link', state.tiktokValue);
 
         try {
           const response = await Axios.patch(
@@ -199,7 +216,42 @@ function ProfileUpdate() {
               })
             }
           />
-
+          <input
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="text"
+            value={state.facebookValue}
+            placeholder="Facebook Link"
+            onChange={(e) =>
+              dispatch({
+                type: 'catchFacebookLinkChange',
+                facebookLinkChosen: e.target.value,
+              })
+            }
+          />{' '}
+          <input
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="text"
+            value={state.youtubeValue}
+            placeholder="Youtube Link"
+            onChange={(e) =>
+              dispatch({
+                type: 'catchYoutubeLinkChange',
+                youtubeLinkChosen: e.target.value,
+              })
+            }
+          />{' '}
+          <input
+            className="w-full h-16 px-3 shadow-md rounded-lg focus:outline-blue-300"
+            type="text"
+            value={state.tiktokValue}
+            placeholder="Tiktok Link"
+            onChange={(e) =>
+              dispatch({
+                type: 'catchTiktokLinkChange',
+                tiktokLinkChosen: e.target.value,
+              })
+            }
+          />
           <div className="flex items-center justify-center w-full ">
             <label
               htmlFor="dropzone-file"

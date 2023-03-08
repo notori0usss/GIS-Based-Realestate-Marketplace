@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from rtchat.models import ChatRoom, ChatMessage
-from users.api.serializers import UserSerializer
+from users.api.serializers import ProfileSerializer
 
 
 class ChatRoomSerializer(serializers.ModelSerializer):
-    member = UserSerializer(many=True, read_only=True)
+    member = ProfileSerializer(many=True, read_only=True)
     members = serializers.ListField(write_only=True)
 
     def create(self, validatedData):
@@ -19,12 +19,20 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):
+    chatterId = serializers.SerializerMethodField()
     userName = serializers.SerializerMethodField()
     userImage = serializers.SerializerMethodField()
 
     class Meta:
         model = ChatMessage
         exclude = ['id', 'chat']
+
+    def get_chatterId(self, obj):
+        try:
+            return obj.user.seller.id
+        except AttributeError as e:
+            print("Attr Error", e)
+            return None
 
     def get_userName(self, Obj):
         return Obj.user.f_name + ' ' + Obj.user.l_name

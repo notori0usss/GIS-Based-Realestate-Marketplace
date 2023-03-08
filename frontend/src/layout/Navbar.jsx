@@ -5,7 +5,7 @@ import StateContext from '../context/StateContext';
 import { useState } from 'react';
 import Axios from 'axios';
 import Avatar, { genConfig } from 'react-nice-avatar';
-import { FaHeart } from 'react-icons/fa';
+import { FaFacebookMessenger, FaHeart } from 'react-icons/fa';
 
 import DispatchContext from '../context/DispatchContext';
 import { useEffect } from 'react';
@@ -93,10 +93,10 @@ function Navbar() {
       </ul>
       {GlobalState.userIsLogged ? (
         <div className="flex items-center">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-2 relative">
-            <FaHeart
+          <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center p-2 relative">
+            <FaFacebookMessenger
               className="w-8 h-8 text-blue-500"
-              onClick={() => navigate('/likeditems')}
+              onClick={() => navigate(`/chat/${GlobalState.userId}`)}
             />
           </div>
           <div className="relative">

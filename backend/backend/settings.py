@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'payments',
     'rtchat',
     'channels',
+    'daphne',
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',

@@ -18,6 +18,12 @@ class Profile(models.Model):
     subscribed = models.BooleanField(default=False, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    facebook_link = models.CharField(
+        max_length=100, default="https://www.facebook.com/", blank=True)
+    youtube_link = models.CharField(
+        max_length=100, default="https://www.youtube.com/", blank=True)
+    tiktok_link = models.CharField(
+        max_length=100, default="https://www.tiktok.com/", blank=True)
 
     def __str__(self):
         return f"Profile of {self.seller.username}"

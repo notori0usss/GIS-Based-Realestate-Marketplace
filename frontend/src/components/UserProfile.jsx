@@ -1,15 +1,15 @@
-import React from "react"
-import { useContext } from "react"
-import StateContext from "../context/StateContext"
+import React from 'react';
+import { useContext } from 'react';
+import StateContext from '../context/StateContext';
 import {
   FaPhoneAlt,
   FaRing,
   FaSuitcase,
   MdVerified,
   TbReportMoney,
-} from "react-icons/all"
-import { useNavigate } from "react-router-dom"
-import ProfileUpdate from "./ProfileUpdate"
+} from 'react-icons/all';
+import { useNavigate } from 'react-router-dom';
+import ProfileUpdate from './ProfileUpdate';
 
 function UserProfile({
   agency,
@@ -19,8 +19,8 @@ function UserProfile({
   totalListing,
   sellerId,
 }) {
-  const GlobalState = useContext(StateContext)
-  const navigate = useNavigate()
+  const GlobalState = useContext(StateContext);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center border-4 py-10 gap-2">
       <img
@@ -30,23 +30,23 @@ function UserProfile({
       />
       {GlobalState.userUsername ? (
         <div className="text-xl font-semibold">
-          Welcome{" "}
+          Welcome{' '}
           <span className="text-blue-500 font-semibold">
-            {GlobalState.userUsername}{" "}
+            {GlobalState.userUsername}{' '}
             {isSubscribed ? (
               <MdVerified className="text-blue-500 text-sm inline" />
             ) : (
-              ""
+              ''
             )}
-          </span>{" "}
+          </span>{' '}
           to your profile!
         </div>
       ) : (
-        ""
+        ''
       )}
 
       <div className="flex items-center gap-2">
-        <FaSuitcase className="text-gray-600" />: {agency}{" "}
+        <FaSuitcase className="text-gray-600" />: {agency}{' '}
       </div>
       <div className="flex items-center gap-2">
         <FaPhoneAlt className="text-gray-600" />: {number}
@@ -55,7 +55,7 @@ function UserProfile({
         className="flex items-center gap-2"
         onClick={() => navigate(`/agencies/${sellerId}`)}
       >
-        <TbReportMoney className="text-gray-600 text-xl font-bold " />:{" "}
+        <TbReportMoney className="text-gray-600 text-xl font-bold " />:
         {totalListing}
       </div>
       <button
@@ -65,7 +65,7 @@ function UserProfile({
         Edit Profile
       </button>
     </div>
-  )
+  );
 }
 
-export default UserProfile
+export default UserProfile;
