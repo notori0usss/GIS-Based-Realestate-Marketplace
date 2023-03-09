@@ -19,7 +19,6 @@ from listings.api import views as listings_api_views
 from realtors.api import views as realtors_api_views
 from users.api import views as users_api_views
 from rtchat.api import views as chats_api_views
-from rtchat import routing
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -50,10 +49,11 @@ urlpatterns = [
 
     path('api/profiles/', users_api_views.ProfileList.as_view()),
     path('api/profiles/<int:seller>/', users_api_views.ProfileDetail.as_view()),
+    path('api/users/<int:pk>/', users_api_views.UserDetail.as_view()),
+
     path('api/profiles/<int:seller>/update/',
          users_api_views.ProfileUpdate.as_view()),
 
-    path('ws/', include(routing.websocket_urlpatterns)),
     path('api/chats/', chats_api_views.ChatRoomView.as_view()),
     path('api/users/<int:userId>/chats/',
          chats_api_views.ChatRoomView.as_view()),

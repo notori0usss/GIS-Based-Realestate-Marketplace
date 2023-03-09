@@ -10,6 +10,7 @@ function App() {
     userId: localStorage.getItem('theUserId'),
     userToken: localStorage.getItem('theUserToken'),
     userIsLogged: localStorage.getItem('theUserUsername') ? true : false,
+
     isSubscribed: '',
     userProfilePicture: '',
     listingInfo: '',

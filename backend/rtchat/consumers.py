@@ -1,16 +1,13 @@
-# chat/consumers.py
-from channels.generic.websocket import AsyncWebsocketConsumer
-from django.contrib.auth import get_user_model
-from channels.db import database_sync_to_async
-from .models import ChatMessage, ChatRoom
-from users.models import Profile as User
 import json
-from users.models import OnlineUser
+from channels.db import database_sync_to_async
+from channels.generic.websocket import AsyncWebsocketConsumer
+from rtchat.models import ChatRoom, ChatMessage
+from users.models import Profile, OnlineUser
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
     def getUser(self, userId):
-        return User.objects.get(id=userId)
+        return Profile.objects.get(id=userId)
 
     def getOnlineUsers(self):
         onlineUsers = OnlineUser.objects.all()
@@ -29,7 +26,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             pass
 
     def saveMessage(self, message, userId, roomId):
-        userObj = User.objects.get(id=userId)
+        userObj = Profile.objects.get(id=userId)
         chatObj = ChatRoom.objects.get(roomId=roomId)
         chatMessageObj = ChatMessage.objects.create(
             chat=chatObj, user=userObj, message=message

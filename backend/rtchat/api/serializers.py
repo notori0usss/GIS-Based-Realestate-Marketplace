@@ -19,20 +19,16 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):
-    chatterId = serializers.SerializerMethodField()
     userName = serializers.SerializerMethodField()
     userImage = serializers.SerializerMethodField()
+    profile_id = serializers.SerializerMethodField()
 
     class Meta:
         model = ChatMessage
         exclude = ['id', 'chat']
 
-    def get_chatterId(self, obj):
-        try:
-            return obj.user.seller.id
-        except AttributeError as e:
-            print("Attr Error", e)
-            return None
+    def get_profile_id(self, Obj):
+        return Obj.user.seller.id
 
     def get_userName(self, Obj):
         return Obj.user.f_name + ' ' + Obj.user.l_name

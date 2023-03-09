@@ -40,6 +40,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'jazzmin',
+    'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,8 +57,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'payments',
     'rtchat',
-    'channels',
-    'daphne',
+
+
 
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',
@@ -182,4 +184,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
+}
+JAZZMIN_SETTINGS = {
+    "site_header": 'Digi Dalal',
 }
