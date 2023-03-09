@@ -35,7 +35,10 @@ function Navbar() {
       console.error(error);
     }
   }
-
+  const [profile, setProfile] = useState('');
+  function getProfile(value) {
+    setProfile(value);
+  }
   const [subscriptionStatus, setSubscriptionStatus] = useState(false);
   useEffect(() => {
     async function GetProfileInfo() {
@@ -45,6 +48,7 @@ function Navbar() {
         );
 
         setSubscriptionStatus(response.data.subscribed);
+        // setProfile(response.data.profile_picture);
         GlobalDispatch({
           type: 'getUserProfilePicture',
           profilePicture: response.data.profile_picture,
@@ -67,6 +71,7 @@ function Navbar() {
     subscriptionStatus,
     GlobalState.subscribedInfo,
     GlobalState.userProfilePicture,
+    profile,
   ]);
   console.log(GlobalState.userProfilePicture);
   return (
@@ -132,7 +137,7 @@ function Navbar() {
                 >
                   <li>
                     <button
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       onClick={() => {
                         navigate('/profile');
                         setIsOpen(false);
@@ -146,7 +151,8 @@ function Navbar() {
                     <li>
                       <a
                         href="http://127.0.0.1:8000/admin/"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
+                        target="/"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-center "
                         onClick={() => {
                           setIsOpen(false);
                         }}
@@ -159,7 +165,7 @@ function Navbar() {
                   )}
                   <li>
                     <button
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
+                      className="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                       onClick={() => {
                         navigate('/mybookings');
                         setIsOpen(false);
@@ -171,7 +177,7 @@ function Navbar() {
                   {subscriptionStatus && (
                     <li>
                       <button
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
+                        className="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white "
                         onClick={() => {
                           navigate('/propertybookings');
                           setIsOpen(false);

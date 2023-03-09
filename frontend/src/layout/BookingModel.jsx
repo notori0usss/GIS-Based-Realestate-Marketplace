@@ -17,6 +17,7 @@ function BookingModel({ listing, seller, getSentBooking }) {
       const formData = new FormData();
       formData.append('f_name', GlobalState.userObject.f_name),
         formData.append('l_name', GlobalState.userObject.l_name),
+        formData.append('phone_number', GlobalState.userObject.phone_number),
         formData.append('date_booked', date),
         formData.append('booker', localStorage.getItem('theUserId')),
         formData.append('listing', listing),

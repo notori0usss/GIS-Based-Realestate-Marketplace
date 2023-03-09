@@ -1,5 +1,5 @@
 from users.models import Profile
-from .serializers import ProfileSerializer, UserSerializer
+from .serializers import ProfileSerializer, UserSerializer, RecommenderSerializer
 from rest_framework import generics
 
 
@@ -22,4 +22,10 @@ class UserDetail(generics.RetrieveAPIView):
 class ProfileUpdate(generics.UpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    lookup_field = 'seller'
+
+
+class RecommenderList(generics.RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = RecommenderSerializer
     lookup_field = 'seller'

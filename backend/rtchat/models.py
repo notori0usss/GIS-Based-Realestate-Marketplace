@@ -8,7 +8,7 @@ class ChatRoom(models.Model):
     roomId = ShortUUIDField()
     type = models.CharField(max_length=10, default='DM')
     member = models.ManyToManyField(Profile)
-    name = models.CharField(max_length=20, null=True, blank=True)
+    name = models.CharField(max_length=120, null=True, blank=True)
 
     def __str__(self):
         return self.roomId + ' -> ' + str(self.name)

@@ -36,7 +36,11 @@ urlpatterns = [
     path('api/bookings/<int:pk>/', listings_api_views.BookingDetail.as_view()),
     path('api/bookings/<int:pk>/update/',
          listings_api_views.BookingUpdateAPIView.as_view()),
+
     path('api/bookings/create/', listings_api_views.BookingCreate.as_view()),
+    path('api/bookings/<int:pk>/delete/',
+         listings_api_views.BookingDelete.as_view()),
+
 
     path('api/realtors/', realtors_api_views.RealtorList.as_view()),
     path('api/realtors/<int:pk>/', realtors_api_views.RealtorDetail.as_view()),
@@ -50,7 +54,8 @@ urlpatterns = [
     path('api/profiles/', users_api_views.ProfileList.as_view()),
     path('api/profiles/<int:seller>/', users_api_views.ProfileDetail.as_view()),
     path('api/users/<int:pk>/', users_api_views.UserDetail.as_view()),
-
+    path('api/users/recommended/<int:seller>/',
+         users_api_views.RecommenderList.as_view()),
     path('api/profiles/<int:seller>/update/',
          users_api_views.ProfileUpdate.as_view()),
 

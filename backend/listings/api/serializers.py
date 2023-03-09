@@ -111,4 +111,4 @@ class BookingSerializer(serializers.ModelSerializer):
 class BookingStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['status']
+        fields = ['status', 'rating']

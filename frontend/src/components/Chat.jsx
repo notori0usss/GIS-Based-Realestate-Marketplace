@@ -132,7 +132,6 @@ function Chat() {
                     </div>
                     <div className="w-full">
                       <div className="text-lg font-semibold">{el2.f_name}</div>
-                      <span className="text-gray-500">Muji</span>
                     </div>
                   </>
                 ))}
@@ -171,7 +170,10 @@ function Chat() {
 
             {/* reciver  */}
           </div>
-          <form className="py-5" onSubmit={messageSubmitHandler}>
+          <form
+            className="py-5 fixed bottom-0 w-full"
+            onSubmit={messageSubmitHandler}
+          >
             <input
               value={message}
               onChange={(e) => setMessage(e.target.value)}

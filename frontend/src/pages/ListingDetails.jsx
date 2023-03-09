@@ -212,7 +212,21 @@ function ListingDetails() {
       }
     }
   }
-
+  const [profile, setProfile] = useState([]);
+  useEffect(() => {
+    async function GetProfileInfo() {
+      try {
+        const response = await Axios.get(
+          `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
+        );
+        console.log(response.data);
+        setProfile(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    GetProfileInfo();
+  }, []);
   if (state.dataIsLoading === true) {
     return <Loading />;
   }
@@ -445,14 +459,28 @@ function ListingDetails() {
                     </button>
 
                     {!found ? (
-                      <BookingModel
-                        listing={state.listingInfo.id}
-                        seller={state.listingInfo.seller}
-                        getSentBooking={getSentBooking}
-                      />
+                      <>
+                        {profile.f_name === null || profile.l_name === null ? (
+                          <button
+                            onClick={() => navigate(`/profile`)}
+                            className="px-4 py-1 font-semibold text-white bg-red-500 border-2 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl"
+                          >
+                            Update Profile
+                          </button>
+                        ) : (
+                          <BookingModel
+                            listing={state.listingInfo.id}
+                            seller={state.listingInfo.seller}
+                            getSentBooking={getSentBooking}
+                          />
+                        )}
+                      </>
                     ) : (
-                      <button className="px-4 py-1 font-semibold text-gray-500 bg-white border-2 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-3xl">
-                        Cancel Booking
+                      <button
+                        onClick={() => navigate('/mybookings')}
+                        className="px-4 py-1 font-semibold text-gray-500 bg-white border-2 hover:bg-blue-500 hover:text-white transition-all duration-200 rounded-3xl"
+                      >
+                        View Bookings
                       </button>
                     )}
                   </div>

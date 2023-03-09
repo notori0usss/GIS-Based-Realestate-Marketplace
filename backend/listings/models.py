@@ -148,15 +148,11 @@ class Booking(models.Model):
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected'),
         ('Completed', 'Completed'),
-
+        ('Cancelled', 'Cancelled'),
     )
+    rating = models.IntegerField(blank=True, null=True)
     status = models.CharField(
         max_length=100, choices=choices_status, default='Pending')
 
     def __str__(self):
         return f"{self.booker} booked {self.listing.title}"
-
-    def update_status_if_date_passed(self):
-        if self.status == 'Approved' and self.date_booked <= timezone.now():
-            self.status = 'Completed'
-            self.save()

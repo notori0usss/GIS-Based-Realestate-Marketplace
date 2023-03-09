@@ -3,6 +3,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from rtchat.models import ChatRoom, ChatMessage
 from users.models import Profile, OnlineUser
+from django.shortcuts import get_object_or_404
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -88,6 +89,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chatMessage = await database_sync_to_async(
                 self.saveMessage
             )(message, userId, roomId)
+            print(roomId)
         elif action == 'typing':
             chatMessage = text_data_json
         await self.channel_layer.group_send(

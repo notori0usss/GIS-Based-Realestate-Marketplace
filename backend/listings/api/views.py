@@ -11,7 +11,7 @@ class ListingList(generics.ListAPIView):
 
 
 class BookingList(generics.ListAPIView):
-    queryset = Booking.objects.all()
+    queryset = Booking.objects.all().order_by('-date_booked')
     serializer_class = BookingSerializer
 
 
@@ -31,13 +31,13 @@ class BookingDetail(generics.RetrieveAPIView):
         return booking
 
 
-class BookingUpdateAPIView(generics.UpdateAPIView):
-    queryset = Booking.objects.all()
-    serializer_class = BookingSerializer
-    lookup_field = 'id'
+# class BookingUpdateAPIView(generics.UpdateAPIView):
+#     queryset = Booking.objects.all()
+#     serializer_class = BookingSerializer
+#     lookup_field = 'id'
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
 
 
 class BookingUpdateAPIView(generics.UpdateAPIView):
@@ -50,9 +50,16 @@ class BookingUpdateAPIView(generics.UpdateAPIView):
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
-        serializer.save(status=request.data['status'])
+        status = request.data.get('status')
+        rating = request.data.get('rating')
+        serializer.save(status=status, rating=rating)
         print(serializer.data)
         return Response(serializer.data)
+
+
+class BookingDelete(generics.DestroyAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
 
 
 class ListingCreate(generics.CreateAPIView):

@@ -4,54 +4,60 @@ import React, {
   useRef,
   useMemo,
   useLayoutEffect,
-} from "react"
-import Navbar from "../layout/Navbar"
-import { useImmerReducer } from "use-immer"
-import PropertyForm from "../components/PropertyForm"
-import Axios from "axios"
-import { MapContainer, TileLayer, useMap, Marker, Polygon } from "react-leaflet"
-import Kirtipur from "../data/GeoJSON/Kirtipur"
-import Balkot from "../data/GeoJSON/Balkot"
-import { AiFillDollarCircle } from "react-icons/ai"
-import StateContext from "../context/StateContext"
-import { useContext } from "react"
-import { useNavigate } from "react-router-dom"
-import CheckOut from "./CheckOut"
-import DispatchContext from "../context/DispatchContext"
+} from 'react';
+import Navbar from '../layout/Navbar';
+import { useImmerReducer } from 'use-immer';
+import PropertyForm from '../components/PropertyForm';
+import Axios from 'axios';
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  Marker,
+  Polygon,
+} from 'react-leaflet';
+import Kirtipur from '../data/GeoJSON/Kirtipur';
+import Balkot from '../data/GeoJSON/Balkot';
+import { AiFillDollarCircle } from 'react-icons/ai';
+import StateContext from '../context/StateContext';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CheckOut from './CheckOut';
+import DispatchContext from '../context/DispatchContext';
 function AddProperty() {
-  const GlobalState = useContext(StateContext)
-  const GlobalDispatch = useContext(DispatchContext)
-  const navigate = useNavigate()
+  const GlobalState = useContext(StateContext);
+  const GlobalDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
   useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   //Initial States for Form
   const initialState = {
-    titleValue: "",
-    listingTypeValue: "",
-    descriptionValue: "",
-    areaValue: "",
-    municipalityValue: "",
-    latitudeValue: "",
-    longitudeValue: "",
-    propertyStatusValue: "",
-    priceValue: "",
-    rentalFrequencyValue: "",
-    roomsValue: "",
-    bathroomValue: "",
-    parkingValue: "",
-    propertyAreaValue: "",
+    titleValue: '',
+    listingTypeValue: '',
+    descriptionValue: '',
+    areaValue: '',
+    municipalityValue: '',
+    latitudeValue: '',
+    longitudeValue: '',
+    propertyStatusValue: '',
+    priceValue: '',
+    rentalFrequencyValue: '',
+    roomsValue: '',
+    bathroomValue: '',
+    parkingValue: '',
+    propertyAreaValue: '',
     furnishedValue: false,
     poolValue: false,
     elevatorValue: false,
     cctvValue: false,
-    picture1Value: "",
-    picture2Value: "",
-    picture3Value: "",
-    bathroom1Value: "",
-    bathroom2Value: "",
-    bedroom1Value: "",
-    bedroom2Value: "",
+    picture1Value: '',
+    picture2Value: '',
+    picture3Value: '',
+    bathroom1Value: '',
+    bathroom2Value: '',
+    bedroom1Value: '',
+    bedroom2Value: '',
     mapInstance: null,
     markerPosition: {
       lat: 27.704111212111023,
@@ -61,305 +67,305 @@ function AddProperty() {
     uploadedBedroomImages: [],
     uploadedBathroomImages: [],
     userProfile: {
-      agencyName: "",
-      phoneNumber: "",
+      agencyName: '',
+      phoneNumber: '',
       subscribed: false,
     },
     sendRequest: 0,
-  }
+  };
   //Reducerfuntion
   function ReducerFunction(draft, action) {
     switch (action.type) {
-      case "catchTitleChange":
-        draft.titleValue = action.titleChosen
-        break
-      case "catchListingTypeChange":
-        draft.listingTypeValue = action.listingTypeChosen
-        break
-      case "catchDescriptionChange":
-        draft.descriptionValue = action.descriptionChosen
-        break
-      case "catchAreaChange":
-        draft.areaValue = action.areaChosen
-        break
-      case "catchMunicipalityChange":
-        draft.municipalityValue = action.municipalityChosen
-        break
-      case "catchLongitudeChange":
-        draft.longitudeValue = action.longitudeChosen
-        break
-      case "catchLatitudeChange":
-        draft.latitudeValue = action.latitudeChosen
-        break
-      case "catchPropertyStatusChange":
-        draft.propertyStatusValue = action.propertyStatusChosen
-        break
-      case "catchPriceChange":
-        draft.priceValue = action.priceChosen
-        break
-      case "catchPropertyAreaChange":
-        draft.propertyAreaValue = action.propertyAreaChosen
-        break
-      case "catchRentalFrequencyChange":
-        draft.rentalFrequencyValue = action.rentalFrequencyChosen
-        break
-      case "catchRoomsChange":
-        draft.roomsValue = action.roomsChosen
-        break
-      case "catchBathroomChange":
-        draft.bathroomValue = action.bathroomChosen
-        break
-      case "catchParkingChange":
-        draft.parkingValue = action.parkingChosen
-        break
-      case "catchFurnishedChange":
-        draft.furnishedValue = !draft.furnishedValue
-        break
-      case "catchPoolChange":
-        draft.poolValue = !draft.poolValue
-        break
-      case "catchElevatorChange":
-        draft.elevatorValue = !draft.elevatorValue
-        break
-      case "catchCctvChange":
-        draft.cctvValue = !draft.cctvValue
-        break
-      case "catchPicture1Change":
-        draft.picture1Value = action.picture1Chosen
-        break
-      case "catchPicture2Change":
-        draft.picture2Value = action.picture2Chosen
-        break
-      case "catchPicture3Change":
-        draft.picture3Value = action.picture3Chosen
-        break
-      case "catchBathroom1Change":
-        draft.bathroom1Value = action.bathroom1Chosen
-        break
-      case "catchBathroom2Change":
-        draft.bathroom2Value = action.bathroom2Chosen
-        break
-      case "catchBedroom1Change":
-        draft.bedroom1Value = action.bedroom1Chosen
-        break
-      case "catchBedroom2Change":
-        draft.bedroom2Value = action.bedroom2Chosen
-        break
+      case 'catchTitleChange':
+        draft.titleValue = action.titleChosen;
+        break;
+      case 'catchListingTypeChange':
+        draft.listingTypeValue = action.listingTypeChosen;
+        break;
+      case 'catchDescriptionChange':
+        draft.descriptionValue = action.descriptionChosen;
+        break;
+      case 'catchAreaChange':
+        draft.areaValue = action.areaChosen;
+        break;
+      case 'catchMunicipalityChange':
+        draft.municipalityValue = action.municipalityChosen;
+        break;
+      case 'catchLongitudeChange':
+        draft.longitudeValue = action.longitudeChosen;
+        break;
+      case 'catchLatitudeChange':
+        draft.latitudeValue = action.latitudeChosen;
+        break;
+      case 'catchPropertyStatusChange':
+        draft.propertyStatusValue = action.propertyStatusChosen;
+        break;
+      case 'catchPriceChange':
+        draft.priceValue = action.priceChosen;
+        break;
+      case 'catchPropertyAreaChange':
+        draft.propertyAreaValue = action.propertyAreaChosen;
+        break;
+      case 'catchRentalFrequencyChange':
+        draft.rentalFrequencyValue = action.rentalFrequencyChosen;
+        break;
+      case 'catchRoomsChange':
+        draft.roomsValue = action.roomsChosen;
+        break;
+      case 'catchBathroomChange':
+        draft.bathroomValue = action.bathroomChosen;
+        break;
+      case 'catchParkingChange':
+        draft.parkingValue = action.parkingChosen;
+        break;
+      case 'catchFurnishedChange':
+        draft.furnishedValue = !draft.furnishedValue;
+        break;
+      case 'catchPoolChange':
+        draft.poolValue = !draft.poolValue;
+        break;
+      case 'catchElevatorChange':
+        draft.elevatorValue = !draft.elevatorValue;
+        break;
+      case 'catchCctvChange':
+        draft.cctvValue = !draft.cctvValue;
+        break;
+      case 'catchPicture1Change':
+        draft.picture1Value = action.picture1Chosen;
+        break;
+      case 'catchPicture2Change':
+        draft.picture2Value = action.picture2Chosen;
+        break;
+      case 'catchPicture3Change':
+        draft.picture3Value = action.picture3Chosen;
+        break;
+      case 'catchBathroom1Change':
+        draft.bathroom1Value = action.bathroom1Chosen;
+        break;
+      case 'catchBathroom2Change':
+        draft.bathroom2Value = action.bathroom2Chosen;
+        break;
+      case 'catchBedroom1Change':
+        draft.bedroom1Value = action.bedroom1Chosen;
+        break;
+      case 'catchBedroom2Change':
+        draft.bedroom2Value = action.bedroom2Chosen;
+        break;
 
-      case "getMap":
-        draft.mapInstance = action.mapData
-        break
-      case "changeMarkerPosition":
-        draft.markerPosition.lat = action.changeLatitude
-        draft.markerPosition.lng = action.changeLongitude
-        draft.latitudeValue = ""
-        draft.longitudeValue = ""
-        break
-      case "catchuploadedPropertyImages":
-        draft.uploadedPropertyImages = action.imagesChosen
-        break
-      case "catchuploadedBedroomImages":
-        draft.uploadedBedroomImages = action.bedimagesChosen
-        break
-      case "catchuploadedBathroomImages":
-        draft.uploadedBathroomImages = action.bathimagesChosen
-        break
+      case 'getMap':
+        draft.mapInstance = action.mapData;
+        break;
+      case 'changeMarkerPosition':
+        draft.markerPosition.lat = action.changeLatitude;
+        draft.markerPosition.lng = action.changeLongitude;
+        draft.latitudeValue = '';
+        draft.longitudeValue = '';
+        break;
+      case 'catchuploadedPropertyImages':
+        draft.uploadedPropertyImages = action.imagesChosen;
+        break;
+      case 'catchuploadedBedroomImages':
+        draft.uploadedBedroomImages = action.bedimagesChosen;
+        break;
+      case 'catchuploadedBathroomImages':
+        draft.uploadedBathroomImages = action.bathimagesChosen;
+        break;
 
-      case "catchuserProfileInfo":
-        draft.userProfile.agencyName = action.profileObject.agency_name
-        draft.userProfile.phoneNumber = action.profileObject.phone_number
-        draft.userProfile.subscribed = action.profileObject.subscribed
-        break
-      case "changeSendRequest":
-        draft.sendRequest = draft.sendRequest + 1
-        break
+      case 'catchuserProfileInfo':
+        draft.userProfile.agencyName = action.profileObject.agency_name;
+        draft.userProfile.phoneNumber = action.profileObject.phone_number;
+        draft.userProfile.subscribed = action.profileObject.subscribed;
+        break;
+      case 'changeSendRequest':
+        draft.sendRequest = draft.sendRequest + 1;
+        break;
     }
   }
   // getting map instance
   function MapComponent() {
-    const map = useMap()
-    dispatch({ type: "getMap", mapData: map })
-    return null
+    const map = useMap();
+    dispatch({ type: 'getMap', mapData: map });
+    return null;
   }
   //displays polygon on the map
   function areaDisplay() {
-    if (state.municipalityValue === "Kirtipur") {
-      return <Polygon positions={Kirtipur} />
-    } else if (state.municipalityValue === "Balkot") {
-      return <Polygon positions={Balkot} />
+    if (state.municipalityValue === 'Kirtipur') {
+      return <Polygon positions={Kirtipur} />;
+    } else if (state.municipalityValue === 'Balkot') {
+      return <Polygon positions={Balkot} />;
     }
   }
   //using immerreducer
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
   //form submit handler
 
   useEffect(() => {
     if (state.sendRequest) {
       async function AddProperty() {
-        const formData = new FormData()
-        formData.append("title", state.titleValue),
-          formData.append("area", state.areaValue),
-          formData.append("municipality", state.municipalityValue),
-          formData.append("description", state.descriptionValue),
-          formData.append("listing_type", state.listingTypeValue),
-          formData.append("property_status", state.propertyStatusValue),
-          formData.append("price", state.priceValue),
-          formData.append("rooms", state.roomsValue),
-          formData.append("parking", state.parkingValue),
-          formData.append("furnished", state.furnishedValue),
-          formData.append("bathroom", state.bathroomValue),
-          formData.append("pool", state.poolValue),
-          formData.append("elevator", state.elevatorValue),
-          formData.append("cctv", state.cctvValue),
-          formData.append("property_area", state.propertyAreaValue),
-          formData.append("rental_frequency", state.rentalFrequencyValue),
-          formData.append("latitude", state.latitudeValue),
-          formData.append("longitude", state.longitudeValue),
-          formData.append("picture1", state.picture1Value),
-          formData.append("picture2", state.picture2Value),
-          formData.append("picture3", state.picture3Value),
-          formData.append("bathPicture1", state.bathroom1Value),
-          formData.append("bathPicture2", state.bathroom2Value),
-          formData.append("bedroomPicture1", state.bedroom1Value),
-          formData.append("bedroomPicture2", state.bedroom2Value),
-          formData.append("seller", localStorage.getItem("theUserId"))
+        const formData = new FormData();
+        formData.append('title', state.titleValue),
+          formData.append('area', state.areaValue),
+          formData.append('municipality', state.municipalityValue),
+          formData.append('description', state.descriptionValue),
+          formData.append('listing_type', state.listingTypeValue),
+          formData.append('property_status', state.propertyStatusValue),
+          formData.append('price', state.priceValue),
+          formData.append('rooms', state.roomsValue),
+          formData.append('parking', state.parkingValue),
+          formData.append('furnished', state.furnishedValue),
+          formData.append('bathroom', state.bathroomValue),
+          formData.append('pool', state.poolValue),
+          formData.append('elevator', state.elevatorValue),
+          formData.append('cctv', state.cctvValue),
+          formData.append('property_area', state.propertyAreaValue),
+          formData.append('rental_frequency', state.rentalFrequencyValue),
+          formData.append('latitude', state.latitudeValue),
+          formData.append('longitude', state.longitudeValue),
+          formData.append('picture1', state.picture1Value),
+          formData.append('picture2', state.picture2Value),
+          formData.append('picture3', state.picture3Value),
+          formData.append('bathPicture1', state.bathroom1Value),
+          formData.append('bathPicture2', state.bathroom2Value),
+          formData.append('bedroomPicture1', state.bedroom1Value),
+          formData.append('bedroomPicture2', state.bedroom2Value),
+          formData.append('seller', localStorage.getItem('theUserId'));
 
         // console.log(response)
         try {
           const response = await Axios.post(
-            "http://127.0.0.1:8000/api/listings/create/",
+            'http://127.0.0.1:8000/api/listings/create/',
             formData
-          )
-          console.log(response)
-          navigate("/listings")
+          );
+          console.log(response);
+          navigate('/listings');
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
-      AddProperty()
+      AddProperty();
     }
-  }, [state.sendRequest])
+  }, [state.sendRequest]);
 
   //for Changing the map position based on municipality
   useEffect(() => {
-    if (state.municipalityValue === "Balkot") {
-      state.mapInstance.flyTo([27.666367937321187, 85.37419795932625], 13)
+    if (state.municipalityValue === 'Balkot') {
+      state.mapInstance.flyTo([27.666367937321187, 85.37419795932625], 13);
       dispatch({
-        type: "changeMarkerPosition",
+        type: 'changeMarkerPosition',
         changeLatitude: 27.666367937321187,
         changeLongitude: 85.37419795932625,
-      })
-    } else if (state.municipalityValue === "Kirtipur") {
-      state.mapInstance.flyTo([27.67887766605217, 85.27391419425689], 13)
+      });
+    } else if (state.municipalityValue === 'Kirtipur') {
+      state.mapInstance.flyTo([27.67887766605217, 85.27391419425689], 13);
       dispatch({
-        type: "changeMarkerPosition",
+        type: 'changeMarkerPosition',
         changeLatitude: 27.67887766605217,
         changeLongitude: 85.27391419425689,
-      })
+      });
     }
-  }, [state.municipalityValue])
+  }, [state.municipalityValue]);
 
   //for changing map position based on area
   useEffect(() => {
-    if (state.areaValue === "Kathmandu") {
-      state.mapInstance.flyTo([27.711964791049617, 85.32270046066495], 13)
+    if (state.areaValue === 'Kathmandu') {
+      state.mapInstance.flyTo([27.711964791049617, 85.32270046066495], 13);
       dispatch({
-        type: "changeMarkerPosition",
+        type: 'changeMarkerPosition',
         changeLatitude: 27.711964791049617,
         changeLongitude: 85.32270046066495,
-      })
-    } else if (state.areaValue === "Bhaktapur") {
-      state.mapInstance.flyTo([27.672074636815736, 85.42961557359669], 13)
+      });
+    } else if (state.areaValue === 'Bhaktapur') {
+      state.mapInstance.flyTo([27.672074636815736, 85.42961557359669], 13);
       dispatch({
-        type: "changeMarkerPosition",
+        type: 'changeMarkerPosition',
         changeLatitude: 27.672074636815736,
         changeLongitude: 85.42961557359669,
-      })
+      });
     }
-  }, [state.areaValue])
+  }, [state.areaValue]);
 
   //draggable marker
-  const markerRef = useRef(null)
+  const markerRef = useRef(null);
   const eventHandlers = useMemo(
     () => ({
       dragend() {
-        const marker = markerRef.current
-        console.log(marker.getLatLng())
+        const marker = markerRef.current;
+        console.log(marker.getLatLng());
         dispatch({
-          type: "catchLatitudeChange",
+          type: 'catchLatitudeChange',
           latitudeChosen: marker.getLatLng().lat,
-        })
+        });
         dispatch({
-          type: "catchLongitudeChange",
+          type: 'catchLongitudeChange',
           longitudeChosen: marker.getLatLng().lng,
-        })
+        });
       },
     }),
     []
-  )
+  );
   //catching pictues
   useEffect(() => {
     if (state.uploadedPropertyImages[0]) {
       dispatch({
-        type: "catchPicture1Change",
+        type: 'catchPicture1Change',
         picture1Chosen: state.uploadedPropertyImages[0],
-      })
+      });
     }
-  }, [state.uploadedPropertyImages[0]])
+  }, [state.uploadedPropertyImages[0]]);
   //pic2
   useEffect(() => {
     if (state.uploadedPropertyImages[1]) {
       dispatch({
-        type: "catchPicture2Change",
+        type: 'catchPicture2Change',
         picture2Chosen: state.uploadedPropertyImages[1],
-      })
+      });
     }
-  }, [state.uploadedPropertyImages[1]])
+  }, [state.uploadedPropertyImages[1]]);
   //pic3
   useEffect(() => {
     if (state.uploadedPropertyImages[2]) {
       dispatch({
-        type: "catchPicture3Change",
+        type: 'catchPicture3Change',
         picture3Chosen: state.uploadedPropertyImages[2],
-      })
+      });
     }
-  }, [state.uploadedPropertyImages[2]])
+  }, [state.uploadedPropertyImages[2]]);
 
   useEffect(() => {
     if (state.uploadedBathroomImages[0]) {
       dispatch({
-        type: "catchBathroom1Change",
+        type: 'catchBathroom1Change',
         bathroom1Chosen: state.uploadedBathroomImages[0],
-      })
+      });
     }
-  }, [state.uploadedBathroomImages[0]])
+  }, [state.uploadedBathroomImages[0]]);
 
   useEffect(() => {
     if (state.uploadedBathroomImages[1]) {
       dispatch({
-        type: "catchBathroom2Change",
+        type: 'catchBathroom2Change',
         bathroom2Chosen: state.uploadedBathroomImages[1],
-      })
+      });
     }
-  }, [state.uploadedBathroomImages[1]])
+  }, [state.uploadedBathroomImages[1]]);
 
   useEffect(() => {
     if (state.uploadedBedroomImages[0]) {
       dispatch({
-        type: "catchBedroom1Change",
+        type: 'catchBedroom1Change',
         bedroom1Chosen: state.uploadedBedroomImages[0],
-      })
+      });
     }
-  }, [state.uploadedBedroomImages[0]])
+  }, [state.uploadedBedroomImages[0]]);
 
   useEffect(() => {
     if (state.uploadedBedroomImages[1]) {
       dispatch({
-        type: "catchBedroom2Change",
+        type: 'catchBedroom2Change',
         bedroom2Chosen: state.uploadedBedroomImages[1],
-      })
+      });
     }
-  }, [state.uploadedBedroomImages[1]])
+  }, [state.uploadedBedroomImages[1]]);
 
   //req to get profile info
   useEffect(() => {
@@ -367,23 +373,26 @@ function AddProperty() {
       try {
         const response = await Axios.get(
           `http://127.0.0.1:8000/api/profiles/${GlobalState.userId}/`
-        )
-        console.log(response.data)
-        dispatch({ type: "catchuserProfileInfo", profileObject: response.data })
-        GlobalDispatch({ type: "getProfile", profileValue: response.data })
+        );
+        console.log(response.data);
+        dispatch({
+          type: 'catchuserProfileInfo',
+          profileObject: response.data,
+        });
+        GlobalDispatch({ type: 'getProfile', profileValue: response.data });
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-    GetProfileInfo()
-  }, [])
+    GetProfileInfo();
+  }, []);
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    console.log("Form Done")
-    dispatch({ type: "changeSendRequest" })
-  }
-  console.log(GlobalState.userIsLogged)
+    e.preventDefault();
+    console.log('Form Done');
+    dispatch({ type: 'changeSendRequest' });
+  };
+  console.log(GlobalState.userIsLogged);
   const SubmitButtonDisplay = () => {
     if (
       GlobalState.userIsLogged &&
@@ -392,30 +401,30 @@ function AddProperty() {
     ) {
       return (
         <button
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate('/profile')}
           className="w-full mx-auto bg-yellow-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Update Profile First
         </button>
-      )
+      );
     } else if (
       GlobalState.userIsLogged &&
-      state.userProfile.agencyName !== "" &&
-      state.userProfile.phoneNumber !== "" &&
+      state.userProfile.agencyName !== '' &&
+      state.userProfile.phoneNumber !== '' &&
       !state.userProfile.subscribed
     ) {
       return (
         <button
-          onClick={() => navigate("/checkout")}
+          onClick={() => navigate('/checkout')}
           className="w-full mx-auto bg-red-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Subscribe First
         </button>
-      )
+      );
     } else if (
       GlobalState.userIsLogged &&
-      state.userProfile.agencyName !== "" &&
-      state.userProfile.phoneNumber !== "" &&
+      state.userProfile.agencyName !== '' &&
+      state.userProfile.phoneNumber !== '' &&
       state.userProfile.subscribed
     ) {
       return (
@@ -425,18 +434,18 @@ function AddProperty() {
         >
           Add Listing
         </button>
-      )
+      );
     } else {
       return (
         <button
-          onClick={() => navigate("/login")}
+          onClick={() => navigate('/login')}
           className="w-full mx-auto bg-blue-500 text-lg rounded-md text-white mb-10 mt-3 h-16"
         >
           Login to Post
         </button>
-      )
+      );
     }
-  }
+  };
   return (
     <div className="flex flex-col items-center w-full pt-5">
       <h1 className="text-3xl my-6 font-semibold text-gray-600">
@@ -455,7 +464,7 @@ function AddProperty() {
             placeholder="Title"
             onChange={(e) =>
               dispatch({
-                type: "catchTitleChange",
+                type: 'catchTitleChange',
                 titleChosen: e.target.value,
               })
             }
@@ -465,7 +474,7 @@ function AddProperty() {
             value={state.listingTypeValue}
             onChange={(e) =>
               dispatch({
-                type: "catchListingTypeChange",
+                type: 'catchListingTypeChange',
                 listingTypeChosen: e.target.value,
               })
             }
@@ -473,9 +482,9 @@ function AddProperty() {
             <option selected hidden>
               Select Listing Type
             </option>
-            <option value={"House"}>House</option>
-            <option value={"Apartment"}>Apartment</option>
-            <option value={"Office"}>Office</option>
+            <option value={'House'}>House</option>
+            <option value={'Apartment'}>Apartment</option>
+            <option value={'Office'}>Office</option>
           </select>
         </div>
         <textarea
@@ -486,7 +495,7 @@ function AddProperty() {
           placeholder="Description"
           onChange={(e) =>
             dispatch({
-              type: "catchDescriptionChange",
+              type: 'catchDescriptionChange',
               descriptionChosen: e.target.value,
             })
           }
@@ -503,7 +512,7 @@ function AddProperty() {
             placeholder="Rooms"
             onChange={(e) =>
               dispatch({
-                type: "catchRoomsChange",
+                type: 'catchRoomsChange',
                 roomsChosen: e.target.value,
               })
             }
@@ -515,7 +524,7 @@ function AddProperty() {
             placeholder="Parking"
             onChange={(e) =>
               dispatch({
-                type: "catchParkingChange",
+                type: 'catchParkingChange',
                 parkingChosen: e.target.value,
               })
             }
@@ -527,7 +536,7 @@ function AddProperty() {
             placeholder="Bathrooms"
             onChange={(e) =>
               dispatch({
-                type: "catchBathroomChange",
+                type: 'catchBathroomChange',
                 bathroomChosen: e.target.value,
               })
             }
@@ -541,7 +550,7 @@ function AddProperty() {
             placeholder="Property Status"
             onChange={(e) =>
               dispatch({
-                type: "catchPropertyStatusChange",
+                type: 'catchPropertyStatusChange',
                 propertyStatusChosen: e.target.value,
               })
             }
@@ -553,13 +562,13 @@ function AddProperty() {
             <option value="Rent">Rent</option>
           </select>
 
-          {state.propertyStatusValue === "Rent" ? (
+          {state.propertyStatusValue === 'Rent' ? (
             <select
               className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
               value={state.rentalFrequencyValue}
               onChange={(e) =>
                 dispatch({
-                  type: "catchRentalFrequencyChange",
+                  type: 'catchRentalFrequencyChange',
                   rentalFrequencyChosen: e.target.value,
                 })
               }
@@ -591,7 +600,7 @@ function AddProperty() {
             placeholder="Property Area"
             onChange={(e) =>
               dispatch({
-                type: "catchPropertyAreaChange",
+                type: 'catchPropertyAreaChange',
                 propertyAreaChosen: e.target.value,
               })
             }
@@ -604,7 +613,7 @@ function AddProperty() {
             placeholder="Price"
             onChange={(e) =>
               dispatch({
-                type: "catchPriceChange",
+                type: 'catchPriceChange',
                 priceChosen: e.target.value,
               })
             }
@@ -619,10 +628,10 @@ function AddProperty() {
               placeholder="Furnished"
               onChange={(e) =>
                 dispatch({
-                  type: "catchFurnishedChange",
+                  type: 'catchFurnishedChange',
                 })
               }
-            />{" "}
+            />{' '}
             Furnished
           </label>
           <label htmlFor="Pool">
@@ -633,10 +642,10 @@ function AddProperty() {
               placeholder="Pool"
               onChange={(e) =>
                 dispatch({
-                  type: "catchPoolChange",
+                  type: 'catchPoolChange',
                 })
               }
-            />{" "}
+            />{' '}
             Pool
           </label>
           <label htmlFor="elevator">
@@ -647,10 +656,10 @@ function AddProperty() {
               placeholder="elevator"
               onChange={(e) =>
                 dispatch({
-                  type: "catchElevatorChange",
+                  type: 'catchElevatorChange',
                 })
               }
-            />{" "}
+            />{' '}
             Elevator
           </label>
           <label htmlFor="cctv">
@@ -660,10 +669,10 @@ function AddProperty() {
               value={state.cctvValue}
               onChange={(e) =>
                 dispatch({
-                  type: "catchCctvChange",
+                  type: 'catchCctvChange',
                 })
               }
-            />{" "}
+            />{' '}
             CCTV
           </label>
         </div>
@@ -675,7 +684,7 @@ function AddProperty() {
             placeholder="Area"
             onChange={(e) =>
               dispatch({
-                type: "catchAreaChange",
+                type: 'catchAreaChange',
                 areaChosen: e.target.value,
               })
             }
@@ -683,8 +692,8 @@ function AddProperty() {
             <option selected hidden>
               Select District
             </option>
-            <option value={"Kathmandu"}>Kathmandu</option>
-            <option value={"Bhaktapur"}>Bhaktapur</option>
+            <option value={'Kathmandu'}>Kathmandu</option>
+            <option value={'Bhaktapur'}>Bhaktapur</option>
           </select>
           <select
             className="w-full h-16 px-3 shadow-md rounded focus:outline-blue-300"
@@ -693,7 +702,7 @@ function AddProperty() {
             placeholder="Municipality"
             onChange={(e) =>
               dispatch({
-                type: "catchMunicipalityChange",
+                type: 'catchMunicipalityChange',
                 municipalityChosen: e.target.value,
               })
             }
@@ -701,7 +710,7 @@ function AddProperty() {
             <option selected hidden>
               Select Area
             </option>
-            {state.areaValue === "Bhaktapur" ? (
+            {state.areaValue === 'Bhaktapur' ? (
               <option value="Balkot">Balkot</option>
             ) : (
               <option value="Kirtipur">Kirtipur</option>
@@ -738,7 +747,7 @@ function AddProperty() {
             placeholder="Latitude"
             onChange={(e) =>
               dispatch({
-                type: "catchLatitudeChange",
+                type: 'catchLatitudeChange',
                 latitudeChosen: e.target.value,
               })
             }
@@ -750,7 +759,7 @@ function AddProperty() {
             placeholder="Longitude"
             onChange={(e) =>
               dispatch({
-                type: "catchLongitudeChange",
+                type: 'catchLongitudeChange',
                 longitudeChosen: e.target.value,
               })
             }
@@ -794,17 +803,17 @@ function AddProperty() {
                     {state.picture1Value ? (
                       <li>{state.picture1Value.name}</li>
                     ) : (
-                      ""
+                      ''
                     )}
                     {state.picture2Value ? (
                       <li>{state.picture2Value.name}</li>
                     ) : (
-                      ""
+                      ''
                     )}
                     {state.picture3Value ? (
                       <li>{state.picture3Value.name}</li>
                     ) : (
-                      ""
+                      ''
                     )}
                   </span>
                 </p>
@@ -818,9 +827,9 @@ function AddProperty() {
               accept="image/png,image/gif,image/jpeg"
               onChange={(e) => {
                 dispatch({
-                  type: "catchuploadedPropertyImages",
+                  type: 'catchuploadedPropertyImages',
                   imagesChosen: e.target.files,
-                })
+                });
               }}
             />
           </label>
@@ -864,12 +873,12 @@ function AddProperty() {
                       {state.bedroom1Value ? (
                         <li>{state.bedroom1Value.name}</li>
                       ) : (
-                        ""
+                        ''
                       )}
                       {state.bedroom2Value ? (
                         <li>{state.bedroom2Value.name}</li>
                       ) : (
-                        ""
+                        ''
                       )}
                     </span>
                   </p>
@@ -883,9 +892,9 @@ function AddProperty() {
                 accept="image/png,image/gif,image/jpeg"
                 onChange={(e) => {
                   dispatch({
-                    type: "catchuploadedBedroomImages",
+                    type: 'catchuploadedBedroomImages',
                     bedimagesChosen: e.target.files,
-                  })
+                  });
                 }}
               />
             </label>
@@ -929,12 +938,12 @@ function AddProperty() {
                       {state.bathroom1Value ? (
                         <li>{state.bathroom1Value.name}</li>
                       ) : (
-                        ""
+                        ''
                       )}
                       {state.bathroom2Value ? (
                         <li>{state.bathroom2Value.name}</li>
                       ) : (
-                        ""
+                        ''
                       )}
                     </span>
                   </p>
@@ -948,9 +957,9 @@ function AddProperty() {
                 accept="image/png,image/gif,image/jpeg"
                 onChange={(e) => {
                   dispatch({
-                    type: "catchuploadedBathroomImages",
+                    type: 'catchuploadedBathroomImages',
                     bathimagesChosen: e.target.files,
-                  })
+                  });
                 }}
               />
             </label>
@@ -959,7 +968,7 @@ function AddProperty() {
         <div>{SubmitButtonDisplay()}</div>
       </form>
     </div>
-  )
+  );
 }
 
-export default AddProperty
+export default AddProperty;
