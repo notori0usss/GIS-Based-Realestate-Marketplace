@@ -1,33 +1,42 @@
-import React from "react"
-import HeroImg from "../assets/services.jpg"
-import TypeWriter from "./TypeWriter"
-import { useNavigate } from "react-router-dom"
-import Home from "../assets/home.jpg"
-function Hero() {
-  const navigate = useNavigate()
+import React, { Suspense, useRef } from 'react';
+import TypeWriter from './TypeWriter';
+import { useNavigate } from 'react-router-dom';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Preload, Tube, useGLTF } from '@react-three/drei';
+import CanvasLoader from './CanvasLoader';
+
+function Model() {
+  const model = useGLTF('/modern_home/scene.gltf');
   return (
-    <div
-      className="bg-gradient-to-tr from-gray-700 to-gray-500 h-[80vh] w-full relative"
-      style={{ clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0 88%)" }}
-    >
-      <img
-        src={Home}
-        alt="bg-hero"
-        className="w-full h-full object-cover absolute mix-blend-overlay"
-      />
-      <div className="flex flex-col items-center justify-center w-full h-full gap-10">
-        <h1 className="text-5xl lg:text-7xl font-bold uppercase text-white shadow-sm">
-          <TypeWriter />
-        </h1>
-        <button
-          className="bg-blue-500 z-10 text-white font-semibold px-5 py-3 shadow-sm uppercase rounded-lg"
-          onClick={() => navigate("/allProperties")}
-        >
-          See all properties
-        </button>
-      </div>
+    <mesh>
+      <hemisphereLight intensity={0.9} />
+      <primitive object={model.scene} />
+    </mesh>
+  );
+}
+function Hero() {
+  return (
+    <div className="bg-gradient-to-tr from-gray-700 to-gray-500 h-[80vh] w-full grid grid-cols-3">
+      <TypeWriter className="top-0 col-span-2 " />
+      <Canvas
+        className="w-full"
+        frameloop="demand"
+        shadows
+        camera={{ position: [3, 2, 4], rotation: [0, Math.PI, 0], fov: 20 }}
+        gl={{ preserveDrawingBuffer: true }}
+      >
+        <Suspense fallback={<CanvasLoader />}>
+          <OrbitControls
+            enablePan={true}
+            enableZoom={true}
+            enableRotate={true}
+          />
+          <Model />
+        </Suspense>
+        <Preload all />
+      </Canvas>
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
