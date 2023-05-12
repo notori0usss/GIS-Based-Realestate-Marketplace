@@ -1,7 +1,1 @@
-super user:
-username=admin
-email: admin@swaroop.com
-password: normal one
-
-
- & "f:/React Projects/fyp/myvenv/Scripts/Activate.ps1"
+This is a Final Year Project done by me using GeoDjango, Postgresql & React JS. 
